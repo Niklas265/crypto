@@ -42,7 +42,8 @@ public:
 	virtual Integer getInteger(unsigned int size);
 
     /**
-     * Generiert eine Zufallszahl, die eine Größe von size (param) Bytes hat.
+     * Generiert eine Zufallszahl aus der Menge {0, 1,..., m-1}.
+     * Der Übergabeparameter muss ein Integer sein, der größer als 0 ist.
      * Die möglichen erzeugten Werte der Zufallszahl sind gleichverteilt
      * und werden in Form eines Integers zurückgegeben.
      */
