@@ -2,13 +2,17 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="AngewandteKryptographie" targetName="hellostudent" />
-      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="calculate" />
+      <config projectName="AngewandteKryptographie" targetName="kasiski" />
       <config projectName="AngewandteKryptographie" targetName="polybius" />
-      <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
+      <config projectName="AngewandteKryptographie" targetName="coindex" />
+      <config projectName="AngewandteKryptographie" targetName="searchshift" />
+      <config projectName="AngewandteKryptographie" targetName="vigenere" />
       <config projectName="AngewandteKryptographie" targetName="polybius-test" />
+      <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
+      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="helloworld" />
+      <config projectName="AngewandteKryptographie" targetName="hellostudent" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -18,8 +22,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03877d79-aa4f-4875-a788-6f1bc6e771ef" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/ClassicCipher.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/ClassicCipher.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereBreaker.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereBreaker.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereCipher.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereCipher.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/byte.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/coindex-getopt.ggo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/coindex-main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/kasiski-getopt.ggo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/kasiski-main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/searchshift-getopt.ggo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/searchshift-main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/vigenere-getopt.ggo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/vigenere-main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.h" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,8 +57,10 @@
   <component name="ProjectId" id="1SvoHZtz10dqa4HhSjiQrpDKxTX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.overridden" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Praktikum-CryptoPP" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -59,8 +81,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.cryptopp-intro">
+  <component name="RunManager" selected="CMake Application.searchshift">
     <configuration name="calculate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="calculate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="calculate">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="coindex" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="coindex" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="coindex">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -85,12 +112,27 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="kasiski" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="kasiski" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="kasiski">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="polybius-test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="polybius-test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="polybius-test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="polybius" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="polybius" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="polybius">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="searchshift" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="searchshift" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="searchshift">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="vigenere" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="vigenere" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="vigenere">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -103,6 +145,10 @@
       <item itemvalue="CMake Application.polybius" />
       <item itemvalue="CMake Application.polybius-test" />
       <item itemvalue="CMake Application.cryptopp-intro" />
+      <item itemvalue="CMake Application.coindex" />
+      <item itemvalue="CMake Application.kasiski" />
+      <item itemvalue="CMake Application.searchshift" />
+      <item itemvalue="CMake Application.vigenere" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -116,7 +162,8 @@
       <option name="presentableId" value="Default" />
       <updated>1572453342368</updated>
       <workItem from="1572453345425" duration="10953000" />
-      <workItem from="1572522647340" duration="8410000" />
+      <workItem from="1572522647340" duration="13778000" />
+      <workItem from="1572540331962" duration="5502000" />
     </task>
     <servers />
   </component>
@@ -125,7 +172,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
