@@ -19,9 +19,21 @@
 using namespace std;
 using namespace CryptoPP;
 
-string hexToASCII(string src) {
+string toHex(string src) {
     string dst;
-    StringSource(src, true, new HexDecoder(new StringSink(dst)));
+    StringSink* sink = new StringSink(dst);
+    HexEncoder* encoder = new HexEncoder(sink);
+    StringSource(src, true, encoder);
+    return dst;
+}
+
+string fromHex(string src) {
+    string dst;
+    StringSource(src, true,
+        new HexDecoder(
+            new StringSink(dst)
+        )
+    );
     return dst;
 }
  
@@ -33,37 +45,45 @@ void DataFlowExercise() {
          << "Data Flow Exercise:" << endl
          << "===================" << endl << endl;
  
-    string src = "Kryptographie macht Spaß!!!";
+    string src = "äKryptographie macht Spaß!!!";
 
     try {
-        string dst;
-        StringSink* sink = new StringSink(dst);
-
-        HexEncoder* encoder = new HexEncoder(sink);
-
-        StringSource(src, true, encoder);
-
-        cout << dst << " -> " << hexToASCII(dst) << endl;
-        assert(src == hexToASCII(dst));
+        // Converting bytes in src to base 16 encoded hex.
+        string dst = toHex(src);
+        cout << src << " >  HexEncoder > " << dst << endl;
+        // Converting the hex back to bytes should be the same as the original src.
+        assert(src == fromHex(dst));
 
         src = "4963682062696E2065696E20537472696E6720696E204865786164657A696D616C6B6F64696572756E6721";
-        cout << hexToASCII(src) << endl;
+        // Converting base 16 encoded string to bytes.
+        string decoderDst = fromHex(src);
+        cout << src.substr(0, 20) << "... > HexDecoder > " << decoderDst << endl;
+        // Converting the bytes back to base 16 encoded data
+        // should be the same as the original src.
+        assert(src == toHex(decoderDst));
 
-        // modified readFromFile a bit
-        // 3rd arg is a bool called skipNewlines. setting skipNewlines to true skips newlines in the output
-        Toolbox::readFromFile("../../data/base64data.txt", src, /*skipNewlines=*/true);
+        // The readFromFile Function from the Toolbox was modified. First we
+        // removed lowering of the characters in the output by removing the
+        // 'tolower(c)' call in readFromFile. Second we added a new bool as
+        // 3rd argument which is called skipNewlines. This argument defaults
+        // to 'false'. Setting skipNewlines to true removes newlines '\n' in
+        // the functions output.
+        if (!Toolbox::readFromFile("../../data/base64data.txt", src, /*skipNewlines=*/true)) {
+            // Opening the File failed. Continue anyway to execute the other tasks.
+            cerr << "Reading from File ../../data/base64data.txt failed. Continuing." << endl;
+        }
 
-        cout << src << endl;
+        cout << "File ../../data/base64data.txt Content: " << src << endl;
 
         dst = "";
-
+        // Decode base 64 encoded data in src into dst
         StringSource(src, true,
             new Base64Decoder(
                 new StringSink(dst)
             )
         );
 
-        cout << dst << endl;
+        cout << "Decoded File Content: " << dst << endl;
     } catch(const Exception& e) {
         cerr << e.what() << endl;
         assert(false);
@@ -73,6 +93,10 @@ void DataFlowExercise() {
 void EncryptionExercise_Part1() {
     byte key[16];
     string encoded_key = "08a8cbfe7a3d1262c8abc3d1197dfefe";
+    // Converting base 16 encoded string to bytes.
+    // The result is saved in byte array.
+    // The conversion is required because we need to pass bytes
+    // to the AES object.
     StringSource(encoded_key, true,
         new HexDecoder(
             new ArraySink(key, 16)
@@ -86,6 +110,10 @@ void EncryptionExercise_Part1() {
 
     aes_enc.SetKey(key, sizeof(key));
 
+    // Encrypts the content of plain_text with AES in ECB Mode
+    // with they key in the key array. The HexEncoder is used
+    // to convert the bytes from the AES output to human
+    // readable hex code.
     StringSource(plain_text, true,
         new StreamTransformationFilter(aes_enc,
             new HexEncoder(
@@ -94,12 +122,17 @@ void EncryptionExercise_Part1() {
         )
     );
 
+    cout << plain_text << " > AES Encrypt > " << cypher_text << endl;
+
     ECB_Mode<AES>::Decryption aes_dec;
 
+    // Key is used for both encryption and decryption.
     aes_dec.SetKey(key, sizeof(key));
 
     string p;
 
+    // During Encoding we converted the bytes to hex.
+    // HexDecoder is required and used to convert the hex back to bytes.
     StringSource(cypher_text, true,
         new HexDecoder(
             new StreamTransformationFilter(aes_dec,
@@ -108,23 +141,22 @@ void EncryptionExercise_Part1() {
         )
     );
 
-    cout << p << endl;
+    cout << cypher_text << " > AES Decrypt > " << p << endl;
+    assert(plain_text == p);
 }
 
 void EncryptionExercise_Part2() {
     string cypher_text;
 
     string src;
-    Toolbox::readFromFile("../../data/aescipher.txt", src, true);
+    if (!Toolbox::readFromFile("../../data/aescipher.txt", src, true)) {
+        cerr << "Reading from File ../../data/aescipher.txt failed. Continuing." << endl;
+    }
 
-    StringSource(src, true,
-        new Base64Decoder(
-            new StringSink(cypher_text)
-        )
-    );
+    cout << "File ../../data/aescipher.txt Content: " << src << endl;
 
-    cout << cypher_text << endl;
-
+    // The SetKeyWithIV function requires the key and IV to be
+    // bytes and saved in a byte array.
     byte key[16];
     string encoded_key = "47656865696D65725363686CC3BC7373";
     StringSource(encoded_key, true,
@@ -145,14 +177,19 @@ void EncryptionExercise_Part2() {
 
     aes_crt_dec.SetKeyWithIV(key, sizeof(key), iv);
 
-    string p;
-    StringSource(cypher_text, true,
-        new StreamTransformationFilter(aes_crt_dec,
-             new StringSink(p)
+    string dst;
+    // The source is a base64 encoded string. The Base64Decoder is used
+    // to convert the encoded string to bytes. This is required for the
+    // AES StreamTransformationFilter.
+    StringSource(src, true,
+        new Base64Decoder(
+            new StreamTransformationFilter(aes_crt_dec,
+                 new StringSink(dst)
+            )
         )
     );
 
-    cout << p << endl;
+    cout << src.substr(0, 20) << "... > AES Decrypt > " << dst << endl;
 }
  
 void EncryptionExercise() {
@@ -165,10 +202,10 @@ void EncryptionExercise() {
          << endl;
 
     try {
-        // 3a) und 3b)
+        // Task 3a) und 3b)
         EncryptionExercise_Part1();
 
-        // 3c)
+        // Task 3c)
         EncryptionExercise_Part2();
     } catch(const Exception& e) {
         cerr << e.what() << endl;
@@ -210,12 +247,13 @@ void HashExercise() {
 
     assert(result);
 
-    // b: result is false
+    // b: The variable result will be set to false in HashVerificationFilter()/ArraySink
 
-    // c: HASH_AT_END
+    // c: Replace the 'HashVerificationFilter::HASH_AT_BEGIN'
+    //           with 'HashVerificationFilter::HASH_AT_END'.
 }
- 
- 
+
+// Calculates a^b % n
 Integer modexp(const Integer &a, const Integer &b, const Integer &n) {
     /*************************************************************************
      * Aufgabe 5a.
@@ -245,7 +283,14 @@ void IntegerExercise() {
 
     Integer res2 = a_exp_b_mod_c(Integer(371), Integer(18961551), Integer(2371));
 
+    // Überprüfung, ob das Ergebnis der Crypto++ Funktion a_exp_b_mod_c mit
+    // der von uns implementierten modexp Funktion übereinstimmt.
     assert(res == res2);
+
+    Integer p(95957);
+    Integer a(58788);
+    bool isQR = modexp(a, Integer((p-1) / 2), p) == 1;
+    cout << "Die Zahl " << a << " ist " << (isQR ? "ein" : "kein") << " QR mod " << p << endl;
 }
 
 void RNGExercise() {
@@ -259,33 +304,43 @@ void RNGExercise() {
     Integer n = Integer("1252910265243849922375596598575099209083498535192739493227403") *
                 Integer("1476222059624949757818143837507324048590620075519516306265283");
 
+    // Initialisierung des BlumBlumShubGenerators mit "mod n" und seed 42.
     BlumBlumShubGenerator bbs(n, Integer(42));
 
+    cout << "Generierung von 20 Zufallsbits: ";
     for (int i = 0; i < 20; i++) {
-        cout << i << ": " << int(bbs.getBit()) << endl;
+        cout << int(bbs.getBit());
     }
+    cout << endl << endl;
 
+    cout << "Generierung von 5 Zufallsbytes: ";
     for (int i = 0; i < 5; i++) {
-        cout << i << ": " << int(bbs.getByte()) << endl;
+        cout << int(bbs.getByte()) << " ";
     }
+    cout << endl << endl;
 
     byte array[100];
-
     bbs.getBlock(array, 100);
 
-    cout << (int)array[99] << endl;
+    cout << "Generierung von 100 Zufallsbytes: ";
+    for (int i = 0; i < 100; i++) {
+        cout << int(array[i]) << " ";
+    }
+    cout << endl << endl;
 
-    cout << bbs.getInteger(200) << endl;
+    cout << "Generierung einer Zufallszahl mit 200 Bytes: " << bbs.getInteger(200);
+    cout << endl << endl;
 
 
     Integer sum;
-
-    for (int i = 0; i < 10000; i++)
+    cout << "Generierung von 1000 gleichverteilten Integern aus der Menge {0,1,...,24}. ";
+    for (int i = 0; i < 1000; i++)
         sum += bbs.getInteger(Integer(25));
+    cout << "Generierte Zahlen summiert: " << sum
+         << " Summiert sollte das irgendwo in der Nähe von " << 12 * 1000 << " sein." << endl << endl;
 
-    cout << sum / 10000 << endl;
-
-    cout << bbs.getInteger(Integer(pow(2, 30))) << endl;
+    cout << "Generierung einer Zufallszahl aus der Menge  {0, 1, . . . , 2^30 − 1}: "
+         << bbs.getInteger(Integer(pow(2, 30))) << endl;
 }
  
  

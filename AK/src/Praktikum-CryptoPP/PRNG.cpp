@@ -41,7 +41,8 @@ Integer PRNG::getInteger(const Integer &m) {
      * Aufgabe 6i.
      *************************************************************************/
 
-    assert(m != 0);
+    // Der Parameter m muss laut Aufgabenstellung eine ganze Zahl > 0 sein.
+    assert(m > 0);
 
     Integer ret;
 
