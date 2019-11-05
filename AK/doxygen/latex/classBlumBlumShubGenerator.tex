@@ -1,0 +1,52 @@
+\hypertarget{classBlumBlumShubGenerator}{}\section{Blum\+Blum\+Shub\+Generator Class Reference}
+\label{classBlumBlumShubGenerator}\index{Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}}
+
+
+{\ttfamily \#include $<$Blum\+Blum\+Shub\+Generator.\+h$>$}
+
+
+
+Inheritance diagram for Blum\+Blum\+Shub\+Generator\+:
+% FIG 0
+
+
+Collaboration diagram for Blum\+Blum\+Shub\+Generator\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classBlumBlumShubGenerator_ae4bb31e199365075f38783d82f5dd74f}{Blum\+Blum\+Shub\+Generator} (const Integer \&n, const Integer \&seed)
+\item 
+virtual bool \hyperlink{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b472d39}{get\+Bit} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} ist eine Klasse für das Erzeugen von (pseudo) zufälligen Bits. Die erzeugten Bits hängen von den Parametern n (mod n) und s (seed) ab. Das heißt, dass bei verwendung der gleichen Parametern die gleiche Zufallszahlenfolge erzeugt wird. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBlumBlumShubGenerator_ae4bb31e199365075f38783d82f5dd74f}\label{classBlumBlumShubGenerator_ae4bb31e199365075f38783d82f5dd74f}} 
+\index{Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}!Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}}
+\index{Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}!Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}}
+\subsubsection{\texorpdfstring{Blum\+Blum\+Shub\+Generator()}{BlumBlumShubGenerator()}}
+{\footnotesize\ttfamily Blum\+Blum\+Shub\+Generator\+::\+Blum\+Blum\+Shub\+Generator (\begin{DoxyParamCaption}\item[{const Integer \&}]{n,  }\item[{const Integer \&}]{seed }\end{DoxyParamCaption})}
+
+Einziger Konstruktor der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} Klasse. Der Übergabeparameter n ist vom Typ Integer und sollte das Produkt von zwei Primzahlen sein. Der Übergabeparameter seed ist vom Typ Integer und sollte nicht 0 oder 1 sein. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b472d39}\label{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b472d39}} 
+\index{Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}!get\+Bit@{get\+Bit}}
+\index{get\+Bit@{get\+Bit}!Blum\+Blum\+Shub\+Generator@{Blum\+Blum\+Shub\+Generator}}
+\subsubsection{\texorpdfstring{get\+Bit()}{getBit()}}
+{\footnotesize\ttfamily bool Blum\+Blum\+Shub\+Generator\+::get\+Bit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Generiert ein (pseudo) zufälliges Bit und gibt dieses in Form eines bools zurück. 
+
+Implements \hyperlink{classPRNG_a513ec082275e805da358a2a790db2f9e}{P\+R\+NG}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/Blum\+Blum\+Shub\+Generator.\+h\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/Blum\+Blum\+Shub\+Generator.\+cpp\end{DoxyCompactItemize}

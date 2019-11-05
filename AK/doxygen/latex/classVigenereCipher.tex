@@ -1,0 +1,87 @@
+\hypertarget{classVigenereCipher}{}\section{Vigenere\+Cipher Class Reference}
+\label{classVigenereCipher}\index{Vigenere\+Cipher@{Vigenere\+Cipher}}
+
+
+Inheritance diagram for Vigenere\+Cipher\+:
+% FIG 0
+
+
+Collaboration diagram for Vigenere\+Cipher\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual int \hyperlink{classVigenereCipher_a6eb292617c3a63bed3ee97f48f916522}{decrypt} (const vector$<$ byte $>$ \&cipher\+\_\+text, const vector$<$ byte $>$ \&key, vector$<$ byte $>$ \&plain\+\_\+text)
+\item 
+virtual int \hyperlink{classVigenereCipher_a3952791f1e39fc4c5280f8fcec4dea43}{encrypt} (const vector$<$ byte $>$ \&plain\+\_\+text, const vector$<$ byte $>$ \&key, vector$<$ byte $>$ \&cipher\+\_\+text)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classVigenereCipher_a6eb292617c3a63bed3ee97f48f916522}\label{classVigenereCipher_a6eb292617c3a63bed3ee97f48f916522}} 
+\index{Vigenere\+Cipher@{Vigenere\+Cipher}!decrypt@{decrypt}}
+\index{decrypt@{decrypt}!Vigenere\+Cipher@{Vigenere\+Cipher}}
+\subsubsection{\texorpdfstring{decrypt()}{decrypt()}}
+{\footnotesize\ttfamily int Vigenere\+Cipher\+::decrypt (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{cipher\+\_\+text,  }\item[{const vector$<$ byte $>$ \&}]{key,  }\item[{vector$<$ byte $>$ \&}]{plain\+\_\+text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Decrypt a cipher text.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & array to store cipher text \\
+\hline
+{\em cipher\+\_\+len} & length of the cipher text array \\
+\hline
+{\em key} & key \\
+\hline
+{\em key\+\_\+len} & key length \\
+\hline
+{\em plain\+\_\+text} & plain text to be decrypted \\
+\hline
+{\em plain\+\_\+len} & length of the plain text\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of decrypted bytes 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classClassicCipher_a7a94b818759feeb570077022911d6648}{Classic\+Cipher}.
+
+\mbox{\Hypertarget{classVigenereCipher_a3952791f1e39fc4c5280f8fcec4dea43}\label{classVigenereCipher_a3952791f1e39fc4c5280f8fcec4dea43}} 
+\index{Vigenere\+Cipher@{Vigenere\+Cipher}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!Vigenere\+Cipher@{Vigenere\+Cipher}}
+\subsubsection{\texorpdfstring{encrypt()}{encrypt()}}
+{\footnotesize\ttfamily int Vigenere\+Cipher\+::encrypt (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{plain\+\_\+text,  }\item[{const vector$<$ byte $>$ \&}]{key,  }\item[{vector$<$ byte $>$ \&}]{cipher\+\_\+text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Encrypt a plain text.
+
+
+\begin{DoxyParams}{Parameters}
+{\em plain\+\_\+text} & plain text to be encrypted \\
+\hline
+{\em plain\+\_\+len} & length of the plain text \\
+\hline
+{\em key} & key \\
+\hline
+{\em key\+\_\+len} & key length \\
+\hline
+{\em cipher\+\_\+text} & array to store cipher text \\
+\hline
+{\em cipher\+\_\+len} & length of the cipher text array\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of encrypted bytes 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classClassicCipher_aab1fac1b6e54aee2fb34a65cf4cb917f}{Classic\+Cipher}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Vigenere/Vigenere\+Cipher.\+h\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Vigenere/Vigenere\+Cipher.\+cpp\end{DoxyCompactItemize}

@@ -17,6 +17,8 @@ public:
     /**
 	 * Generiert ein (pseudo) zufälliges Bit und gibt dieses in Form
 	 * eines bools zurück.
+         *
+         * @returns ein pseudozufallsgeneriertes Bit
 	 */
 	virtual bool getBit() = 0;
 

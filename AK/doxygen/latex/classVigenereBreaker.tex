@@ -1,0 +1,165 @@
+\hypertarget{classVigenereBreaker}{}\section{Vigenere\+Breaker Class Reference}
+\label{classVigenereBreaker}\index{Vigenere\+Breaker@{Vigenere\+Breaker}}
+
+
+Inheritance diagram for Vigenere\+Breaker\+:
+% FIG 0
+
+
+Collaboration diagram for Vigenere\+Breaker\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classVigenereBreaker_aaa9154379a64b4d3e63c21abdc8a2270}{kasiski\+Test} (const vector$<$ byte $>$ \&cipher\+\_\+text, int ngram\+\_\+len=3)
+\item 
+float \hyperlink{classVigenereBreaker_a9f3763cd550c2f97b09dc3c9e872ef4a}{coincidence\+Index} (const vector$<$ byte $>$ \&text)
+\item 
+bool \hyperlink{classVigenereBreaker_a52abe1abb911197d3df281d33568e31a}{coincidence\+Test} (const vector$<$ byte $>$ \&cipher\+\_\+text, int cols, float threshold=0.\+065)
+\item 
+int \hyperlink{classVigenereBreaker_ac507990f1124fbbb419d0444fea290c4}{mutual\+Coin\+Index} (const vector$<$ byte $>$ \&cipher\+\_\+text, int cols, int i, int j, float threshold=0.\+065)
+\item 
+void \hyperlink{classVigenereBreaker_a6ba37c849739dcda0a06ed0596ae1bf5}{analyse} (const vector$<$ byte $>$ \&cipher\+\_\+text)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classVigenereBreaker_aca7fe8477586cc1b134835e5ca6d1882}{gcd} (int a, int b) const
+\item 
+int \hyperlink{classVigenereBreaker_aa68812c04ec6674d69bfe36d4e1e84c6}{gcd} (const vector$<$ int $>$ \&v) const
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classVigenereBreaker_a6ba37c849739dcda0a06ed0596ae1bf5}\label{classVigenereBreaker_a6ba37c849739dcda0a06ed0596ae1bf5}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!analyse@{analyse}}
+\index{analyse@{analyse}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{analyse()}{analyse()}}
+{\footnotesize\ttfamily void Vigenere\+Breaker\+::analyse (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{cipher\+\_\+text }\end{DoxyParamCaption})}
+
+Analyse a given cipher text. 
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & cipher text to be analysed \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVigenereBreaker_a9f3763cd550c2f97b09dc3c9e872ef4a}\label{classVigenereBreaker_a9f3763cd550c2f97b09dc3c9e872ef4a}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!coincidence\+Index@{coincidence\+Index}}
+\index{coincidence\+Index@{coincidence\+Index}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{coincidence\+Index()}{coincidenceIndex()}}
+{\footnotesize\ttfamily float Vigenere\+Breaker\+::coincidence\+Index (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{text }\end{DoxyParamCaption})}
+
+Compute the conincidence index for a given text
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & text to be analysed\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+coincidence index of text 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVigenereBreaker_a52abe1abb911197d3df281d33568e31a}\label{classVigenereBreaker_a52abe1abb911197d3df281d33568e31a}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!coincidence\+Test@{coincidence\+Test}}
+\index{coincidence\+Test@{coincidence\+Test}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{coincidence\+Test()}{coincidenceTest()}}
+{\footnotesize\ttfamily bool Vigenere\+Breaker\+::coincidence\+Test (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{cipher\+\_\+text,  }\item[{int}]{cols,  }\item[{float}]{threshold = {\ttfamily 0.065} }\end{DoxyParamCaption})}
+
+Compute the coincidence indices of a given number of columns and check whether all values lie above a given threshold
+
+
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & cipher\+\_\+text to be analysed \\
+\hline
+{\em cols} & number of columns \\
+\hline
+{\em threshold} & thershold value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true $<$=$>$ indices of all columns are $>$= threshold 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVigenereBreaker_aca7fe8477586cc1b134835e5ca6d1882}\label{classVigenereBreaker_aca7fe8477586cc1b134835e5ca6d1882}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!gcd@{gcd}}
+\index{gcd@{gcd}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{gcd()}{gcd()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Vigenere\+Breaker\+::gcd (\begin{DoxyParamCaption}\item[{int}]{a,  }\item[{int}]{b }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+Compute greatest common divisor of two integers a and b
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & first integer \\
+\hline
+{\em b} & second integer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+gcd(a,b) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVigenereBreaker_aa68812c04ec6674d69bfe36d4e1e84c6}\label{classVigenereBreaker_aa68812c04ec6674d69bfe36d4e1e84c6}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!gcd@{gcd}}
+\index{gcd@{gcd}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{gcd()}{gcd()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Vigenere\+Breaker\+::gcd (\begin{DoxyParamCaption}\item[{const vector$<$ int $>$ \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+Compute the greatest common divisor of a vector of integers.
+
+The vector must be of size $>$ 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & vector containing at least 1 integer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+greatest common divisor of all integers in v 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVigenereBreaker_aaa9154379a64b4d3e63c21abdc8a2270}\label{classVigenereBreaker_aaa9154379a64b4d3e63c21abdc8a2270}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!kasiski\+Test@{kasiski\+Test}}
+\index{kasiski\+Test@{kasiski\+Test}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{kasiski\+Test()}{kasiskiTest()}}
+{\footnotesize\ttfamily int Vigenere\+Breaker\+::kasiski\+Test (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{cipher\+\_\+text,  }\item[{int}]{ngram\+\_\+len = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+Perform Kasiski test to detect key length
+
+
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & cipher text to be analysed \\
+\hline
+{\em ngram\+\_\+len} & length of the n-\/grams to be checked\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+key length (0 = no length computed) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVigenereBreaker_ac507990f1124fbbb419d0444fea290c4}\label{classVigenereBreaker_ac507990f1124fbbb419d0444fea290c4}} 
+\index{Vigenere\+Breaker@{Vigenere\+Breaker}!mutual\+Coin\+Index@{mutual\+Coin\+Index}}
+\index{mutual\+Coin\+Index@{mutual\+Coin\+Index}!Vigenere\+Breaker@{Vigenere\+Breaker}}
+\subsubsection{\texorpdfstring{mutual\+Coin\+Index()}{mutualCoinIndex()}}
+{\footnotesize\ttfamily int Vigenere\+Breaker\+::mutual\+Coin\+Index (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{cipher\+\_\+text,  }\item[{int}]{cols,  }\item[{int}]{i,  }\item[{int}]{j,  }\item[{float}]{threshold = {\ttfamily 0.065} }\end{DoxyParamCaption})}
+
+Compute the mutual coincidence index table of two columns and return the relative shift g such that key\mbox{[}j\mbox{]} = key\mbox{[}i\mbox{]} -\/ g if the respective index is $>$= threshold
+
+
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & cipher\+\_\+text to be analysed \\
+\hline
+{\em cols} & number of columns \\
+\hline
+{\em col\+\_\+i} & first column \\
+\hline
+{\em col\+\_\+j} & second column \\
+\hline
+{\em threshold} & thershold value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+shift g between key\mbox{[}i\mbox{]} and key\mbox{[}j\mbox{]}, if respective index is $>$= threshold. -\/1, otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Vigenere/Vigenere\+Breaker.\+h\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Vigenere/Vigenere\+Breaker.\+cpp\end{DoxyCompactItemize}

@@ -45,7 +45,7 @@ void DataFlowExercise() {
          << "Data Flow Exercise:" << endl
          << "===================" << endl << endl;
  
-    string src = "äKryptographie macht Spaß!!!";
+    string src = "Kryptographie macht Spaß!!!";
 
     try {
         // Converting bytes in src to base 16 encoded hex.
@@ -233,6 +233,13 @@ void HashExercise() {
         )
     );
 
+    string dst;
+    StringSink* sink = new StringSink(dst);
+    HexEncoder* encoder = new HexEncoder(sink);
+    StringSource(message, true, encoder);
+
+    cout << "Message Hash: " << dst << endl;
+
     word32 flags = HashVerificationFilter::HASH_AT_BEGIN
                    | HashVerificationFilter::PUT_RESULT;
 
@@ -244,6 +251,8 @@ void HashExercise() {
                 flags
         )
     );
+
+    cout << "Verification " << (result ? "successful" : "failed") << endl;
 
     assert(result);
 
@@ -340,7 +349,7 @@ void RNGExercise() {
          << " Summiert sollte das irgendwo in der Nähe von " << 12 * 1000 << " sein." << endl << endl;
 
     cout << "Generierung einer Zufallszahl aus der Menge  {0, 1, . . . , 2^30 − 1}: "
-         << bbs.getInteger(Integer(pow(2, 30))) << endl;
+         << bbs.getInteger(Integer(1 << 30)) << endl;
 }
  
  

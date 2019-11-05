@@ -1,0 +1,127 @@
+\hypertarget{classClassicCipher}{}\section{Classic\+Cipher Class Reference}
+\label{classClassicCipher}\index{Classic\+Cipher@{Classic\+Cipher}}
+
+
+Inheritance diagram for Classic\+Cipher\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual int \hyperlink{classClassicCipher_a7a94b818759feeb570077022911d6648}{decrypt} (const vector$<$ byte $>$ \&cipher\+\_\+text, const vector$<$ byte $>$ \&key, vector$<$ byte $>$ \&plain\+\_\+text)=0
+\item 
+virtual int \hyperlink{classClassicCipher_aab1fac1b6e54aee2fb34a65cf4cb917f}{encrypt} (const vector$<$ byte $>$ \&plain\+\_\+text, const vector$<$ byte $>$ \&key, vector$<$ byte $>$ \&cipher\+\_\+text)=0
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classClassicCipher_aaa086df3339430db098d39e145da490d}{read\+Stream} (istream \&strm, vector$<$ byte $>$ \&out\+\_\+text, int block\+\_\+len=1, unsigned char blender=\textquotesingle{}x\textquotesingle{})
+\item 
+static int \hyperlink{classClassicCipher_ab3613bc81d24e8e2b5558851e3777746}{write\+Stream} (ostream \&strm, const vector$<$ byte $>$ \&in\+\_\+text, unsigned char c\+\_\+shift=\textquotesingle{}a\textquotesingle{}, int columns=50)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classClassicCipher_a7a94b818759feeb570077022911d6648}\label{classClassicCipher_a7a94b818759feeb570077022911d6648}} 
+\index{Classic\+Cipher@{Classic\+Cipher}!decrypt@{decrypt}}
+\index{decrypt@{decrypt}!Classic\+Cipher@{Classic\+Cipher}}
+\subsubsection{\texorpdfstring{decrypt()}{decrypt()}}
+{\footnotesize\ttfamily virtual int Classic\+Cipher\+::decrypt (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{cipher\+\_\+text,  }\item[{const vector$<$ byte $>$ \&}]{key,  }\item[{vector$<$ byte $>$ \&}]{plain\+\_\+text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Decrypt a cipher text.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & to be decrypted \\
+\hline
+{\em key} & key \\
+\hline
+{\em plain\+\_\+text} & vector to store the resulting plain text\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of decrypted bytes 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classVigenereCipher_a6eb292617c3a63bed3ee97f48f916522}{Vigenere\+Cipher}.
+
+\mbox{\Hypertarget{classClassicCipher_aab1fac1b6e54aee2fb34a65cf4cb917f}\label{classClassicCipher_aab1fac1b6e54aee2fb34a65cf4cb917f}} 
+\index{Classic\+Cipher@{Classic\+Cipher}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!Classic\+Cipher@{Classic\+Cipher}}
+\subsubsection{\texorpdfstring{encrypt()}{encrypt()}}
+{\footnotesize\ttfamily virtual int Classic\+Cipher\+::encrypt (\begin{DoxyParamCaption}\item[{const vector$<$ byte $>$ \&}]{plain\+\_\+text,  }\item[{const vector$<$ byte $>$ \&}]{key,  }\item[{vector$<$ byte $>$ \&}]{cipher\+\_\+text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Encrypt a plain text.
+
+
+\begin{DoxyParams}{Parameters}
+{\em plain\+\_\+text} & plain text to be encrypted \\
+\hline
+{\em plain\+\_\+len} & length of the plain text \\
+\hline
+{\em key} & key \\
+\hline
+{\em key\+\_\+len} & key length \\
+\hline
+{\em cipher\+\_\+text} & array to store cipher text \\
+\hline
+{\em cipher\+\_\+len} & length of the cipher text array\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of encrypted bytes 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classVigenereCipher_a3952791f1e39fc4c5280f8fcec4dea43}{Vigenere\+Cipher}.
+
+\mbox{\Hypertarget{classClassicCipher_aaa086df3339430db098d39e145da490d}\label{classClassicCipher_aaa086df3339430db098d39e145da490d}} 
+\index{Classic\+Cipher@{Classic\+Cipher}!read\+Stream@{read\+Stream}}
+\index{read\+Stream@{read\+Stream}!Classic\+Cipher@{Classic\+Cipher}}
+\subsubsection{\texorpdfstring{read\+Stream()}{readStream()}}
+{\footnotesize\ttfamily int Classic\+Cipher\+::read\+Stream (\begin{DoxyParamCaption}\item[{istream \&}]{strm,  }\item[{vector$<$ byte $>$ \&}]{out\+\_\+text,  }\item[{int}]{block\+\_\+len = {\ttfamily 1},  }\item[{unsigned char}]{blender = {\ttfamily \textquotesingle{}x\textquotesingle{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Read a stream and store the characters in an S\+TL vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em strm} & stream to read \\
+\hline
+{\em out\+\_\+text} & storage area \\
+\hline
+{\em block\+\_\+len} & block length \\
+\hline
+{\em blender} & character to use for block padding\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of read bytes 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classClassicCipher_ab3613bc81d24e8e2b5558851e3777746}\label{classClassicCipher_ab3613bc81d24e8e2b5558851e3777746}} 
+\index{Classic\+Cipher@{Classic\+Cipher}!write\+Stream@{write\+Stream}}
+\index{write\+Stream@{write\+Stream}!Classic\+Cipher@{Classic\+Cipher}}
+\subsubsection{\texorpdfstring{write\+Stream()}{writeStream()}}
+{\footnotesize\ttfamily int Classic\+Cipher\+::write\+Stream (\begin{DoxyParamCaption}\item[{ostream \&}]{strm,  }\item[{const vector$<$ byte $>$ \&}]{in\+\_\+text,  }\item[{unsigned char}]{c\+\_\+shift = {\ttfamily \textquotesingle{}a\textquotesingle{}},  }\item[{int}]{columns = {\ttfamily 50} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Write a byte array to a stream.
+
+
+\begin{DoxyParams}{Parameters}
+{\em strm} & stream to write \\
+\hline
+{\em in\+\_\+text} & text to be written \\
+\hline
+{\em c\+\_\+shift} & character to shift output \\
+\hline
+{\em columns} & number of columns per line\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of written bytes 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Vigenere/Classic\+Cipher.\+h\item 
+/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Vigenere/Classic\+Cipher.\+cpp\end{DoxyCompactItemize}
