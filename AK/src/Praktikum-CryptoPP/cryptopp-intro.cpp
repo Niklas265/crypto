@@ -71,6 +71,11 @@ void DataFlowExercise() {
         // 3rd argument which is called skipNewlines. This argument defaults
         // to 'false'. Setting skipNewlines to true removes newlines '\n' in
         // the functions output.
+        // I use the relative path with the assumption, that we are located in the 'bin'
+        // folder when this program is started.
+        // If this script is started from the Debug Folder with './bin/cryptopp-intro', we
+        // need to use "../data/base64data.txt" instead. This can be automated by
+        // evaluating argv[0], but we thought this was not expected.
         if (!Toolbox::readFromFile("../../data/base64data.txt", src, /*skipNewlines=*/true)) {
             // Opening the File failed. Continue anyway to execute the other tasks.
             cerr << "Reading from File ../../data/base64data.txt failed. Continuing." << endl;
