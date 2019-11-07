@@ -71,13 +71,17 @@ $(function() {
 Inheritance diagram for BlumBlumShubGenerator:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBlumBlumShubGenerator__inherit__graph.png" border="0" usemap="#BlumBlumShubGenerator_inherit__map" alt="Inheritance graph"/></div>
-<!-- MAP 0 -->
+<map name="BlumBlumShubGenerator_inherit__map" id="BlumBlumShubGenerator_inherit__map">
+<area shape="rect" id="node2" href="classPRNG.html" title="PRNG" alt="" coords="59,5,121,32"/>
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for BlumBlumShubGenerator:</div>
 <div class="dyncontent">
 <div class="center"><img src="classBlumBlumShubGenerator__coll__graph.png" border="0" usemap="#BlumBlumShubGenerator_coll__map" alt="Collaboration graph"/></div>
-<!-- MAP 1 -->
+<map name="BlumBlumShubGenerator_coll__map" id="BlumBlumShubGenerator_coll__map">
+<area shape="rect" id="node2" href="classPRNG.html" title="PRNG" alt="" coords="59,5,121,32"/>
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -97,7 +101,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af9eb9406a3ba8308447a125c1f24d7df inherit pub_methods_classPRNG"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Der <a class="el" href="classBlumBlumShubGenerator.html">BlumBlumShubGenerator</a> ist eine Klasse für das Erzeugen von (pseudo) zufälligen Bits. Die erzeugten Bits hängen von den Parametern n (mod n) und s (seed) ab. Das heißt, dass bei verwendung der gleichen Parametern die gleiche Zufallszahlenfolge erzeugt wird. </p>
+<div class="textblock"><p>Der <a class="el" href="classBlumBlumShubGenerator.html">BlumBlumShubGenerator</a> ist eine Klasse für das Erzeugen von (pseudo) zufälligen Bits. Die erzeugten Bits hängen von den Parametern n (mod n) und s (seed) ab. Das heißt, dass bei Verwendung der gleichen Parametern die gleiche Zufallszahlenfolge erzeugt wird (die Bits werden deterministisch erzeugt). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae4bb31e199365075f38783d82f5dd74f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae4bb31e199365075f38783d82f5dd74f">&#9670;&nbsp;</a></span>BlumBlumShubGenerator()</h2>
@@ -124,7 +128,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Einziger Konstruktor der <a class="el" href="classBlumBlumShubGenerator.html">BlumBlumShubGenerator</a> Klasse. Der Übergabeparameter n ist vom Typ Integer und sollte das Produkt von zwei Primzahlen sein. Der Übergabeparameter seed ist vom Typ Integer und sollte nicht 0 oder 1 sein. </p>
+<p>Einziger Konstruktor der <a class="el" href="classBlumBlumShubGenerator.html">BlumBlumShubGenerator</a> Klasse. Der Übergabeparameter n ist vom Typ Integer und sollte das Produkt von zwei Primzahlen sein. Der Übergabeparameter seed ist vom Typ Integer und sollte nicht 0 oder 1 sein.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Ein "Integer" Objekt der CryptoPP Bibliothek</td></tr>
+    <tr><td class="paramname">seed</td><td>Ein "Integer" Objekt der CryptoPP Bibliothek </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -151,15 +162,16 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Generiert ein (pseudo) zufälliges Bit und gibt dieses in Form eines bools zurück. </p>
+<p>Generiert ein (pseudo) zufälliges, im Durchschnitt gleichverteiltes Bit und gibt dieses in Form eines bools zurück.</p>
+<dl class="section return"><dt>Returns</dt><dd>Gleichverteilt entweder einen bool mit 'True' oder 'False' </dd></dl>
 
 <p>Implements <a class="el" href="classPRNG.html#a513ec082275e805da358a2a790db2f9e">PRNG</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/daniel/K/Docker/AK/src/Praktikum-CryptoPP/<a class="el" href="BlumBlumShubGenerator_8h_source.html">BlumBlumShubGenerator.h</a></li>
-<li>/home/daniel/K/Docker/AK/src/Praktikum-CryptoPP/BlumBlumShubGenerator.cpp</li>
+<li>/home/sinflair/P/crypto/AK/src/Praktikum-CryptoPP/<a class="el" href="BlumBlumShubGenerator_8h_source.html">BlumBlumShubGenerator.h</a></li>
+<li>/home/sinflair/P/crypto/AK/src/Praktikum-CryptoPP/BlumBlumShubGenerator.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

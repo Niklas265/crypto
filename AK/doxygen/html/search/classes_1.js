@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blumblumshubgenerator',['BlumBlumShubGenerator',['../classBlumBlumShubGenerator.html',1,'']]]
+  ['prng',['PRNG',['../classPRNG.html',1,'']]]
 ];

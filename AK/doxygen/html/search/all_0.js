@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['a',['A',['../classA.html',1,'']]],
-  ['analyse',['analyse',['../classVigenereBreaker.html#a6ba37c849739dcda0a06ed0596ae1bf5',1,'VigenereBreaker']]]
+  ['blumblumshubgenerator',['BlumBlumShubGenerator',['../classBlumBlumShubGenerator.html',1,'BlumBlumShubGenerator'],['../classBlumBlumShubGenerator.html#ae4bb31e199365075f38783d82f5dd74f',1,'BlumBlumShubGenerator::BlumBlumShubGenerator()']]]
 ];

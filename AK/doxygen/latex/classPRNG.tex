@@ -3,7 +3,13 @@
 
 
 Inheritance diagram for P\+R\+NG\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{classPRNG__inherit__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -26,7 +32,12 @@ virtual Integer \hyperlink{classPRNG_af9eb9406a3ba8308447a125c1f24d7df}{get\+Int
 \subsubsection{\texorpdfstring{get\+Bit()}{getBit()}}
 {\footnotesize\ttfamily virtual bool P\+R\+N\+G\+::get\+Bit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
-Generiert ein (pseudo) zufälliges Bit und gibt dieses in Form eines bools zurück. 
+Generiert ein (pseudo) zufälliges, im Durchschnitt gleichverteiltes Bit und gibt dieses in Form eines bools zurück.
+
+\begin{DoxyReturn}{Returns}
+Gleichverteilt ein zufälliges Bit in Form eines booleans. 
+\end{DoxyReturn}
+
 
 Implemented in \hyperlink{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b472d39}{Blum\+Blum\+Shub\+Generator}.
 
@@ -36,27 +47,61 @@ Implemented in \hyperlink{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b
 \subsubsection{\texorpdfstring{get\+Block()}{getBlock()}}
 {\footnotesize\ttfamily void P\+R\+N\+G\+::get\+Block (\begin{DoxyParamCaption}\item[{byte $\ast$}]{buffer,  }\item[{unsigned int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
-Generiert ein (pseudo) zufälliges Array von n (param) Bytes. Die möglichen erzeugten Werte der Bytes sind gleichverteilt und werden an die von \textquotesingle{}buffer\textquotesingle{} (param) verweisende Stelle geschrieben. \mbox{\Hypertarget{classPRNG_aaef8a8a16c7a871a85262e26a19b9048}\label{classPRNG_aaef8a8a16c7a871a85262e26a19b9048}} 
+Generiert ein (pseudo) zufälliges Array von n (param) Bytes. Die möglichen erzeugten Werte der Bytes sind gleichverteilt und werden an die von \textquotesingle{}buffer\textquotesingle{} (param) verweisende Stelle geschrieben.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Ein Buffer mit einer Größe von (mindestens) (param) n Bytes.\\
+\hline
+{\em n} & Die Anzahl der zu generierenden Bytes, welche in (param) buffer abgespeichert werden. (param) n sollte nicht größer als der für (param) buffer reservierte Speicherplatz in Bytes sein. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classPRNG_aaef8a8a16c7a871a85262e26a19b9048}\label{classPRNG_aaef8a8a16c7a871a85262e26a19b9048}} 
 \index{P\+R\+NG@{P\+R\+NG}!get\+Byte@{get\+Byte}}
 \index{get\+Byte@{get\+Byte}!P\+R\+NG@{P\+R\+NG}}
 \subsubsection{\texorpdfstring{get\+Byte()}{getByte()}}
 {\footnotesize\ttfamily byte P\+R\+N\+G\+::get\+Byte (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
-Generiert ein (pseudo) zufälliges Byte und gibt dieses in Form eines byte Wertes zurück. Die möglichen erzeugten Werte des Bytes sind gleichverteilt. \mbox{\Hypertarget{classPRNG_aee67ebb332e0336b2dceefb6bba726db}\label{classPRNG_aee67ebb332e0336b2dceefb6bba726db}} 
+Generiert ein (pseudo) zufälliges Byte und gibt dieses in Form eines byte Wertes zurück. Die möglichen erzeugten Werte des Bytes sind gleichverteilt.
+
+\begin{DoxyReturn}{Returns}
+Gleichverteilt ein zufälliges Byte in Form eines char beziehungsweise eines \textquotesingle{}byte\textquotesingle{} alias. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classPRNG_aee67ebb332e0336b2dceefb6bba726db}\label{classPRNG_aee67ebb332e0336b2dceefb6bba726db}} 
 \index{P\+R\+NG@{P\+R\+NG}!get\+Integer@{get\+Integer}}
 \index{get\+Integer@{get\+Integer}!P\+R\+NG@{P\+R\+NG}}
 \subsubsection{\texorpdfstring{get\+Integer()}{getInteger()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily Integer P\+R\+N\+G\+::get\+Integer (\begin{DoxyParamCaption}\item[{unsigned int}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
-Generiert eine Zufallszahl, die eine Größe von size (param) Bytes hat. Die möglichen erzeugten Werte der Zufallszahl sind gleichverteilt und werden in Form eines Integers zurückgegeben. \mbox{\Hypertarget{classPRNG_af9eb9406a3ba8308447a125c1f24d7df}\label{classPRNG_af9eb9406a3ba8308447a125c1f24d7df}} 
+Generiert eine Zufallszahl, die eine Größe von size (param) Bytes hat. Die möglichen erzeugten Werte der Zufallszahl sind gleichverteilt und werden in Form eines Integers zurückgegeben.
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & Eine Positive Ganze Zahl in Form eines unsigned int\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Eine (param) size Byte große Zufallszahl in Form eines \char`\"{}\+Integer\char`\"{} Objekts der Crypto\+PP Bibliothek 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classPRNG_af9eb9406a3ba8308447a125c1f24d7df}\label{classPRNG_af9eb9406a3ba8308447a125c1f24d7df}} 
 \index{P\+R\+NG@{P\+R\+NG}!get\+Integer@{get\+Integer}}
 \index{get\+Integer@{get\+Integer}!P\+R\+NG@{P\+R\+NG}}
 \subsubsection{\texorpdfstring{get\+Integer()}{getInteger()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily Integer P\+R\+N\+G\+::get\+Integer (\begin{DoxyParamCaption}\item[{const Integer \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
-Generiert eine Zufallszahl aus der Menge \{0, 1,..., m-\/1\}. Der Übergabeparameter muss ein Integer sein, der größer als 0 ist. Die möglichen erzeugten Werte der Zufallszahl sind gleichverteilt und werden in Form eines Integers zurückgegeben. 
+Generiert eine Zufallszahl aus der Menge \{0, 1,..., m-\/1\}. Der Übergabeparameter muss ein Integer sein, der größer als 0 ist. Die möglichen erzeugten Werte der Zufallszahl sind gleichverteilt und werden in Form eines Integers zurückgegeben.
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & Eine positive ganze Zahl in Form eines \char`\"{}\+Integer\char`\"{} Objekts der Crypto\+PP Bibliothek\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Eine Zufallszahl aus der Menge \{0, 1,..., m-\/1\} in Form eines \char`\"{}\+Integer\char`\"{} Objekts der Crypto\+PP Bibliothek 
+\end{DoxyReturn}
+
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/P\+R\+N\+G.\+h\item 
-/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/P\+R\+N\+G.\+cpp\end{DoxyCompactItemize}
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/P\+R\+N\+G.\+h\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/P\+R\+N\+G.\+cpp\end{DoxyCompactItemize}

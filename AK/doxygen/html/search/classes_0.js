@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['a',['A',['../classA.html',1,'']]]
+  ['blumblumshubgenerator',['BlumBlumShubGenerator',['../classBlumBlumShubGenerator.html',1,'']]]
 ];

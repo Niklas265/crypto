@@ -19,6 +19,7 @@
 using namespace std;
 using namespace CryptoPP;
 
+// Converts/Encodes bytes in (param) src to (return) base 16 encoded hex.
 string toHex(string src) {
     string dst;
     StringSink* sink = new StringSink(dst);
@@ -27,6 +28,8 @@ string toHex(string src) {
     return dst;
 }
 
+// Converts/Decodes base 16 encoded hex in (param) src
+// to (return) decoded bytes.
 string fromHex(string src) {
     string dst;
     StringSource(src, true,
@@ -106,8 +109,10 @@ void EncryptionExercise_Part1() {
     string plain_text = "Streng geheime Botschaft";
     string cypher_text;
 
+    // AES Implementation for Encryption from the CryptoPP lib
     ECB_Mode<AES>::Encryption aes_enc;
 
+    // Using the 16 Bytes in the 'key' array for future encoding
     aes_enc.SetKey(key, sizeof(key));
 
     // Encrypts the content of plain_text with AES in ECB Mode
@@ -173,8 +178,11 @@ void EncryptionExercise_Part2() {
          )
     );
 
+    // AES Implementation for Decryption from the CryptoPP lib
     CTR_Mode<AES>::Decryption aes_crt_dec;
 
+    // The bytes in the key array and iv array are used in the
+    // future decoding
     aes_crt_dec.SetKeyWithIV(key, sizeof(key), iv);
 
     string dst;
@@ -208,6 +216,10 @@ void EncryptionExercise() {
         // Task 3c)
         EncryptionExercise_Part2();
     } catch(const Exception& e) {
+        // This branch is executed is an Exception is raised in the
+        // try Block, for example if CryptoPP threw an Error/Exception
+        // during AES encoding or decoding
+        // Prints the reason for the Exception and Exits the Program
         cerr << e.what() << endl;
         assert(false);
     }
@@ -226,23 +238,39 @@ void HashExercise() {
     string message = "Kryptographie macht immer noch Spaß!!!";
  
     string digest;
+    // SHA256 Implementation from the CryptoPP lib
     SHA256 hash;
+    // Hashes the message string with CryptoPP's implementation
+    // of SHA256 and saves the Hash
+    // in the 'digest' string
     StringSource(message, true,
         new HashFilter(hash,
             new StringSink(digest)
         )
     );
 
+    // The SHA256 Hash in hash is saved in hex encoded
+    // format in the dst string. This way we can
+    // print the Hash in human readable format.
     string dst;
     StringSink* sink = new StringSink(dst);
     HexEncoder* encoder = new HexEncoder(sink);
     StringSource(message, true, encoder);
 
+    //Prints the hex encoded SHA256 Hash of message
     cout << "Message Hash: " << dst << endl;
 
+    // HASH_AT_BEGIN: Specifies that the SHA256 Hash in
+    // 'digest' should be at the beginning of the string,
+    // the message is concatenated right after 'digest'
+    // PUT_RESULT: Specifies that the result of the verification
+    // is saved in the 'result' variable
     word32 flags = HashVerificationFilter::HASH_AT_BEGIN
                    | HashVerificationFilter::PUT_RESULT;
 
+    // Evaluates if the digest is a SHA256 Hash of message
+    // hash.Restart() restarts the internal state of the SHA256 hash
+    // The result is saved as a boolean in the 'result' variable
     bool result;
     hash.Restart();
     StringSource(digest + message, true,
@@ -262,7 +290,10 @@ void HashExercise() {
     //           with 'HashVerificationFilter::HASH_AT_END'.
 }
 
-// Calculates a^b % n
+// Calculates (a^b) % n and returns the result of this calculation
+// as a Integer Objekt from the CryptoPP lib
+// This calculation is according to the Pseudocode for
+// 'Modulare Exponentiation vom Zahlentheorie-Vorkurs'
 Integer modexp(const Integer &a, const Integer &b, const Integer &n) {
     /*************************************************************************
      * Aufgabe 5a.
@@ -288,8 +319,12 @@ void IntegerExercise() {
          << "IntegerExercise:" << endl
          << "================" << endl << endl;
 
+    // Berechnet (a^b) % n mit unserer Implementation
+    // a = 1. argument; b = 2. arg; n = 3. arg
     Integer res = modexp(Integer(371), Integer(18961551), Integer(2371));
 
+    // Berechnet (a^b) % n mit der Implementation der CryptoPP Bibliothek
+    // a = 1. argument; b = 2. arg; n = 3. arg
     Integer res2 = a_exp_b_mod_c(Integer(371), Integer(18961551), Integer(2371));
 
     // Überprüfung, ob das Ergebnis der Crypto++ Funktion a_exp_b_mod_c mit
@@ -298,6 +333,10 @@ void IntegerExercise() {
 
     Integer p(95957);
     Integer a(58788);
+    // Da p eine ungerade Primzahl ist, gilt nach dem Euler Kriterium auf
+    // Seite 43 der 'Zufallszahlengeneratoren' Folien, dass a ein
+    // quadratischer Rest modulo p genau dann ist, wenn a^((p-1)/2) kongruent zu
+    // 1 (mod p) ist.
     bool isQR = modexp(a, Integer((p-1) / 2), p) == 1;
     cout << "Die Zahl " << a << " ist " << (isQR ? "ein" : "kein") << " QR mod " << p << endl;
 }
@@ -310,6 +349,7 @@ void RNGExercise() {
          << "RNGExercise:" << endl
          << "============" << endl << endl;
 
+    // Das n für den BBS wird aus dem Produkt von zwei Primzahlen gebildet.
     Integer n = Integer("1252910265243849922375596598575099209083498535192739493227403") *
                 Integer("1476222059624949757818143837507324048590620075519516306265283");
 
@@ -330,7 +370,6 @@ void RNGExercise() {
 
     byte array[100];
     bbs.getBlock(array, 100);
-
     cout << "Generierung von 100 Zufallsbytes: ";
     for (int i = 0; i < 100; i++) {
         cout << int(array[i]) << " ";

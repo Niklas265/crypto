@@ -2,15 +2,15 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
+      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="calculate" />
       <config projectName="AngewandteKryptographie" targetName="kasiski" />
-      <config projectName="AngewandteKryptographie" targetName="polybius" />
-      <config projectName="AngewandteKryptographie" targetName="coindex" />
+      <config projectName="AngewandteKryptographie" targetName="polybius-test" />
       <config projectName="AngewandteKryptographie" targetName="searchshift" />
       <config projectName="AngewandteKryptographie" targetName="vigenere" />
-      <config projectName="AngewandteKryptographie" targetName="polybius-test" />
+      <config projectName="AngewandteKryptographie" targetName="coindex" />
       <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
-      <config projectName="AngewandteKryptographie" targetName="functions" />
+      <config projectName="AngewandteKryptographie" targetName="polybius" />
       <config projectName="AngewandteKryptographie" targetName="helloworld" />
       <config projectName="AngewandteKryptographie" targetName="hellostudent" />
     </generated>
@@ -22,24 +22,242 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03877d79-aa4f-4875-a788-6f1bc6e771ef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/ClassicCipher.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/ClassicCipher.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereBreaker.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereBreaker.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereCipher.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/VigenereCipher.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/byte.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/coindex-getopt.ggo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/coindex-main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/kasiski-getopt.ggo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/kasiski-main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/searchshift-getopt.ggo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/searchshift-main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/vigenere-getopt.ggo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Praktikum-Vigenere/vigenere-main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/BlumBlumShubGenerator_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/BlumBlumShubGenerator_8h_source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/ClassicCipher_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/PRNG_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/PRNG_8h_source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/VigenereBreaker_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/VigenereCipher_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/annotated.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/annotated.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/byte_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classA.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classBlumBlumShubGenerator.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/classBlumBlumShubGenerator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classBlumBlumShubGenerator__coll__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classBlumBlumShubGenerator__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classClassicCipher-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classClassicCipher.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classClassicCipher__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classClassicCipher__inherit__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classPRNG.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/classPRNG.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classPRNG__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereBreaker-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereBreaker.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereBreaker__coll__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereBreaker__coll__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereBreaker__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereBreaker__inherit__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereCipher-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereCipher.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereCipher__coll__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereCipher__coll__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereCipher__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classVigenereCipher__inherit__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/classes.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/classes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/coindex-getopt_8h.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/coindex-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/coindex-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/coindex-getopt_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/deprecated.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/dir_68267d1309a1af8e8297ef4c3efbcdba.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/dir_68267d1309a1af8e8297ef4c3efbcdba.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/dir_a3d008f409c6a0834a3ae2c064f635a5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/dir_a3d008f409c6a0834a3ae2c064f635a5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/dir_a49eeb6180d31acdc87ce15e0c7a8378.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/files.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/files.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/functions.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/functions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/functions_func.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/functions_func.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/functions_vars.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/globals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/globals_defs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/globals_func.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/globals_vars.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/graph_legend.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/hierarchy.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/hierarchy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_0.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_0.md5" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/inherit_graph_0.md5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_1.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_1.md5" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/inherit_graph_1.md5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_2.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_2.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_3.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_3.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_4.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_4.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_5.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_5.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_6.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherit_graph_6.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/inherits.html" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/inherits.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/kasiski-getopt_8h.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/kasiski-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/kasiski-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/kasiski-getopt_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/menudata.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/menudata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/pages.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/all_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/all_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_10.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_10.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_11.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_11.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/all_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/all_3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_6.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_7.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_8.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_9.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_a.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_b.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_c.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_d.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_e.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_f.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/all_f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/classes_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/classes_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/classes_2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_6.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/classes_6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/defines_0.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/defines_0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_0.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/files_3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/functions_0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/functions_1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_6.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_7.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_8.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_9.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/functions_9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/pages_0.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/pages_0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/searchdata.js" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/search/searchdata.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_0.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_6.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_7.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_8.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_9.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_a.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_b.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_c.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/search/variables_c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/searchshift-getopt_8h.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/searchshift-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/searchshift-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/searchshift-getopt_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structcmdline__parser__params-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structcmdline__parser__params.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structcustom__getopt__data-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structcustom__getopt__data.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structgengetopt__args__info-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structgengetopt__args__info.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structoption-members.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/structoption.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/tabs.css" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/html/tabs.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/vigenere-getopt_8h.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/vigenere-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/vigenere-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/html/vigenere-getopt_8h_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/annotated.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/annotated.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classA.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classBlumBlumShubGenerator.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/classBlumBlumShubGenerator.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classBlumBlumShubGenerator__coll__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classBlumBlumShubGenerator__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classClassicCipher.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classClassicCipher__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classClassicCipher__inherit__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classPRNG.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/classPRNG.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classPRNG__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereBreaker.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereBreaker__coll__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereBreaker__coll__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereBreaker__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereBreaker__inherit__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereCipher.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereCipher__coll__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereCipher__coll__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereCipher__inherit__graph.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/classVigenereCipher__inherit__graph.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/coindex-getopt_8h.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/coindex-getopt_8h.tex.tmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/coindex-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/coindex-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/deprecated.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/dir_68267d1309a1af8e8297ef4c3efbcdba.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/dir_68267d1309a1af8e8297ef4c3efbcdba.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/dir_a3d008f409c6a0834a3ae2c064f635a5.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/dir_a3d008f409c6a0834a3ae2c064f635a5.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/dir_a49eeb6180d31acdc87ce15e0c7a8378.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/files.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/hierarchy.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/hierarchy.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/kasiski-getopt_8h.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/kasiski-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/kasiski-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/refman.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/latex/refman.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/searchshift-getopt_8h.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/searchshift-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/searchshift-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/structcmdline__parser__params.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/structcustom__getopt__data.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/structgengetopt__args__info.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/structoption.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/vigenere-getopt_8h.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/vigenere-getopt_8h__incl.dot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/latex/vigenere-getopt_8h__incl.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doxygen/x" beforeDir="false" afterPath="$PROJECT_DIR$/../doxygen/x" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.h" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/cryptopp-intro.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/cryptopp-intro.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +280,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.overridden" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Praktikum-CryptoPP" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -81,7 +299,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.searchshift">
+  <component name="RunManager" selected="CMake Application.cryptopp-intro">
     <configuration name="calculate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="calculate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="calculate">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -164,6 +382,8 @@
       <workItem from="1572453345425" duration="10953000" />
       <workItem from="1572522647340" duration="13778000" />
       <workItem from="1572540331962" duration="5502000" />
+      <workItem from="1572641317204" duration="354000" />
+      <workItem from="1573126015143" duration="4026000" />
     </task>
     <servers />
   </component>

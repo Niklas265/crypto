@@ -7,11 +7,23 @@
 
 
 Inheritance diagram for Blum\+Blum\+Shub\+Generator\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{classBlumBlumShubGenerator__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Blum\+Blum\+Shub\+Generator\+:
-% FIG 1
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{classBlumBlumShubGenerator__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,7 +34,7 @@ virtual bool \hyperlink{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b47
 
 
 \subsection{Detailed Description}
-Der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} ist eine Klasse für das Erzeugen von (pseudo) zufälligen Bits. Die erzeugten Bits hängen von den Parametern n (mod n) und s (seed) ab. Das heißt, dass bei verwendung der gleichen Parametern die gleiche Zufallszahlenfolge erzeugt wird. 
+Der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} ist eine Klasse für das Erzeugen von (pseudo) zufälligen Bits. Die erzeugten Bits hängen von den Parametern n (mod n) und s (seed) ab. Das heißt, dass bei Verwendung der gleichen Parametern die gleiche Zufallszahlenfolge erzeugt wird (die Bits werden deterministisch erzeugt). 
 
 \subsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classBlumBlumShubGenerator_ae4bb31e199365075f38783d82f5dd74f}\label{classBlumBlumShubGenerator_ae4bb31e199365075f38783d82f5dd74f}} 
@@ -31,7 +43,16 @@ Der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} ist eine
 \subsubsection{\texorpdfstring{Blum\+Blum\+Shub\+Generator()}{BlumBlumShubGenerator()}}
 {\footnotesize\ttfamily Blum\+Blum\+Shub\+Generator\+::\+Blum\+Blum\+Shub\+Generator (\begin{DoxyParamCaption}\item[{const Integer \&}]{n,  }\item[{const Integer \&}]{seed }\end{DoxyParamCaption})}
 
-Einziger Konstruktor der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} Klasse. Der Übergabeparameter n ist vom Typ Integer und sollte das Produkt von zwei Primzahlen sein. Der Übergabeparameter seed ist vom Typ Integer und sollte nicht 0 oder 1 sein. 
+Einziger Konstruktor der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub\+Generator} Klasse. Der Übergabeparameter n ist vom Typ Integer und sollte das Produkt von zwei Primzahlen sein. Der Übergabeparameter seed ist vom Typ Integer und sollte nicht 0 oder 1 sein.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Ein \char`\"{}\+Integer\char`\"{} Objekt der Crypto\+PP Bibliothek\\
+\hline
+{\em seed} & Ein \char`\"{}\+Integer\char`\"{} Objekt der Crypto\+PP Bibliothek \\
+\hline
+\end{DoxyParams}
+
 
 \subsection{Member Function Documentation}
 \mbox{\Hypertarget{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b472d39}\label{classBlumBlumShubGenerator_aa25d1b6bc4686e6fecd254877b472d39}} 
@@ -40,7 +61,12 @@ Einziger Konstruktor der \hyperlink{classBlumBlumShubGenerator}{Blum\+Blum\+Shub
 \subsubsection{\texorpdfstring{get\+Bit()}{getBit()}}
 {\footnotesize\ttfamily bool Blum\+Blum\+Shub\+Generator\+::get\+Bit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
-Generiert ein (pseudo) zufälliges Bit und gibt dieses in Form eines bools zurück. 
+Generiert ein (pseudo) zufälliges, im Durchschnitt gleichverteiltes Bit und gibt dieses in Form eines bools zurück.
+
+\begin{DoxyReturn}{Returns}
+Gleichverteilt entweder einen bool mit \textquotesingle{}True\textquotesingle{} oder \textquotesingle{}False\textquotesingle{} 
+\end{DoxyReturn}
+
 
 Implements \hyperlink{classPRNG_a513ec082275e805da358a2a790db2f9e}{P\+R\+NG}.
 
@@ -48,5 +74,5 @@ Implements \hyperlink{classPRNG_a513ec082275e805da358a2a790db2f9e}{P\+R\+NG}.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/Blum\+Blum\+Shub\+Generator.\+h\item 
-/home/daniel/\+K/\+Docker/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/Blum\+Blum\+Shub\+Generator.\+cpp\end{DoxyCompactItemize}
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/Blum\+Blum\+Shub\+Generator.\+h\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+Crypto\+P\+P/Blum\+Blum\+Shub\+Generator.\+cpp\end{DoxyCompactItemize}

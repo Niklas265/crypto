@@ -10,8 +10,8 @@ using namespace CryptoPP;
  * Der BlumBlumShubGenerator ist eine Klasse für das
  * Erzeugen von (pseudo) zufälligen Bits. Die erzeugten Bits
  * hängen von den Parametern n (mod n) und s (seed) ab.
- * Das heißt, dass bei verwendung der gleichen Parametern die gleiche
- * Zufallszahlenfolge erzeugt wird.
+ * Das heißt, dass bei Verwendung der gleichen Parametern die gleiche
+ * Zufallszahlenfolge erzeugt wird (die Bits werden deterministisch erzeugt).
 */
 class BlumBlumShubGenerator : public PRNG {
 private:
@@ -25,12 +25,18 @@ public:
      * sollte das Produkt von zwei Primzahlen sein.
      * Der Übergabeparameter seed ist vom Typ Integer und
      * sollte nicht 0 oder 1 sein.
+     *
+     * @param n Ein "Integer" Objekt der CryptoPP Bibliothek
+     *
+     * @param seed Ein "Integer" Objekt der CryptoPP Bibliothek
      */
 	BlumBlumShubGenerator(const Integer& n, const Integer& seed);
 
 	/**
-	 * Generiert ein (pseudo) zufälliges Bit und gibt dieses in Form
-	 * eines bools zurück.
+	 * Generiert ein (pseudo) zufälliges, im Durchschnitt gleichverteiltes
+	 * Bit und gibt dieses in Form eines bools zurück.
+	 *
+	 * @return Gleichverteilt entweder einen bool mit 'True' oder 'False'
 	 */
 	virtual bool getBit();
 
