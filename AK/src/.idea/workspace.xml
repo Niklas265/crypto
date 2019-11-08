@@ -23,7 +23,6 @@
   <component name="ChangeListManager">
     <list default="true" id="03877d79-aa4f-4875-a788-6f1bc6e771ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/cryptopp-intro.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/cryptopp-intro.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +148,7 @@
       <workItem from="1572522647340" duration="13778000" />
       <workItem from="1572540331962" duration="5502000" />
       <workItem from="1572641317204" duration="354000" />
-      <workItem from="1573126015143" duration="5860000" />
+      <workItem from="1573126015143" duration="5968000" />
     </task>
     <servers />
   </component>
