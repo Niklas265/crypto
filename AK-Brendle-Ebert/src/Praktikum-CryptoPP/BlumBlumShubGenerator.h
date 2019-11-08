@@ -33,7 +33,7 @@ public:
 	BlumBlumShubGenerator(const Integer& n, const Integer& seed);
 
 	/**
-	 * Generiert ein (pseudo) zufälliges, im Durchschnitt gleichverteiltes
+	 * Generiert ein (pseudo) zufälliges, gleichverteiltes
 	 * Bit und gibt dieses in Form eines bools zurück.
 	 *
 	 * @return Gleichverteilt entweder einen bool mit 'True' oder 'False'
