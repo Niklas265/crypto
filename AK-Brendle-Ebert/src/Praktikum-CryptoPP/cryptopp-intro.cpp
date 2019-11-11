@@ -417,7 +417,7 @@ void RNGExercise() {
          << " Summiert sollte das irgendwo in der Nähe von " << 12 * 1000 << " sein." << endl << endl;
 
     cout << "Generierung einer Zufallszahl aus der Menge  {0, 1, . . . , 2^30 − 1}: "
-         << bbs.getInteger(Integer(1 << 30)) << endl;
+         << bbs.getInteger(Integer(1 << 30)-1) << endl;
 }
  
  
