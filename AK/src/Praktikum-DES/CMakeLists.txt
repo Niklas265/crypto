@@ -16,6 +16,6 @@ add_executable( des des-main DESCipher BlockCipher
         ${CMAKE_CURRENT_SOURCE_DIR}/des-getopt.h
         ${CMAKE_CURRENT_SOURCE_DIR}/des-getopt.c
         )
-add_executable( desTest desTest DESCipher BlockCipher )
+add_executable( desTest desTest DESCipher BlockCipher catch.hpp)
 
 
