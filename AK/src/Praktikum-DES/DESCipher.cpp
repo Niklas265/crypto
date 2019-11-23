@@ -13,6 +13,38 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
 /******************************************************************************
  * Aufgabe 5
  ******************************************************************************/
+
+    // TODO: decrypt mode
+    assert(encmode);
+
+    byte roundKeySchedule[16][48];
+
+    //int shifts[] = {1, 2, 4, 6, 8, 10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28};
+    // TODO: no idea why we need 1 less shifts here
+    int shifts[] = {0, 1, 3, 5, 7, 9, 11, 13, 14, 16, 18, 20, 22, 24, 26, 27};
+
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 48; j++) {
+            byte jPC2 = pc2[j];
+            byte jLS;
+            if (jPC2 <= 28) {
+                jLS = (jPC2 + shifts[i]) % 28;
+            } else {
+                jLS = 28 + ((jPC2 - 28 + shifts[i]) % 28);
+            }
+            roundKeySchedule[i][j] = pc1[jLS];
+            //cout << (int)roundKeySchedule[i][j] << " ";
+        }
+        //cout << endl << endl;
+    }
+
+    for( size_t i = 0; i < 16; i++ )
+    {
+        for( size_t j = 0; j < 48; j++ )
+        {
+            setBit( key_schedule[i], 6, j, getBit( key,8,roundKeySchedule[i][j] -1 ) );
+        }
+    }
 }
 
 
@@ -24,7 +56,7 @@ byte DESCipher::computeSBox(byte id, byte line, byte col) {
     assert(line < 4);
     assert(col < 16);
 
-    return 0;
+    return sbox[id][line * 16 + col];
 }
 
 
@@ -65,6 +97,13 @@ int DESCipher::encrypt
     assert(cipher_len >= plain_len);
     assert(key_len == 8);
 
+    computeKeySchedule(key, true);
+
+    for (unsigned int i = 0; i < plain_len; i += block_len) {
+        processBlock(plain_text+i, cipher_text);
+    }
+
+
     return plain_len;
 }
 
@@ -81,6 +120,15 @@ void DESCipher::feistel
     /******************************************************************************
      * Aufgabe 6c
      ******************************************************************************/
+    for (int i = 0; i < 4; i++) {
+        l_out[i] = r_in[i];
+    }
+
+     byte z[4];
+     functionF(r_in, key, z, rnd);
+     for (int i = 0; i < 4; i++) {
+         r_out[i] = z[i] ^ l_in[i];
+     }
 }
 
 
@@ -94,6 +142,36 @@ void DESCipher::functionF
     /******************************************************************************
      * Aufgabe 6b
      ******************************************************************************/
+
+    byte expand[6];
+    permutate(ev, 48, r_in, 32, expand, 48);
+
+    for (int i = 0; i < 6; i++) {
+        expand[i] ^= key[i];
+    }
+
+    byte b[8][6];
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 6; j++) {
+            b[i][j] = getBit(expand, 8, i * 6 + j);
+        }
+    }
+
+    byte s[8];
+    for (int i = 0; i < 8; i++) {
+        byte line = 2 * b[i][0] + b[i][5];
+        assert(line >= 0 && line <= 3);
+        byte col = 8 * b[i][1] + 4 * b[i][2] + 2 * b[i][3] + b[i][4];
+        assert(col >= 0 && col <= 15);
+        s[i] = computeSBox(i, line, col);
+    }
+
+    byte z[4];
+    z[0] = (s[0] << 4) + s[1];
+    z[1] = (s[2] << 4) + s[3];
+    z[2] = (s[4] << 4) + s[5];
+    z[3] = (s[6] << 4) + s[7];
+    permutate(pp, 32, z, 4, r_out, 4);
 }
 
 
@@ -156,6 +234,30 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
 /******************************************************************************
  * Aufgabe 7
  ******************************************************************************/
+
+    byte tmp[8];
+    permutate(ip, 64, in_block, 64, tmp, 64);
+
+    cout << endl << endl <<  "init " << endl;
+    printBitField(tmp, 8); cout << endl;
+
+    for (int i = 0; i < 16; i++) {
+        byte t[8];
+        feistel(tmp, tmp+4, key_schedule[i], t, t+4, i);
+        cout << endl << endl << "round " << i << endl;
+        //printBitField(key_schedule[i], 6); cout << endl;
+        printBitField(t, 8); cout << endl;
+        for (int j = 0; j < 8; j++) {
+            tmp[j] = t[j];
+        }
+    }
+
+
+
+    for (int i = 0; i < 64; i++) {
+        setBit(out_block, 64, i, getBit(tmp, 64, fp[i] - 1));
+        cout << i << ' ' << getBit(tmp, 64, fp[i]+1) << endl;
+    }
 }
 
 

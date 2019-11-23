@@ -12,6 +12,17 @@
 
 using namespace std;
 
+
+TEST_CASE("Aufgabe 3") {
+
+    DESCipher des;
+
+    SECTION("A") {
+
+    }
+}
+
+
 SCENARIO( "des-funktion-printBitField", "[des], [Aufgabe2]" )
 {
    DESCipher des;
