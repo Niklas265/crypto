@@ -15,7 +15,7 @@ using namespace CryptoPP;
 class PRNG {
 public:
     /**
-	 * Generiert ein (pseudo) zufälliges, im Durchschnitt gleichverteiltes
+	 * Generiert ein (pseudo) zufälliges, gleichverteiltes
 	 * Bit und gibt dieses in Form eines bools zurück.
 	 *
 	 * @return Gleichverteilt ein zufälliges Bit in Form eines booleans.
@@ -47,7 +47,7 @@ public:
 	virtual void getBlock(byte* buffer, unsigned int n);
 
     /**
-     * Generiert eine Zufallszahl, die eine Größe von size (param) Bytes hat.
+     * Generiert eine Zufallszahl, die eine Größe von (param) size Bytes hat.
      * Die möglichen erzeugten Werte der Zufallszahl sind gleichverteilt
      * und werden in Form eines Integers zurückgegeben.
      *

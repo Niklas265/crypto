@@ -2,17 +2,17 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="calculate" />
       <config projectName="AngewandteKryptographie" targetName="kasiski" />
-      <config projectName="AngewandteKryptographie" targetName="polybius-test" />
+      <config projectName="AngewandteKryptographie" targetName="polybius" />
       <config projectName="AngewandteKryptographie" targetName="searchshift" />
+      <config projectName="AngewandteKryptographie" targetName="hellostudent" />
       <config projectName="AngewandteKryptographie" targetName="vigenere" />
       <config projectName="AngewandteKryptographie" targetName="coindex" />
       <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
-      <config projectName="AngewandteKryptographie" targetName="polybius" />
+      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="helloworld" />
-      <config projectName="AngewandteKryptographie" targetName="hellostudent" />
+      <config projectName="AngewandteKryptographie" targetName="polybius-test" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -22,7 +22,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03877d79-aa4f-4875-a788-6f1bc6e771ef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../cmake-debug.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/BlumBlumShubGenerator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.h" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/PRNG.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-CryptoPP/cryptopp-intro.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-CryptoPP/cryptopp-intro.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -80,6 +87,16 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="des" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="des" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="des">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="desTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="desTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="desTest">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="functions" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="functions" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -128,6 +145,8 @@
       <item itemvalue="CMake Application.polybius" />
       <item itemvalue="CMake Application.polybius-test" />
       <item itemvalue="CMake Application.cryptopp-intro" />
+      <item itemvalue="CMake Application.des" />
+      <item itemvalue="CMake Application.desTest" />
       <item itemvalue="CMake Application.coindex" />
       <item itemvalue="CMake Application.kasiski" />
       <item itemvalue="CMake Application.searchshift" />
@@ -149,6 +168,7 @@
       <workItem from="1572540331962" duration="5502000" />
       <workItem from="1572641317204" duration="354000" />
       <workItem from="1573126015143" duration="5968000" />
+      <workItem from="1574523762388" duration="317000" />
     </task>
     <servers />
   </component>

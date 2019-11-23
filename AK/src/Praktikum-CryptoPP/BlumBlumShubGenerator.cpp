@@ -11,7 +11,7 @@ bool BlumBlumShubGenerator::getBit() {
     /*************************************************************************
      * Aufgabe 6b.
      *************************************************************************/
-
+    // s wird dadurch ein Quadratischer Rest
     s = (s * s) % n;
 
     return s % 2;

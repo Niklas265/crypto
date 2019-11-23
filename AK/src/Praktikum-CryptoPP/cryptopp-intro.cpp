@@ -19,7 +19,10 @@
 using namespace std;
 using namespace CryptoPP;
 
-// Converts/Encodes bytes in (param) src to (return) base 16 encoded hex.
+// Convertiert/Encodiert Bytes in (param) src und gibt 
+// den zur Basis 16 encodierten Hexstring zurück.
+// Als Hexstring wird eine Zeichenkette bezeichnet, in der die Bytes/Characters
+// zur Basis 16 kodiert gespeichert sind.
 string toHex(string src) {
     string dst;
     StringSink* sink = new StringSink(dst);
@@ -28,8 +31,8 @@ string toHex(string src) {
     return dst;
 }
 
-// Converts/Decodes base 16 encoded hex in (param) src
-// to (return) decoded bytes.
+// Convertiert/Decodiert den Hexstring in (param) src und gibt 
+// den decodierten String zurück.
 string fromHex(string src) {
     string dst;
     StringSource(src, true,
@@ -51,47 +54,51 @@ void DataFlowExercise() {
     string src = "Kryptographie macht Spaß!!!";
 
     try {
-        // Converting bytes in src to base 16 encoded hex.
+        // Convertiert die Bytes in src zu Base 16 encodiertem Hex.
         string dst = toHex(src);
         cout << src << " >  HexEncoder > " << dst << endl;
-        // Converting the hex back to bytes should be the same as the original src.
+        // Der Hexstring dst dekodiert sollte der gleiche
+        // wie das Original src sein.
         assert(src == fromHex(dst));
 
         src = "4963682062696E2065696E20537472696E6720696E204865786164657A696D616C6B6F64696572756E6721";
-        // Converting base 16 encoded string to bytes.
+        // Convertiert einen auf Basis 16 encodierten Hexstring zu Bytes.
         string decoderDst = fromHex(src);
         cout << src.substr(0, 20) << "... > HexDecoder > " << decoderDst << endl;
-        // Converting the bytes back to base 16 encoded data
-        // should be the same as the original src.
+        // Das Encodieren des Strings decoderDst sollte wieder wie src sein.
         assert(src == toHex(decoderDst));
 
-        // The readFromFile Function from the Toolbox was modified. First we
-        // removed lowering of the characters in the output by removing the
-        // 'tolower(c)' call in readFromFile. Second we added a new bool as
-        // 3rd argument which is called skipNewlines. This argument defaults
-        // to 'false'. Setting skipNewlines to true removes newlines '\n' in
-        // the functions output.
-        // I use the relative path with the assumption, that we are located in the 'bin'
-        // folder when this program is started.
-        // If this script is started from the Debug Folder with './bin/cryptopp-intro', we
-        // need to use "../data/base64data.txt" instead. This can be automated by
-        // evaluating argv[0], but we thought this was not expected.
-        if (!Toolbox::readFromFile("../../data/base64data.txt", src, /*skipNewlines=*/true)) {
-            // Opening the File failed. Continue anyway to execute the other tasks.
-            cerr << "Reading from File ../../data/base64data.txt failed. Continuing." << endl;
+        // Die Funktion readFromFile aus der Toolbox wurde geändert. 
+        // Zuerst haben wir die Funktionalität entfernt, dass alle 
+        // Zeichen zu Kleinbuchstaben umgewandelt werden, indem 
+        // wir den Aufruf von 'tolower(c)' in readFromFile() entfernt haben.
+        // Zweitens haben wir als drittes Argument einen neuen bool 
+        // hinzugefügt, welcher skipNewlines heißt. Dieses Argument ist 
+        // standardmäßig auf 'false' voreingestellt. Das Setzen von 
+        // skipNewlines auf 'true' entfernt Newlines ('\n') in 
+        // der Funktionsausgabe. Aufgrund des voreingestellten 'false' wird
+        // die Funktionsweise für vorherigen und zukünftigen Code, welche
+        // die readFromFile Funktion nutzen, nicht verändert. Falls zukünftige
+        // Funktionen das Verwenden von tolower(c) bei readFromFile() erwarten, 
+        // müsste readFromFile abgeändert werden.
+        if (!Toolbox::readFromFile("data/base64data.txt", src, /*skipNewlines=*/true)) {
+            // Das Öffnen der Datei ist fehlgeschlagen. Wir fahren Sie trotzdem 
+            // fort, um die anderen Aufgaben auszuführen.
+            cerr << "Auslesen der File data/base64data.txt fehlgeschlagen. Continuing." << endl;
         }
 
-        cout << "File ../../data/base64data.txt Content: " << src << endl;
+        cout << "File data/base64data.txt Inhalt: " << src << endl;
 
         dst = "";
-        // Decode base 64 encoded data in src into dst
+        // Dekodiert Base64 kodierte Daten in src. Die kodierten Daten 
+        // werden in 'dst' als String abgespeichert..
         StringSource(src, true,
             new Base64Decoder(
                 new StringSink(dst)
             )
         );
 
-        cout << "Decoded File Content: " << dst << endl;
+        cout << "Decoded File Inhalt: " << dst << endl;
     } catch(const Exception& e) {
         cerr << e.what() << endl;
         assert(false);
@@ -101,10 +108,12 @@ void DataFlowExercise() {
 void EncryptionExercise_Part1() {
     byte key[16];
     string encoded_key = "08a8cbfe7a3d1262c8abc3d1197dfefe";
-    // Converting base 16 encoded string to bytes.
-    // The result is saved in byte array.
-    // The conversion is required because we need to pass bytes
-    // to the AES object.
+    // Konvertiert den Hexstring 'encoded_key' zu Bytes.
+    // Das Ergebnis wird in einem 'byte' (bzw. char) Array abgespeichert.
+    // Da ein Character des Hexstrings in 4 Bits abgespeichert werden kann,
+    // können die 32 Characters des Hexstrings in einem 16 byte großen 
+    // Array abgespeichert werden. Diese Umwandlung wird benötigt,
+    // da wir den key als bytes dekodiert an das AES Objekt übergeben müssen.
     StringSource(encoded_key, true,
         new HexDecoder(
             new ArraySink(key, 16)
@@ -114,16 +123,17 @@ void EncryptionExercise_Part1() {
     string plain_text = "Streng geheime Botschaft";
     string cypher_text;
 
-    // AES Implementation for Encryption from the CryptoPP lib
+    // AES Implementierung für die Verschlüsselung aus der CryptoPP-Bibliothek
+    // im ECB Modus
     ECB_Mode<AES>::Encryption aes_enc;
 
-    // Using the 16 Bytes in the 'key' array for future encoding
+    // Verwendung der 16 Bytes des 'key'-Arrays für zukünftige Verschlüsselung
+    // mit dem AES Objekt
     aes_enc.SetKey(key, sizeof(key));
 
-    // Encrypts the content of plain_text with AES in ECB Mode
-    // with they key in the key array. The HexEncoder is used
-    // to convert the bytes from the AES output to human
-    // readable hex code.
+    // Verschlüsselt den Inhalt von plain_text mit AES im ECB-Modus
+    // Der HexEncoder wird verwendet, um die Bytes der AES Ausgabe in 
+    // menschenlesbaren Hex-Code zu konvertieren.
     StringSource(plain_text, true,
         new StreamTransformationFilter(aes_enc,
             new HexEncoder(
@@ -134,15 +144,20 @@ void EncryptionExercise_Part1() {
 
     cout << plain_text << " > AES Encrypt > " << cypher_text << endl;
 
+    // AES Implementierung für die Entschlüsselung aus der CryptoPP-Bibliothek
+    // mit dem ECB Modus.
     ECB_Mode<AES>::Decryption aes_dec;
 
-    // Key is used for both encryption and decryption.
+    // Derselbe Key aus der Verschlüsselung wird bei AES ebenfalls
+    // für die Entschlüsselung verwendet.
     aes_dec.SetKey(key, sizeof(key));
 
     string p;
 
-    // During Encoding we converted the bytes to hex.
-    // HexDecoder is required and used to convert the hex back to bytes.
+    // Während des Verschlüsselns haben wir die AES Ausgabe in einen HexCode
+    // konvertiert. Für die Entschlüsselung benötigt das AES Objekt ebenfalls
+    // wieder bytes. Deshalb wird der HexDecoder wird verwendet, um den 
+    // Hexstring zurück in Bytes zu konvertieren.
     StringSource(cypher_text, true,
         new HexDecoder(
             new StreamTransformationFilter(aes_dec,
@@ -159,14 +174,16 @@ void EncryptionExercise_Part2() {
     string cypher_text;
 
     string src;
-    if (!Toolbox::readFromFile("../../data/aescipher.txt", src, true)) {
-        cerr << "Reading from File ../../data/aescipher.txt failed. Continuing." << endl;
+    if (!Toolbox::readFromFile("data/aescipher.txt", src, true)) {
+        cerr << "Auslesen der File data/aescipher.txt fehlgeschlagen. Continuing." << endl;
     }
 
-    cout << "File ../../data/aescipher.txt Content: " << src << endl;
+    cout << "File data/aescipher.txt Inhalt: " << src << endl;
 
-    // The SetKeyWithIV function requires the key and IV to be
-    // bytes and saved in a byte array.
+    // Die Funktion SetKeyWithIV benötigt den Schlüssel und IV als Bytes 
+    // dekodiert und die beiden Argumente werden über ein Byte-Array übergeben.
+    // Das Konvertieren und Abspeichern läuft wie in der letzten Aufgabe
+    // beim Dekodieren von 'encoded_key' ab.
     byte key[16];
     string encoded_key = "47656865696D65725363686CC3BC7373";
     StringSource(encoded_key, true,
@@ -183,17 +200,19 @@ void EncryptionExercise_Part2() {
          )
     );
 
-    // AES Implementation for Decryption from the CryptoPP lib
+    // AES Implementierung für die Entschlüsselung aus der CryptoPP-Bibliothek
+    // mit dem CTR Modus.
     CTR_Mode<AES>::Decryption aes_crt_dec;
 
-    // The bytes in the key array and iv array are used in the
-    // future decoding
+    // Die Bytes im Schlüssel-Array und IV-Array werden in der 
+    // zukünftigen Dekodierung verwendet.
     aes_crt_dec.SetKeyWithIV(key, sizeof(key), iv);
 
     string dst;
-    // The source is a base64 encoded string. The Base64Decoder is used
-    // to convert the encoded string to bytes. This is required for the
-    // AES StreamTransformationFilter.
+    // Der String in src ist eine base64-kodierte Zeichenkette. 
+    // Der Base64Decoder wird verwendet, um die kodierte Zeichenkette in Bytes 
+    // zu konvertieren. Dies ist für den AES StreamTransformationFilter 
+    // erforderlich.
     StringSource(src, true,
         new Base64Decoder(
             new StreamTransformationFilter(aes_crt_dec,
@@ -215,16 +234,16 @@ void EncryptionExercise() {
          << endl;
 
     try {
-        // Task 3a) und 3b)
+        // Aufgabe 3a) und 3b)
         EncryptionExercise_Part1();
 
-        // Task 3c)
+        // Aufgabe 3c)
         EncryptionExercise_Part2();
     } catch(const Exception& e) {
-        // This branch is executed is an Exception is raised in the
-        // try Block, for example if CryptoPP threw an Error/Exception
-        // during AES encoding or decoding
-        // Prints the reason for the Exception and Exits the Program
+        // Dieser Zweig wird ausgeführt, wenn eine Exception im Try-Block 
+        // ausgelöst wird, z.B. wenn CryptoPP während der AES-Kodierung oder 
+        // -Dekodierung einen Error/Exception auslöst. Dabei wird der Grund für 
+        // die Exception ausgegeben und das Programm wird beendet
         cerr << e.what() << endl;
         assert(false);
     }
@@ -243,39 +262,37 @@ void HashExercise() {
     string message = "Kryptographie macht immer noch Spaß!!!";
  
     string digest;
-    // SHA256 Implementation from the CryptoPP lib
+    // SHA256 Implementierung aus der CryptoPP-Bibliothek
     SHA256 hash;
-    // Hashes the message string with CryptoPP's implementation
-    // of SHA256 and saves the Hash
-    // in the 'digest' string
+    // Der String in message wird mit CryptoPP's implementation von SHA256
+    // gehasht. Der Hash wird im 'digest' String abgespeichert.
     StringSource(message, true,
         new HashFilter(hash,
             new StringSink(digest)
         )
     );
 
-    // The SHA256 Hash in hash is saved in hex encoded
-    // format in the dst string. This way we can
-    // print the Hash in human readable format.
+    // Der SHA256 Hash in 'hash' wird zu einem Hexstring umgewandelt,
+    // damit er menschenlesbar ausgegeben werden kann.
     string dst;
     StringSink* sink = new StringSink(dst);
     HexEncoder* encoder = new HexEncoder(sink);
     StringSource(message, true, encoder);
 
-    //Prints the hex encoded SHA256 Hash of message
     cout << "Message Hash: " << dst << endl;
 
-    // HASH_AT_BEGIN: Specifies that the SHA256 Hash in
-    // 'digest' should be at the beginning of the string,
-    // the message is concatenated right after 'digest'
-    // PUT_RESULT: Specifies that the result of the verification
-    // is saved in the 'result' variable
+    // HASH_AT_BEGIN: Gibt an, dass der SHA256 Hash in 'digest' am Anfang der 
+    // zu übergebenen Zeichenkette stehen soll, die 'message' wird dann direkt 
+    // nach dem 'digest' angehängt. 
+    // PUT_RESULT: Gibt an, dass das Ergebnis der Verifikation in der Variable 
+    // 'result' gespeichert werden soll.
     word32 flags = HashVerificationFilter::HASH_AT_BEGIN
                    | HashVerificationFilter::PUT_RESULT;
 
-    // Evaluates if the digest is a SHA256 Hash of message
-    // hash.Restart() restarts the internal state of the SHA256 hash
-    // The result is saved as a boolean in the 'result' variable
+    // Es wird überprüft, ob es sich bei dem Digest um den SHA256 Hash von 
+    // 'message' handelt. Davor muss mit hash.Restart() der den internen Zustand 
+    // des SHA256 Hash Objekts neu gestartet werden. 
+    // Das Ergebnis wird als Boolean in der Variable 'result' gespeichert.
     bool result;
     hash.Restart();
     StringSource(digest + message, true,
@@ -289,16 +306,17 @@ void HashExercise() {
 
     assert(result);
 
-    // b: The variable result will be set to false in HashVerificationFilter()/ArraySink
+    // Aufgabe b: Mit *sehr* hoher Wahrscheinlichkeit wird nun die Nachricht
+    // gehasht nicht gleich 'digest' sein. Dies führt dazu, dass die
+    // Verifikation 'false' in der 'result' Variable zurückliefert.
 
-    // c: Replace the 'HashVerificationFilter::HASH_AT_BEGIN'
-    //           with 'HashVerificationFilter::HASH_AT_END'.
+    // Aufgabe c: Ersetze 'HashVerificationFilter::HASH_AT_BEGIN'
+    //              durch 'HashVerificationFilter::HASH_AT_END'.
 }
 
-// Calculates (a^b) % n and returns the result of this calculation
-// as a Integer Objekt from the CryptoPP lib
-// This calculation is according to the Pseudocode for
-// 'Modulare Exponentiation vom Zahlentheorie-Vorkurs'
+// Berechnet (a^b) % n und gibt das Ergebnis dieser Berechnung als Integer 
+// Objekt aus der CryptoPP lib zurück. Diese Berechnung erfolgt nach dem 
+// Pseudocode für Modulare Exponentiation vom Zahlentheorie-Vorkurs.
 Integer modexp(const Integer &a, const Integer &b, const Integer &n) {
     /*************************************************************************
      * Aufgabe 5a.
@@ -358,7 +376,7 @@ void RNGExercise() {
     Integer n = Integer("1252910265243849922375596598575099209083498535192739493227403") *
                 Integer("1476222059624949757818143837507324048590620075519516306265283");
 
-    // Initialisierung des BlumBlumShubGenerators mit "mod n" und seed 42.
+    // Initialisierung des BlumBlumShubGenerators mit n für "mod n" und Seed 42.
     BlumBlumShubGenerator bbs(n, Integer(42));
 
     cout << "Generierung von 20 Zufallsbits: ";
@@ -393,7 +411,7 @@ void RNGExercise() {
          << " Summiert sollte das irgendwo in der Nähe von " << 12 * 1000 << " sein." << endl << endl;
 
     cout << "Generierung einer Zufallszahl aus der Menge  {0, 1, . . . , 2^30 − 1}: "
-         << bbs.getInteger(Integer(1 << 30)) << endl;
+         << bbs.getInteger(Integer(1 << 30)-1) << endl;
 }
  
  
