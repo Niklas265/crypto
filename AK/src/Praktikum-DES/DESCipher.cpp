@@ -8,29 +8,30 @@ DESCipher::DESCipher() {
 DESCipher::~DESCipher() {
 }
 
+void exchange(byte* l, byte* r, int size) {
+    byte tmp[size];
+    for(int i = 0; i < size; i++) {
+        tmp[i] = l[i];
+        l[i] = r[i];
+        r[i] = tmp[i];
+    }
+}
 
 void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
 /******************************************************************************
  * Aufgabe 5
  ******************************************************************************/
 
-    // TODO: decrypt mode
-    assert(encmode);
-
     byte roundKeySchedule[16][48];
-
-    //int shifts[] = {1, 2, 4, 6, 8, 10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28};
-    // TODO: no idea why we need 1 less shifts here
-    int shifts[] = {0, 1, 3, 5, 7, 9, 11, 13, 14, 16, 18, 20, 22, 24, 26, 27};
 
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 48; j++) {
             byte jPC2 = pc2[j];
             byte jLS;
             if (jPC2 <= 28) {
-                jLS = (jPC2 + shifts[i]) % 28;
+                jLS = (jPC2 + total_rot[i]-1) % 28;
             } else {
-                jLS = 28 + ((jPC2 - 28 + shifts[i]) % 28);
+                jLS = 28 + ((jPC2 - 28 + total_rot[i]-1) % 28);
             }
             roundKeySchedule[i][j] = pc1[jLS];
             //cout << (int)roundKeySchedule[i][j] << " ";
@@ -45,7 +46,17 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
             setBit( key_schedule[i], 6, j, getBit( key,8,roundKeySchedule[i][j] -1 ) );
         }
     }
+
+
+    if (!encmode) {
+        for (int i = 0; i < 8; i++) {
+            exchange(key_schedule[i], key_schedule[15-i], 6);
+        }
+    }
 }
+
+// privaten attribute mit in doxygen
+// Aufgabe 3 in extra datei
 
 
 byte DESCipher::computeSBox(byte id, byte line, byte col) {
@@ -77,6 +88,12 @@ int DESCipher::decrypt
     assert(plain_len >= cipher_len);
     assert(key_len == 8);
 
+    computeKeySchedule(key, false);
+
+    for (unsigned int i = 0; i < cipher_len; i += block_len) {
+        processBlock(cipher_text+i, plain_text+i);
+    }
+
     return plain_len;
 }
 
@@ -100,7 +117,7 @@ int DESCipher::encrypt
     computeKeySchedule(key, true);
 
     for (unsigned int i = 0; i < plain_len; i += block_len) {
-        processBlock(plain_text+i, cipher_text);
+        processBlock(plain_text+i, cipher_text+i);
     }
 
 
@@ -238,26 +255,28 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
     byte tmp[8];
     permutate(ip, 64, in_block, 64, tmp, 64);
 
-    cout << endl << endl <<  "init " << endl;
-    printBitField(tmp, 8); cout << endl;
+    //cout << endl << endl <<  "init " << endl;
+    //printBitField(tmp, 8); cout << endl;
 
     for (int i = 0; i < 16; i++) {
         byte t[8];
         feistel(tmp, tmp+4, key_schedule[i], t, t+4, i);
-        cout << endl << endl << "round " << i << endl;
+        //cout << endl << endl << "round " << i << endl;
         //printBitField(key_schedule[i], 6); cout << endl;
-        printBitField(t, 8); cout << endl;
+        //printBitField(t, 8); cout << endl;
         for (int j = 0; j < 8; j++) {
             tmp[j] = t[j];
         }
     }
 
-
-
-    for (int i = 0; i < 64; i++) {
-        setBit(out_block, 64, i, getBit(tmp, 64, fp[i] - 1));
-        cout << i << ' ' << getBit(tmp, 64, fp[i]+1) << endl;
+    byte roundResult[8];
+    for(int i = 0; i < 4; i++) {
+        roundResult[i] = tmp[i+4];
+        roundResult[i+4] = tmp[i];
     }
+
+
+    permutate(fp, 64, roundResult, 64, out_block, 64);
 }
 
 
