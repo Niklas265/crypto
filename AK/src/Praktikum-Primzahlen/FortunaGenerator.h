@@ -11,7 +11,8 @@
 #include "PRNG.h"
 
 class FortunaGenerator: public PRNG {
-private:
+    // TODO: back to private
+public:
 	// Key
 	byte key[32];
 	// Counter

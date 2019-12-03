@@ -21,6 +21,16 @@ void fortuna() {
 	cout << "Fortuna PRNG"
 		 << "============"
 		 << endl << endl;
+
+	FortunaGenerator fortunaGenerator;
+	for (int i = 0; i < 16; i++) {
+	    fortunaGenerator.cntr[i] = 0xff;
+	}
+	fortunaGenerator.cntr[15] = 0xf;
+
+	byte b[2] = {0x42, 0x43};
+
+	fortunaGenerator.reseed(b, 2);
 }
 
 int main() {
@@ -28,7 +38,7 @@ int main() {
 		 << "=========================="
 		 << endl << endl;
 
-	//fortuna();
+	fortuna();
 	//millerRabin();
 
 	return 0;
