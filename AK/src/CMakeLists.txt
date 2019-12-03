@@ -20,3 +20,5 @@ ADD_SUBDIRECTORY( Praktikum-CryptoPP )
 ADD_SUBDIRECTORY( Praktikum-Vigenere )
 
 ADD_SUBDIRECTORY( Praktikum-DES )
+
+ADD_SUBDIRECTORY( Praktikum-Primzahlen )
