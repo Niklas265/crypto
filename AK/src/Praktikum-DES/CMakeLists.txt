@@ -18,4 +18,4 @@ add_executable( des des-main DESCipher BlockCipher
         )
 add_executable( desTest desTest DESCipher BlockCipher catch.hpp)
 
-
+add_executable( desAufgabe3 desAufgabe3 DESCipher BlockCipher)

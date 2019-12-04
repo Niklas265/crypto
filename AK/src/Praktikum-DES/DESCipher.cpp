@@ -8,6 +8,7 @@ DESCipher::DESCipher() {
 DESCipher::~DESCipher() {
 }
 
+// Vertauscht size bytes ab *a und *b
 void exchange(byte* l, byte* r, int size) {
     byte tmp[size];
     for(int i = 0; i < size; i++) {
@@ -21,33 +22,104 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
 /******************************************************************************
  * Aufgabe 5
  ******************************************************************************/
-
+    // Wir berechnen und speichern das Mapping von Bits aus key zu den
+    // Rundenschlüsseln in roundKeySchedule ab.
+    // Das wird für jeden der 16 Rundenschlüssel gemacht.
+    // Jeder Rundenschlüssel ist 48 Bit groß. Für jedes Bit X des
+    // Rundenschlüssels wird berechnet und in roundKeySchedule
+    // abgespeichert, welches Bit aus *key für Bit X des
+    // Rundenschlüssels verwendet werden soll.
+    // Zum Beispiel ist roundKeySchedule[0][0] = 10. Das bedeutet,
+    // dass das erste Bit des ersten Rundenschlüssels auf den Wert
+    // des zehnten Bit des key gesetzt wird.
     byte roundKeySchedule[16][48];
 
+    // Der Rundenschlüssel werden in meherern Schritten berechnet.
+    // Als Erstes wird der 64 Bit key mit der pc1 Permutation
+    // (bzw. des Arrays pc1, welches bei einer Permutation verwendet werden kann)
+    // permutiert. Bei dieser Permutation werden 8 Bits des 64 Bit
+    // key nicht zugewiesen. Bei diesen 8 Bits handelt es sich um
+    // die Parity-Bits. Diese werden bei der Generierung der
+    // Rundenschlüssel nicht benötigt und werden durch die
+    // Permutation ignoriert bzw. herausgefiltert.
+
+    // Anschließend werden die aus der Permutation resultierenden
+    // 56 Bits in zwei Teile geteilt. Jedes Teil ist 28 Bit groß.
+    // Der Inhalt des ersten Teils entspricht den ersten 28 Bits
+    // der aus der Permutation pc1 resultierenden 56 Bits.
+    // Der Inhalt des zweiten Teils entspricht den letzten
+    // 28 Bits der aus der Permutation pc1 resultierenden 56 Bits.
+    // Auf beide Teile werden zyklische Linksverschiebungen
+    // angewendet. Zyklisch bedeutet, dass Bits die links
+    // herausgeschoben werden auf der rechten Seite wieder
+    // reingeschoben werden. Die Anzahl der zyklischen
+    // Linksverschiebungen hängt davon ab, um welchen
+    // Rundenschlüssel es sich handelt. Zum Beispiel
+    // wird für den ersten Rundenschlüssel ein mal,
+    // für den zweiten zwei mal, für den dritten vier mal
+    // und so weiter verschoben. Das total_rot Array gibt
+    // diese Anzahl für jeden Rundenschlüssel an.
+
+    // Abschließend werden die zwei Teile wieder zusammengesetzt,
+    // sind also wieder 56 Bits groß, und werden mit einer weiteren
+    // Permutation pc2 permutiert. Dabei werden wieder
+    // 8 Bits herausgefiltert. Die Permutation weist nur
+    // 48 der 56 Bits zu. Die 8 nicht zugewiesenen Bits
+    // werden wie bei Permutation pc1 nicht verwendet und
+    // ignoriert. Die aus dieser Permutation resultierenden
+    // 48 Bits bilden einen Rundenschlüssel.
+
+    // Um für roundKeySchedule jedes j-te Bit jedes i-ten
+    // Rundenschlüssel zu berechnen, muss rückwärtsgerechnet
+    // werden.
+    // Speziell wird für jeden Rundenschlüssel i...
     for (int i = 0; i < 16; i++) {
+        // ...und jedes Bit j des Rundenschlüssel i...
         for (int j = 0; j < 48; j++) {
+            // ...als Erstes die pc2 Permutation zurückgerechnet.
+            // jPC2 gibt an, welches Bit nach den Linksverschiebungen
+            // am j-ten Bit des Rundenschlüssels steht. Dabei gilt
+            // zu beachten, dass hier ab 1 und nich von 0 an gezählt
+            // wird.
             byte jPC2 = pc2[j];
+            // Danach wird berechnet und in jLS abgespeichert,
+            // welches Bit vor den Linksverschiebungen an der
+            // durch jPC2 spezifizierten Position steht.
             byte jLS;
+            // Hier wird berechnet, wieviele Linksverschiebungen
+            // angewendet worden sind.
+            // Dabei muss auch der Teil, in dem sich jPC2
+            // befindet berücksichtigt werden.
+            // Wegen den zyklischen Linksverschiebungen und
+            // der Größe der Teile von 28 Bits wird modulo 28
+            // gerechnet.
             if (jPC2 <= 28) {
                 jLS = (jPC2 + total_rot[i]-1) % 28;
             } else {
                 jLS = 28 + ((jPC2 - 28 + total_rot[i]-1) % 28);
             }
+            // Abschließend wird, wie bei der pc2 Permutation,
+            // die pc1 Permutation zurückgerechnet.
+            // Der Wert von pc1[jLS] gibt an, dass das j-te Bit
+            // des i-ten Rundenschlüssels auf den Wert
+            // des pc1[jLS]-ten Bit des key gesetzt wird.
             roundKeySchedule[i][j] = pc1[jLS];
-            //cout << (int)roundKeySchedule[i][j] << " ";
-        }
-        //cout << endl << endl;
-    }
-
-    for( size_t i = 0; i < 16; i++ )
-    {
-        for( size_t j = 0; j < 48; j++ )
-        {
-            setBit( key_schedule[i], 6, j, getBit( key,8,roundKeySchedule[i][j] -1 ) );
         }
     }
 
+    // roundKeySchedule kann dann mit einer Permutation zur Berechnung der
+    // Rundenschlüssel verwendet werden.
+    for( size_t i = 0; i < 16; i++ ) {
+        for( size_t j = 0; j < 48; j++ ) {
+            setBit(key_schedule[i], 6, j, getBit(key, 8, roundKeySchedule[i][j]-1));
+        }
+    }
 
+    // Beim Entschlüsseln wird die Reihenfolge der Rundenschlüssel
+    // vertauscht. Speziell wird bei der ersten Entschlüsselungsrunde
+    // der 16-te berechnete Rundenschlüssel verwendet. Bei der
+    // zweiten Entschlüsselungsrunde der 15-te berechnete Rundenschlüssel
+    // und so weiter.
     if (!encmode) {
         for (int i = 0; i < 8; i++) {
             exchange(key_schedule[i], key_schedule[15-i], 6);
@@ -55,18 +127,25 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
     }
 }
 
-// privaten attribute mit in doxygen
-// Aufgabe 3 in extra datei
+// TODO: privaten attribute mit in doxygen ausgeben
 
 
 byte DESCipher::computeSBox(byte id, byte line, byte col) {
     /******************************************************************************
      * Aufgabe 6a
      ******************************************************************************/
+     // Es gibt 8 S-Boxen und jede S-Box ist eine 4x16 Matrix.
+     // Checks for out of bounds access.
     assert(id < 8);
     assert(line < 4);
     assert(col < 16);
 
+    // line (Zeile) und col (Spalte) spezifizieren die Position eines Elements
+    // in einer 4x16 Matrix.
+    // Die Matrix wird hier, wie im Doxygen beschrieben,
+    // 'ausgerollt' als Array abgespeichert.
+    // Über 'line*16' kann die Startposition der Matrixzeile im Array bestimmt
+    // werden.
     return sbox[id][line * 16 + col];
 }
 
@@ -85,11 +164,27 @@ int DESCipher::decrypt
      ******************************************************************************/
 
     assert(cipher_len % block_len == 0);
+    // Um das komplette Ergebnis zu speichern muss plain_len größer
+    // als cipher_len sein.
     assert(plain_len >= cipher_len);
     assert(key_len == 8);
 
-    computeKeySchedule(key, false);
+    // Aus dem key werden 16 Rundenschlüssel erzeugt.
+    // encmode ist auf false gesetzt, damit Rundenschlüssel
+    // für das Entschlüsseln erzeugt werden bzw. dass die
+    // Rundenschlüssel in der richtigen Reihenfolge
+    // in key_schedule abgespeichert werden.
+    computeKeySchedule(key, /*encmode=*/false);
 
+    // Unter processBlock wird dann auf diese in key_schedule
+    // abgespeicherten Rundenschlüssel zugewiesen.
+
+    // DES ist eine Blockchiffre. Deshalb wird in block_len großen Byte
+    // Blöcken entschlüsselt. Das Ent- und Verschlüsseln eines Blocks wird
+    // durch processBlock implementiert.
+    // processBlock bearbeitet jeweils block_len Bytes.
+    // Deshalb muss processBlock gegebenenfalls mehrmals mit
+    // jeweils block_len Bytes des cipher_text aufgerufen werden.
     for (unsigned int i = 0; i < cipher_len; i += block_len) {
         processBlock(cipher_text+i, plain_text+i);
     }
@@ -111,15 +206,30 @@ int DESCipher::encrypt
      ******************************************************************************/
 
     assert(plain_len % block_len == 0);
+    // Um das komplette Ergebnis zu speichern muss cipher_len größer
+    // als plain_len sein.
     assert(cipher_len >= plain_len);
     assert(key_len == 8);
 
-    computeKeySchedule(key, true);
+    // Aus dem key werden 16 Rundenschlüssel erzeugt.
+    // encmode ist auf true gesetzt, damit Rundenschlüssel
+    // für das Verschlüsseln erzeugt werden bzw. dass die
+    // Rundenschlüssel in der richtigen Reihenfolge
+    // in key_schedule abgespeichert werden.
+    computeKeySchedule(key, /*encmode=*/true);
 
+    // Unter processBlock wird dann auf diese in key_schedule
+    // abgespeicherten Rundenschlüssel zugewiesen.
+
+    // DES ist eine Blockchiffre. Deshalb wird in block_len großen Byte
+    // Blöcken verschlüsselt. Das Ent- und Verschlüsseln eines Blocks wird
+    // durch processBlock implementiert.
+    // processBlock bearbeitet jeweils block_len Bytes.
+    // Deshalb muss processBlock gegebenenfalls mehrmals mit
+    // jeweils block_len Bytes des cipher_text aufgerufen werden.
     for (unsigned int i = 0; i < plain_len; i += block_len) {
         processBlock(plain_text+i, cipher_text+i);
     }
-
 
     return plain_len;
 }
@@ -137,15 +247,24 @@ void DESCipher::feistel
     /******************************************************************************
      * Aufgabe 6c
      ******************************************************************************/
+    // Der zu Ver- oder Entschlüsselnde Text besteht aus zwei 32 Bit großen
+    // Teilen. Der Inhalt beider Teile wird verarbeiten und wieder als
+    // zwei 32 Bit Teile in l_out und r_out gespeichert.
+    // In jeder Runde wird der Inhalt des linken l_out Teils auf den Inhalt des
+    // rechten r_in Teils gesetzt.
+    // In jedem Schleifendurchlauf werden 8 Bit gesetzt.
     for (int i = 0; i < 4; i++) {
         l_out[i] = r_in[i];
     }
 
-     byte z[4];
-     functionF(r_in, key, z, rnd);
-     for (int i = 0; i < 4; i++) {
-         r_out[i] = z[i] ^ l_in[i];
-     }
+    // Der Inhalt des rechten r_out Teils wird berechnet, indem
+    // die F Funktion mit r_in und key verarbeitet, und abschließend
+    // dieses Ergebnis mit l_in XOR wird.
+    byte z[4];
+    functionF(r_in, key, z, rnd);
+    for (int i = 0; i < 4; i++) {
+        r_out[i] = z[i] ^ l_in[i];
+    }
 }
 
 
@@ -160,13 +279,31 @@ void DESCipher::functionF
      * Aufgabe 6b
      ******************************************************************************/
 
+    // Im ersten Schritt werden die 32 Bit in r_in zu einem
+    // 48 Bit expandiert, indem manche Bits in r_in mehrmals
+    // für das resultierende 48 Bit große Ergebnis verwendet
+    // werden. Das Ergebnis wird im expand array gespeichert.
+    // Für die Expansion gibt das ev Array an, welche Bits
+    // von r_in welchen Bits in expand zugewiesen werden.
+    // Diese Funktionalität implementiert die permutate
+    // Funktion.
     byte expand[6];
     permutate(ev, 48, r_in, 32, expand, 48);
 
+    // Im zweiten Schritt wird expand XOR key berechnet.
+    // Das Ergebnis wird im expand array gespeichert.
     for (int i = 0; i < 6; i++) {
         expand[i] ^= key[i];
     }
 
+    // Danach werden die 48 Bits in expand in 6 Bit
+    // Blöcke zerlegt und in b abgespeichert.
+    // b ist ein 2D Array. Jedes Element 'bi' in b
+    // repräsentiert einen 6 Bit Block und ist ein Array mit
+    // 6 byte Elementen, wobei in jedem Byte ein Bit des
+    // zerlegten 6 Bit 'bi' gespeichert wird.
+    // Das bedeutet, dass in der zweiten Dimension von b
+    // jedes byte entweder 0 oder 1 ist.
     byte b[8][6];
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 6; j++) {
@@ -174,6 +311,22 @@ void DESCipher::functionF
         }
     }
 
+    // Jeder 6 Bit Block wird Permutiert. Die Permutation
+    // wird durch S-Boxen implementiert. In dieser
+    // DES Implementation sind die durch die Permutation
+    // resultierenden Ergebnisse bereits in Tabellen
+    // berechnet. Diese Tabellen können dann als
+    // Lookup Tabellen verwendet werden.
+    // Wie in der Doxygen unter der Funktion computeSBox
+    // beschrieben, werden die Ergebnisse eines Blocks in
+    // einer 4x16 Matrix gespeichert. Das erste und sechste
+    // Bit jedes Blocks bestimmt eindeutig die Zeile, die
+    // Bits 2,3,4 und 5 bestimmen eindeutig die Spalte der
+    // Matrix.
+    // Das Ergebnis eines Blocks ist ein 4 Bitwort. Die Ergebnisse
+    // aller 8 Blöche werden als byte im s Array gespeichert.
+    // Da es sich um 4 Bitwörter handelt, sind die oberen 4 Bits
+    // der Bytes immer 0.
     byte s[8];
     for (int i = 0; i < 8; i++) {
         byte line = 2 * b[i][0] + b[i][5];
@@ -183,11 +336,15 @@ void DESCipher::functionF
         s[i] = computeSBox(i, line, col);
     }
 
+    // Die acht 4-Bitwörter hintereinander
+    // im z Speicherblock gespeichert.
     byte z[4];
     z[0] = (s[0] << 4) + s[1];
     z[1] = (s[2] << 4) + s[3];
     z[2] = (s[4] << 4) + s[5];
     z[3] = (s[6] << 4) + s[7];
+    // Abschließend werden die 32 Bits ab z mit der pp Tabelle
+    // permutiert. Das Ergebnis wird im r_out Array gespeichert.
     permutate(pp, 32, z, 4, r_out, 4);
 }
 
@@ -255,15 +412,9 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
     byte tmp[8];
     permutate(ip, 64, in_block, 64, tmp, 64);
 
-    //cout << endl << endl <<  "init " << endl;
-    //printBitField(tmp, 8); cout << endl;
-
     for (int i = 0; i < 16; i++) {
         byte t[8];
         feistel(tmp, tmp+4, key_schedule[i], t, t+4, i);
-        //cout << endl << endl << "round " << i << endl;
-        //printBitField(key_schedule[i], 6); cout << endl;
-        //printBitField(t, 8); cout << endl;
         for (int j = 0; j < 8; j++) {
             tmp[j] = t[j];
         }
@@ -274,7 +425,6 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
         roundResult[i] = tmp[i+4];
         roundResult[i+4] = tmp[i];
     }
-
 
     permutate(fp, 64, roundResult, 64, out_block, 64);
 }
@@ -308,6 +458,7 @@ void DESCipher::setBit
 
 }
 
+// unrolls key_schedule into (param) key_schedule2
 void DESCipher::getKeySchedule(byte *key_schedule2) {
     for (size_t i = 0; i < 16; i++) {
         for (size_t j = 0; j < 6; j++) {
