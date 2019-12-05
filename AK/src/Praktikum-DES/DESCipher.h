@@ -34,7 +34,7 @@ public:
      */
     ~DESCipher();
 
-    /*
+    /**
      * Berechnet die Rundenschlüssel und speichert diese in key_schedule
      * ab. Es werden 16 Rundenschlüsselt berechnet, wobei jeder
      * Rundenschlüssel 48 Bit groß ist.
@@ -48,7 +48,7 @@ public:
      */
     void computeKeySchedule(const byte *key, bool encmode=true);
 
-    /*
+    /**
      * computeSBox liefert ein Arrayelement zurück. Bei dem
      * Array handelt es sich um das sbox 2D Array. Das Element wird über
      * id, line und col bestimmt.
@@ -86,7 +86,7 @@ public:
      */
     byte computeSBox(byte id, byte line, byte col);
 
-    /*
+    /**
      * decrypt entschlüsselt cipher_len Bytes ab cipher_text
      * mit dem key_len großen Schlüssel key und speichert den
      * entschlüsselten Text im plain_len großen plain_text
@@ -115,12 +115,14 @@ public:
      * @param plain_len gibt die Größe des plain_text in Byte an.
      * Um das komplette Ergebnis zu speichern muss plain_len
      * größer als cipher_len sein.
+     *
+     * @return den Wert in (param) plain_len
      */
     virtual int decrypt(const byte* cipher_text, int cipher_len,
                       const byte* key, int key_len,
                       byte* plain_text, int plain_len);
 
-    /*
+    /**
      * encrypt verschlüsselt plain_len Bytes ab plain_text
      * mit dem key_len großen Schlüssel key und speichert den
      * verschlüsselten Text im cipher_len großen cipher_text
@@ -150,16 +152,21 @@ public:
      * @param cipher_len gibt die Größe des cipher_text in Byte an.
      * Um das komplette Ergebnis zu speichern muss cipher_len größer
      * als plain_len sein.
+     *
+     * @return den Wert in (param) plain_len
      */
     virtual int encrypt(const byte* plain_text, int plain_len,
                       const byte* key, int key_len,
                       byte* cipher_text, int cipher_len);
 
     /*
-     *
+     * 
      */
     void processBlock(const byte* in_block, byte* out_block);
 
+    /**
+     * Implementation der Feistel-Chiffre.
+     */
     void feistel(const byte* l_in,
                const byte* r_in,
                const byte* key,
@@ -167,21 +174,104 @@ public:
                byte* r_out,
                int rnd=0);
 
+    /**
+     * Implementation der DES-Funktion f
+     *
+     * @param r_in
+     * @param key
+     * @param r_out
+     * @param rnd
+     */
     void functionF(const byte* r_in,
                  const byte* key,
                  byte* r_out,
                  int rnd=0);
 
+    /**
+     * Liefert das pos-te Bit des array zurück.
+     *
+     * @param array verweist auf einen Speicherblock.
+     *
+     * @param array_len gibt die Größe des array in Byte an.
+     *
+     * @param pos gibt an, dass das pos-te Bit zurückgegeben werden soll.
+     *
+     * @return den Wert des pos-ten Bits des array.
+     */
     bool getBit(const byte* array, int array_len, int pos) const;
 
+    /**
+     * p ist ein p_len großes Array mit Integern. Die Bits in in_array
+     * werden an die durch den Wert der Elemente in p bestimmen Position
+     * ins out_array geschrieben.
+     * Das bedeutet, dass das i-te Bit in in_array an das (p[i]-1)-te Bit
+     * in out_array geschrieben, wobei i = 0,1,...,p_len-1.
+     * Die Indices in p starten bei 1 und nicht bei 0.
+     *
+     * @param p zeigt auf ein p_len byte großes Array, wobei jedes Element
+     * des Arrays eine Zuordnung eines Bits auf in_array zu out_array
+     * bestimmt.
+     *
+     * @param p_len gibt die Größe in byte des p Arrays an.
+     *
+     * @param in_array zeigt auf ein in_len byte großes Array. Bits aus
+     * in_array werden später an durch p beschriebene Positionen in das
+     * out_array geschrieben. Es gilt zu beachten, dass möglicherweise
+     * keine, manche oder alle Bits aus in_array an Positionen in
+     * out_array kopiert werden und dass auch manche Bits mehrmals
+     * in out_array kopiert werden können.
+     *
+     * @param in_len gibt die Größe in bytes des in_array an.
+     *
+     * @param out_array zeigt auf ein out_len byte großes Array.
+     * Die out_len*8 Bits ab out_array werden auf den Wert von Bits
+     * des in_array gesetzt.
+     *
+     * @param out_len gibt die Größe in bytes des out_array an.
+     */
     void permutate(const byte* p, int p_len,
                  const byte* in_array, int in_len,
                  byte* out_array, int out_len) const;
 
+    /**
+     * printBitField gibt 8*len Bit ab bytefield als Bitfolge auf der
+     * Standardausgabe aus.
+     * Nach jeweils block_len bits wird ein Leerzeichen ausgegeben, außer
+     * auf das Leerzeichen folgt kein weiteres Bit (no trailing whitespace).
+     *
+     * @param bytefield zeigt auf eine Position im Speicher, ab der len
+     * Bytes auf der Standardausgabe ausgegeben werden.
+     *
+     * @param len gibt die Anzahl der Byte an
+     *
+     * @param block_len gibt an, nach jeweils wievielen ausgegebenen Bits
+     * ein Leerzeichen ausgegeben werden soll. block_len ist standardmäßig
+     * auf 8 gesetzt.
+     */
     void printBitField(const byte* bytefield, int len, int block_len=8) const;
 
+    /**
+     * setBit setzt das pos-te Bit in array auf den Wert von value.
+     *
+     * @param array zeigt auf ein array_len Byte großes Feld.
+     *
+     * @param array_len gibt die Größe des array in Bytes an. Damit das
+     * Bit gesetzt werden kann, muss pos < 8*array_len sein.
+     *
+     * @param pos gibt an, dass das pos-te Bit ab array gesetzt werden soll.
+     *
+     * @param value Das pos-te Bit wird auf value gesetzt.
+     */
     void setBit(byte* array, int array_len, int pos, bool value) const;
 
+    /**
+     * getKeySchedule speichert die 16 6-Byte großen Rundenschlüssel
+     * hintereinander in der durch keySchedule gezeigten Position ab.
+     * Ab keySchedule muss darum 16*6=96 Byte Speicher reserviert sein.
+     *
+     * @keySchedule Zeigt auf einen mindestens 96 Byte großen Speicherblock.
+     * In diesen Speicherblock werden die Rundenschlüssel geschrieben.
+     */
     void getKeySchedule( byte* keySchedule );
 
 };

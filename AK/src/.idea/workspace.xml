@@ -2,20 +2,20 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="AngewandteKryptographie" targetName="vigenere" />
-      <config projectName="AngewandteKryptographie" targetName="coindex" />
-      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="polybius" />
-      <config projectName="AngewandteKryptographie" targetName="primes" />
+      <config projectName="AngewandteKryptographie" targetName="vigenere" />
+      <config projectName="AngewandteKryptographie" targetName="functions" />
       <config projectName="AngewandteKryptographie" targetName="desTest" />
-      <config projectName="AngewandteKryptographie" targetName="helloworld" />
-      <config projectName="AngewandteKryptographie" targetName="searchshift" />
+      <config projectName="AngewandteKryptographie" targetName="desAufgabe3" />
       <config projectName="AngewandteKryptographie" targetName="hellostudent" />
-      <config projectName="AngewandteKryptographie" targetName="calculate" />
-      <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
-      <config projectName="AngewandteKryptographie" targetName="des" />
+      <config projectName="AngewandteKryptographie" targetName="coindex" />
       <config projectName="AngewandteKryptographie" targetName="kasiski" />
       <config projectName="AngewandteKryptographie" targetName="polybius-test" />
+      <config projectName="AngewandteKryptographie" targetName="helloworld" />
+      <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
+      <config projectName="AngewandteKryptographie" targetName="searchshift" />
+      <config projectName="AngewandteKryptographie" targetName="calculate" />
+      <config projectName="AngewandteKryptographie" targetName="des" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -26,13 +26,9 @@
   <component name="ChangeListManager">
     <list default="true" id="03877d79-aa4f-4875-a788-6f1bc6e771ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-DES/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-DES/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Praktikum-DES/DESCipher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-DES/DESCipher.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Praktikum-DES/DESCipher.h" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-DES/DESCipher.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-DES/desTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-DES/desTest.cpp" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,30 +47,23 @@
   </component>
   <component name="ProjectId" id="1SvoHZtz10dqa4HhSjiQrpDKxTX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.overridden" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Praktikum-CryptoPP" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Praktikum-CryptoPP" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="CMake Application.cryptopp-intro">
     <configuration name="calculate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="calculate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="calculate">
@@ -93,6 +82,11 @@
       </method>
     </configuration>
     <configuration name="des" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="des" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="des">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="desAufgabe3" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="desAufgabe3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="desAufgabe3">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -132,11 +126,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="primes" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="primes" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="primes">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="searchshift" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="searchshift" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="searchshift">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -156,13 +145,25 @@
       <item itemvalue="CMake Application.polybius-test" />
       <item itemvalue="CMake Application.cryptopp-intro" />
       <item itemvalue="CMake Application.des" />
+      <item itemvalue="CMake Application.desAufgabe3" />
       <item itemvalue="CMake Application.desTest" />
-      <item itemvalue="CMake Application.primes" />
       <item itemvalue="CMake Application.coindex" />
       <item itemvalue="CMake Application.kasiski" />
       <item itemvalue="CMake Application.searchshift" />
       <item itemvalue="CMake Application.vigenere" />
     </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -180,7 +181,9 @@
       <workItem from="1572641317204" duration="354000" />
       <workItem from="1573126015143" duration="5968000" />
       <workItem from="1574523762388" duration="20216000" />
-      <workItem from="1575469366371" duration="14487000" />
+      <workItem from="1575469366371" duration="14532000" />
+      <workItem from="1575502454972" duration="48000" />
+      <workItem from="1575502512652" duration="3973000" />
     </task>
     <servers />
   </component>
@@ -196,5 +199,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="5336" y="823" key="FileChooserDialogImpl" timestamp="1575502555030">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state x="5336" y="823" key="FileChooserDialogImpl/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1575502555030" />
+    <state x="5057" y="715" key="SettingsEditor" timestamp="1575502615645">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state x="5057" y="715" key="SettingsEditor/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1575502615645" />
   </component>
 </project>

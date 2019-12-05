@@ -36,8 +36,11 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
 
     // Der Rundenschlüssel werden in meherern Schritten berechnet.
     // Als Erstes wird der 64 Bit key mit der pc1 Permutation
-    // (bzw. des Arrays pc1, welches bei einer Permutation verwendet werden kann)
-    // permutiert. Bei dieser Permutation werden 8 Bits des 64 Bit
+    // (bzw. des Arrays pc1, welches bei der Permutation verwendet wird)
+    // permutiert. Permutation mit pc1 bedeutet, dass das i-te Bit
+    // in key an das (pc1[i]-1)-te Bit eines Felds geschrieben wird,
+    // wobei i = 0,1,...,55.
+    // Bei dieser Permutation werden 8 Bits des 64 Bit
     // key nicht zugewiesen. Bei diesen 8 Bits handelt es sich um
     // die Parity-Bits. Diese werden bei der Generierung der
     // Rundenschlüssel nicht benötigt und werden durch die
@@ -310,7 +313,6 @@ void DESCipher::functionF
             b[i][j] = getBit(expand, 8, i * 6 + j);
         }
     }
-
     // Jeder 6 Bit Block wird Permutiert. Die Permutation
     // wird durch S-Boxen implementiert. In dieser
     // DES Implementation sind die durch die Permutation
@@ -382,21 +384,31 @@ void DESCipher::permutate
     int i;
 
     assert(in_len > 0);
+    // p_len gibt an, dass 0,1,...,p_len-1 Bits ab out_array
+    // gesetzt werden. Dafür müssen mindestens out_len*8 Bit
+    // ab out_array reserviert worden sein.
     assert(p_len <= out_len * 8);
 
+    // setzt das 0,1,...,(p_len-1)-te Bit in out_array auf das
+    // (p[i]-1)-te Bit des in_array
     for (i = 0; i < p_len; i++) {
         setBit(out_array, out_len, i, getBit(in_array, in_len, p[i] - 1));
     }
-
 }
 
 
 void DESCipher::printBitField(const byte *bytefield, int len, int block_len) const {
     int i, bit_len;
 
+    // bit_len Bits werden ausgegeben
     bit_len = 8 * len;
     for (i = 0; i < bit_len; i++) {
+        // getBit liefert das i-te Bit ab Position bytefield zurück
+        // Dieses Bit wird auf der Standardausgabe ausgegeben
         cout << getBit(bytefield, len, i);
+        // Überprüft, ob noch weitere Bits ausgegeben werden. Falls das
+        // der Fall ist und falls seit dem letzten Leerzeichen block_len
+        // Bits ausgegeben worden sind, dann wird ein Leerzeichen ausgegeben
         if ((i + 1 < bit_len) && ((i + 1) % block_len == 0)) {
             cout << " ";
         }
