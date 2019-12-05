@@ -421,17 +421,31 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
  * Aufgabe 7
  ******************************************************************************/
 
+    // Als Erstes werden die 64 Bit ab in_block mit ip permutiert.
+    // Das Ergebnis dieser Permutation wird in tmp gespeichert.
     byte tmp[8];
     permutate(ip, 64, in_block, 64, tmp, 64);
 
+    // Danach werden in jedem Rundendurchlauf die 64 bit in zwei 32 Bit Teile eingeteilt.
+    // Die ersten 32 Bit in ab *tmp bilden den ersten und rechten Teil,
+    // die darauffolgenden 32 Bit den zweiten und linken Teil.
+    // Mit diesen zwei Teilen wird die Feistel Funktion aufgerufen.
+    // Das Ergebnis der Feistel Funktion wird in *tmp geschrieben und
+    // wird dadurch im nächsten Rundendurchlauf weiterarbeitet.
     for (int i = 0; i < 16; i++) {
+        // Die Feistelausgabe wird in einem neuen Speicherblock
+        // gespeichert
         byte t[8];
         feistel(tmp, tmp+4, key_schedule[i], t, t+4, i);
+        // und wird nach Feistel für den nächsten Schleifendurchlauf
+        // wieder in tmp geschrieben
         for (int j = 0; j < 8; j++) {
             tmp[j] = t[j];
         }
     }
 
+    // Im letzten Schleifendurchlauf wird der rechte und linke Teil
+    // vertauscht, TODO
     byte roundResult[8];
     for(int i = 0; i < 4; i++) {
         roundResult[i] = tmp[i+4];

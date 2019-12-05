@@ -159,8 +159,18 @@ public:
                       const byte* key, int key_len,
                       byte* cipher_text, int cipher_len);
 
-    /*
-     * 
+    /**
+     * Chiffriert block_len bytes ab in_block unter Verwendung der
+     * Rundenschlüssel in der Schlüsseltabelle key_schedule mittels DES
+     * Das Ergebnis wird in den block_len bytes ab out_block gespeichert.
+     * Als Betriebsmodus wird der ECB-Modus verwendet.
+     *
+     * @param in_block zeigt auf die block_len Bytes, welche chiffriert
+     * werden sollen
+     *
+     * @param out_block zeigt auf einen Speicherbereich, der mindestens
+     * out_block Bytes groß sein muss und in welchen das chiffrierte
+     * Ergebnis geschrieben wird.
      */
     void processBlock(const byte* in_block, byte* out_block);
 
