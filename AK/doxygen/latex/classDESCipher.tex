@@ -1,0 +1,487 @@
+\hypertarget{classDESCipher}{}\section{D\+E\+S\+Cipher Class Reference}
+\label{classDESCipher}\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+
+
+Inheritance diagram for D\+E\+S\+Cipher\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{classDESCipher__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+S\+Cipher\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{classDESCipher__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classDESCipher_a296b6450dbdf2c35c70c74c628d9176b}{D\+E\+S\+Cipher} ()
+\item 
+\hyperlink{classDESCipher_ab2a6522ce5c469bfb055e1005ca03fbf}{$\sim$\+D\+E\+S\+Cipher} ()
+\item 
+void \hyperlink{classDESCipher_a7dc960554f1e80092e62730769b9220b}{compute\+Key\+Schedule} (const byte $\ast$key, bool encmode=true)
+\item 
+byte \hyperlink{classDESCipher_a5d22aac97342f530e88c8e9cf75908c2}{compute\+S\+Box} (byte id, byte line, byte col)
+\item 
+virtual int \hyperlink{classDESCipher_a1c4ae4be5ed99cf4278c10742cd09d02}{decrypt} (const byte $\ast$cipher\+\_\+text, int cipher\+\_\+len, const byte $\ast$key, int key\+\_\+len, byte $\ast$plain\+\_\+text, int plain\+\_\+len)
+\item 
+virtual int \hyperlink{classDESCipher_a61a76488e8087e92ba7f6b827c72db61}{encrypt} (const byte $\ast$plain\+\_\+text, int plain\+\_\+len, const byte $\ast$key, int key\+\_\+len, byte $\ast$cipher\+\_\+text, int cipher\+\_\+len)
+\item 
+void \hyperlink{classDESCipher_a97f3ae226e5a206ab35c66eef2cd6f75}{process\+Block} (const byte $\ast$in\+\_\+block, byte $\ast$out\+\_\+block)
+\item 
+void \hyperlink{classDESCipher_a985eafe4c2a27d27289a651ebaedd198}{feistel} (const byte $\ast$l\+\_\+in, const byte $\ast$r\+\_\+in, const byte $\ast$key, byte $\ast$l\+\_\+out, byte $\ast$r\+\_\+out, int rnd=0)
+\item 
+void \hyperlink{classDESCipher_a1448e493c89acc9d3dd68d1d522dd56b}{functionF} (const byte $\ast$r\+\_\+in, const byte $\ast$key, byte $\ast$r\+\_\+out, int rnd=0)
+\item 
+bool \hyperlink{classDESCipher_a25226668c299388dfac613b5dc6c3bac}{get\+Bit} (const byte $\ast$array, int array\+\_\+len, int pos) const
+\item 
+void \hyperlink{classDESCipher_a55e85a3c0fc857b378a1d3a6043ad2bb}{permutate} (const byte $\ast$p, int p\+\_\+len, const byte $\ast$in\+\_\+array, int in\+\_\+len, byte $\ast$out\+\_\+array, int out\+\_\+len) const
+\item 
+void \hyperlink{classDESCipher_a545d394151b622c2920f634ef2e0b9e2}{print\+Bit\+Field} (const byte $\ast$bytefield, int len, int \hyperlink{classBlockCipher_ab29ee03262fd620cd0659e860972faf0}{block\+\_\+len}=8) const
+\item 
+void \hyperlink{classDESCipher_aaf4fd9b18be0689fc3c9de0484dfd66c}{set\+Bit} (byte $\ast$array, int array\+\_\+len, int pos, bool value) const
+\item 
+void \hyperlink{classDESCipher_ace050247cc1d89cf66f85ab890e29a73}{get\+Key\+Schedule} (byte $\ast$key\+Schedule)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+byte \hyperlink{classDESCipher_a15e4c952af35d6b2d19655422b63a54e}{key\+\_\+schedule} \mbox{[}16\mbox{]}\mbox{[}6\mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static byte \hyperlink{classDESCipher_aa9e5743835ee06b59c6fad7cf954fde2}{ip} \mbox{[}64\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_a4ed481831857615035c294e6a4fcee32}{fp} \mbox{[}64\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_a726a2b9846d18e19770eea6d046b3d42}{ev} \mbox{[}48\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_acde876e8b143237759022dd47f867945}{pc1} \mbox{[}$\,$\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_a16cb4a171e849e673cfaf3d864614e81}{pc2} \mbox{[}$\,$\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_af65a5877e08227f4f1817cc6c49dd9bb}{sbox} \mbox{[}8\mbox{]}\mbox{[}64\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_af44d8fee3816aeefffd2049697a177cc}{pp} \mbox{[}32\mbox{]}
+\item 
+static byte \hyperlink{classDESCipher_a28b1d159bad4462f7d89902cd65a8885}{total\+\_\+rot} \mbox{[}16\mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDESCipher_a296b6450dbdf2c35c70c74c628d9176b}\label{classDESCipher_a296b6450dbdf2c35c70c74c628d9176b}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{D\+E\+S\+Cipher()}{DESCipher()}}
+{\footnotesize\ttfamily D\+E\+S\+Cipher\+::\+D\+E\+S\+Cipher (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Leerer Konstruktor für die \hyperlink{classDESCipher}{D\+E\+S\+Cipher} Klasse \mbox{\Hypertarget{classDESCipher_ab2a6522ce5c469bfb055e1005ca03fbf}\label{classDESCipher_ab2a6522ce5c469bfb055e1005ca03fbf}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!````~D\+E\+S\+Cipher@{$\sim$\+D\+E\+S\+Cipher}}
+\index{````~D\+E\+S\+Cipher@{$\sim$\+D\+E\+S\+Cipher}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{$\sim$\+D\+E\+S\+Cipher()}{~DESCipher()}}
+{\footnotesize\ttfamily D\+E\+S\+Cipher\+::$\sim$\+D\+E\+S\+Cipher (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Leerer Destruktor für die \hyperlink{classDESCipher}{D\+E\+S\+Cipher} Klasse 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classDESCipher_a7dc960554f1e80092e62730769b9220b}\label{classDESCipher_a7dc960554f1e80092e62730769b9220b}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!compute\+Key\+Schedule@{compute\+Key\+Schedule}}
+\index{compute\+Key\+Schedule@{compute\+Key\+Schedule}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{compute\+Key\+Schedule()}{computeKeySchedule()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::compute\+Key\+Schedule (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{key,  }\item[{bool}]{encmode = {\ttfamily true} }\end{DoxyParamCaption})}
+
+Berechnet die Rundenschlüssel und speichert diese in key\+\_\+schedule ab. Es werden 16 Rundenschlüsselt berechnet, wobei jeder Rundenschlüssel 48 Bit groß ist.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & ein konstanter byte Zeiger. Dabei handelt es sich um den 64 Bit großen Schlüssel.\\
+\hline
+{\em encmode} & gibt an, ob die Rundenschlüssel für das Verschlüsseln (encmode=true) oder das Entschlüsseln (encmode=false) erstellt werden sollen. encmode ist standardmäßig auf true gesetzt. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDESCipher_a5d22aac97342f530e88c8e9cf75908c2}\label{classDESCipher_a5d22aac97342f530e88c8e9cf75908c2}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!compute\+S\+Box@{compute\+S\+Box}}
+\index{compute\+S\+Box@{compute\+S\+Box}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{compute\+S\+Box()}{computeSBox()}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::compute\+S\+Box (\begin{DoxyParamCaption}\item[{byte}]{id,  }\item[{byte}]{line,  }\item[{byte}]{col }\end{DoxyParamCaption})}
+
+compute\+S\+Box liefert ein Arrayelement zurück. Bei dem Array handelt es sich um das sbox 2D Array. Das Element wird über id, line und col bestimmt.
+
+D\+ES verwendet 8 S-\/\+Boxen für Permutationen. Jede S-\/\+Box ist eine nicht lineare Abbildung von \{0,1\}⁶ nach \{0,1\}⁴. Das bedeutet, dass die S-\/\+Box einen 6 Bit Wert auf einen 4 Bit Wert abbildet/zuweist. Der param id gibt an, welche der 8 S-\/\+Boxen verwendet werden soll.
+
+Es gibt 64 verschiedene Werte für \{0,1\}⁶. Jede S-\/\+Box ist deshalb ein 64 Elemente großes Array. Jedes Element ist ein Byte. Da auf \{0,1\}⁴ abgebildet wird, werden nur die unteren 4 Bits des Bytes gesetzt. Die S-\/\+Box kann auch als 4x16 Matrix dargestellt werden. Die ersten 16 Elemente des 64 Elementearrays bilden die erste Zeile der 4x16 Matrix, die darauffolgenden 16 Elemente an Index 16 bis Index 31 des 64 Elementearrays bilden die zweite Zeile der 4x16 Matrix und so weiter. Die param line, die Zeile, und param col, die Spalte, bestimmen das Element Matrix bzw. des 64 Elementearrays.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & gibt an, welche S\+Box bzw. welches Array für die Berechnung verwendet werden soll. Es gibt 8 verschiedene S\+Boxen/\+Arrays in sbox. Valide Werte von id sind also 0,1,...,7.\\
+\hline
+{\em line} & gibt die Zeile der 4x16 S-\/\+Box Matrix an. Da es sich intern um Arrays handelt fängt man hier ab Index 0 an. Valide Werte sind deshalb 0,1,2 und 3.\\
+\hline
+{\em col} & gibt die Spalte der 4x16 S-\/\+Box Matrix an. Da es sich intern um Arrays handelt fängt man hier ab Index 0 an. Valide Werte sind deshalb 0,1,2,...,15.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Der Wert eines Elements der S-\/\+Boxen. Der Rückgabewert ist vom Typ byte, allerdings werden nur die unteren 4 Bits gesetzt sein. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classDESCipher_a1c4ae4be5ed99cf4278c10742cd09d02}\label{classDESCipher_a1c4ae4be5ed99cf4278c10742cd09d02}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!decrypt@{decrypt}}
+\index{decrypt@{decrypt}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{decrypt()}{decrypt()}}
+{\footnotesize\ttfamily int D\+E\+S\+Cipher\+::decrypt (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{cipher\+\_\+text,  }\item[{int}]{cipher\+\_\+len,  }\item[{const byte $\ast$}]{key,  }\item[{int}]{key\+\_\+len,  }\item[{byte $\ast$}]{plain\+\_\+text,  }\item[{int}]{plain\+\_\+len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+decrypt entschlüsselt cipher\+\_\+len Bytes ab cipher\+\_\+text mit dem key\+\_\+len großen Schlüssel key und speichert den entschlüsselten Text im plain\+\_\+len großen plain\+\_\+text Speicherblock ab.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cipher\+\_\+text} & zeigt auf einen Speicherblock, in dem der mindestens cipher\+\_\+len Byte große verschlüsselte zu entschlüsselnde Text gespeichert ist.\\
+\hline
+{\em cipher\+\_\+len} & gibt die Größe des cipher\+\_\+text in Byte an. cipher\+\_\+len muss ein vielfaches von der durch \hyperlink{classBlockCipher}{Block\+Cipher} spezifizierten block\+\_\+len sein.\\
+\hline
+{\em key} & zeigt auf einen Speicherblock, in dem der 8 Byte große Key gespeichert ist. Dieser Key wird für das entschlüsseln verwendet. Speziell werden aus diesem Key die 16 Rundenschlüssel berechnet.\\
+\hline
+{\em key\+\_\+len} & gibt die Größe des key in Byte an. key\+\_\+len muss gleich 8 sein.\\
+\hline
+{\em plain\+\_\+text} & zeigt auf einen mindestens plain\+\_\+len großen Speicherblock, in dem der entschlüsselte cipher\+\_\+text gespeichert wird.\\
+\hline
+{\em plain\+\_\+len} & gibt die Größe des plain\+\_\+text in Byte an. Um das komplette Ergebnis zu speichern muss plain\+\_\+len größer als cipher\+\_\+len sein.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+den Wert in (param) plain\+\_\+len 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classBlockCipher_a8a401652231a372a0ec248ff0fb5487a}{Block\+Cipher}.
+
+\mbox{\Hypertarget{classDESCipher_a61a76488e8087e92ba7f6b827c72db61}\label{classDESCipher_a61a76488e8087e92ba7f6b827c72db61}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{encrypt()}{encrypt()}}
+{\footnotesize\ttfamily int D\+E\+S\+Cipher\+::encrypt (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{plain\+\_\+text,  }\item[{int}]{plain\+\_\+len,  }\item[{const byte $\ast$}]{key,  }\item[{int}]{key\+\_\+len,  }\item[{byte $\ast$}]{cipher\+\_\+text,  }\item[{int}]{cipher\+\_\+len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+encrypt verschlüsselt plain\+\_\+len Bytes ab plain\+\_\+text mit dem key\+\_\+len großen Schlüssel key und speichert den verschlüsselten Text im cipher\+\_\+len großen cipher\+\_\+text Speicherblock ab.
+
+
+\begin{DoxyParams}{Parameters}
+{\em plain\+\_\+text} & zeigt auf einen Speicherblock, in dem der mindestens plain\+\_\+len Byte große zu verschlüsselnde Text gespeichert ist.\\
+\hline
+{\em plain\+\_\+len} & gibt die Größe des plain\+\_\+text in Byte an. plain\+\_\+len muss ein vielfaches von der durch \hyperlink{classBlockCipher}{Block\+Cipher} spezifizierten block\+\_\+len sein.\\
+\hline
+{\em key} & zeigt auf einen Speicherblock, in dem der 8 Byte große Key gespeichert ist. Dieser Key wird für das verschlüsseln verwendet. Mit diesem key kann der resultierende cipher\+\_\+text auch wieder entschlüsselt werden. Speziell werden aus diesem Key die 16 Rundenschlüssel berechnet.\\
+\hline
+{\em key\+\_\+len} & gibt die Größe des key in Byte an. key\+\_\+len muss gleich 8 sein.\\
+\hline
+{\em cipher\+\_\+text} & zeigt auf einen mindestens cipher\+\_\+len großen Speicherblock, in dem der verschlüsselte plain\+\_\+text gespeichert wird.\\
+\hline
+{\em cipher\+\_\+len} & gibt die Größe des cipher\+\_\+text in Byte an. Um das komplette Ergebnis zu speichern muss cipher\+\_\+len größer als plain\+\_\+len sein.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+den Wert in (param) plain\+\_\+len 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classBlockCipher_a702dd06a7078ef55c4e9a6482893b07d}{Block\+Cipher}.
+
+\mbox{\Hypertarget{classDESCipher_a985eafe4c2a27d27289a651ebaedd198}\label{classDESCipher_a985eafe4c2a27d27289a651ebaedd198}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!feistel@{feistel}}
+\index{feistel@{feistel}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{feistel()}{feistel()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::feistel (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{l\+\_\+in,  }\item[{const byte $\ast$}]{r\+\_\+in,  }\item[{const byte $\ast$}]{key,  }\item[{byte $\ast$}]{l\+\_\+out,  }\item[{byte $\ast$}]{r\+\_\+out,  }\item[{int}]{rnd = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Implementation der Feistel-\/\+Chiffre. Dabei wird l\+\_\+out auf r\+\_\+in gesetzt. Weiter wird die f Funktion mit r\+\_\+in und key aufgerufen und die Ausgabe der Funktion wird mit l\+\_\+in X\+OR\textquotesingle{}d und in r\+\_\+out geschrieben.
+
+
+\begin{DoxyParams}{Parameters}
+{\em l\+\_\+in} & zeigt auf den 32 Bit großen linken Teil.\\
+\hline
+{\em r\+\_\+in} & zeigt auf den 32 Bit großen rechten Teil.\\
+\hline
+{\em key} & zeigt auf einen 48 Bit großen Rundenschlüssel.\\
+\hline
+{\em l\+\_\+out} & In l\+\_\+out wird der berechnete linke Teil geschrieben.\\
+\hline
+{\em r\+\_\+out} & In r\+\_\+out wird der berechnete rechte Teil geschrieben. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDESCipher_a1448e493c89acc9d3dd68d1d522dd56b}\label{classDESCipher_a1448e493c89acc9d3dd68d1d522dd56b}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!functionF@{functionF}}
+\index{functionF@{functionF}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{function\+F()}{functionF()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::functionF (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{r\+\_\+in,  }\item[{const byte $\ast$}]{key,  }\item[{byte $\ast$}]{r\+\_\+out,  }\item[{int}]{rnd = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Implementation der D\+E\+S-\/\+Funktion f. Sie ist eine beliebige injektive Abbildung von \{0, 1\}$^\wedge$(32) × \{0, 1\}$^\wedge$(48) nach \{0, 1\}$^\wedge$(32). Dabei sind r\+\_\+in und key die Eingaben und r\+\_\+out die Ausgabe der Funktion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em r\+\_\+in} & zeigt auf einen 32 Bit großen Speicherblock. Diese 32 Bit werden mit dem Rundenschlüssel key verarbeitet.\\
+\hline
+{\em key} & zeigt auf einen 48 Bit großen Rundenschlüssel.\\
+\hline
+{\em r\+\_\+out} & In r\+\_\+out wird die 32 Bit Ausgabe der f Funktion geschrieben.\\
+\hline
+{\em rnd} & ist optional, gibt die aktuelle D\+ES Runde an und wird in der aktuellen Implementation nicht verwendet. Sie kann in der Zukunft für Debug Ausgaben verwendet werden. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDESCipher_a25226668c299388dfac613b5dc6c3bac}\label{classDESCipher_a25226668c299388dfac613b5dc6c3bac}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!get\+Bit@{get\+Bit}}
+\index{get\+Bit@{get\+Bit}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{get\+Bit()}{getBit()}}
+{\footnotesize\ttfamily bool D\+E\+S\+Cipher\+::get\+Bit (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{array,  }\item[{int}]{array\+\_\+len,  }\item[{int}]{pos }\end{DoxyParamCaption}) const}
+
+Liefert das pos-\/te Bit des array zurück.
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & verweist auf einen Speicherblock.\\
+\hline
+{\em array\+\_\+len} & gibt die Größe des array in Byte an.\\
+\hline
+{\em pos} & gibt an, dass das pos-\/te Bit zurückgegeben werden soll.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+den Wert des pos-\/ten Bits des array. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classDESCipher_ace050247cc1d89cf66f85ab890e29a73}\label{classDESCipher_ace050247cc1d89cf66f85ab890e29a73}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!get\+Key\+Schedule@{get\+Key\+Schedule}}
+\index{get\+Key\+Schedule@{get\+Key\+Schedule}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{get\+Key\+Schedule()}{getKeySchedule()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::get\+Key\+Schedule (\begin{DoxyParamCaption}\item[{byte $\ast$}]{key\+Schedule }\end{DoxyParamCaption})}
+
+get\+Key\+Schedule speichert die 16 6-\/\+Byte großen Rundenschlüssel hintereinander in der durch key\+Schedule gezeigten Position ab. Ab key\+Schedule muss darum 16$\ast$6=96 Byte Speicher reserviert sein.
+
+Zeigt auf einen mindestens 96 Byte großen Speicherblock. In diesen Speicherblock werden die Rundenschlüssel geschrieben. \mbox{\Hypertarget{classDESCipher_a55e85a3c0fc857b378a1d3a6043ad2bb}\label{classDESCipher_a55e85a3c0fc857b378a1d3a6043ad2bb}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!permutate@{permutate}}
+\index{permutate@{permutate}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{permutate()}{permutate()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::permutate (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{p,  }\item[{int}]{p\+\_\+len,  }\item[{const byte $\ast$}]{in\+\_\+array,  }\item[{int}]{in\+\_\+len,  }\item[{byte $\ast$}]{out\+\_\+array,  }\item[{int}]{out\+\_\+len }\end{DoxyParamCaption}) const}
+
+p ist ein p\+\_\+len großes Array mit Integern. Die Bits in in\+\_\+array werden an die durch den Wert der Elemente in p bestimmen Position ins out\+\_\+array geschrieben. Das bedeutet, dass das i-\/te Bit in in\+\_\+array an das (p\mbox{[}i\mbox{]}-\/1)-\/te Bit in out\+\_\+array geschrieben, wobei i = 0,1,...,p\+\_\+len-\/1. Die Indices in p starten bei 1 und nicht bei 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & zeigt auf ein p\+\_\+len byte großes Array, wobei jedes Element des Arrays eine Zuordnung eines Bits auf in\+\_\+array zu out\+\_\+array bestimmt.\\
+\hline
+{\em p\+\_\+len} & gibt die Größe in byte des p Arrays an.\\
+\hline
+{\em in\+\_\+array} & zeigt auf ein in\+\_\+len byte großes Array. Bits aus in\+\_\+array werden später an durch p beschriebene Positionen in das out\+\_\+array geschrieben. Es gilt zu beachten, dass möglicherweise keine, manche oder alle Bits aus in\+\_\+array an Positionen in out\+\_\+array kopiert werden und dass auch manche Bits mehrmals in out\+\_\+array kopiert werden können.\\
+\hline
+{\em in\+\_\+len} & gibt die Größe in bytes des in\+\_\+array an.\\
+\hline
+{\em out\+\_\+array} & zeigt auf ein out\+\_\+len byte großes Array. Die out\+\_\+len$\ast$8 Bits ab out\+\_\+array werden auf den Wert von Bits des in\+\_\+array gesetzt.\\
+\hline
+{\em out\+\_\+len} & gibt die Größe in bytes des out\+\_\+array an. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDESCipher_a545d394151b622c2920f634ef2e0b9e2}\label{classDESCipher_a545d394151b622c2920f634ef2e0b9e2}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!print\+Bit\+Field@{print\+Bit\+Field}}
+\index{print\+Bit\+Field@{print\+Bit\+Field}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{print\+Bit\+Field()}{printBitField()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::print\+Bit\+Field (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{bytefield,  }\item[{int}]{len,  }\item[{int}]{block\+\_\+len = {\ttfamily 8} }\end{DoxyParamCaption}) const}
+
+print\+Bit\+Field gibt 8$\ast$len Bit ab bytefield als Bitfolge auf der Standardausgabe aus. Nach jeweils block\+\_\+len bits wird ein Leerzeichen ausgegeben, außer auf das Leerzeichen folgt kein weiteres Bit (no trailing whitespace).
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytefield} & zeigt auf eine Position im Speicher, ab der len Bytes auf der Standardausgabe ausgegeben werden.\\
+\hline
+{\em len} & gibt die Anzahl der Byte an\\
+\hline
+{\em block\+\_\+len} & gibt an, nach jeweils wievielen ausgegebenen Bits ein Leerzeichen ausgegeben werden soll. block\+\_\+len ist standardmäßig auf 8 gesetzt. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDESCipher_a97f3ae226e5a206ab35c66eef2cd6f75}\label{classDESCipher_a97f3ae226e5a206ab35c66eef2cd6f75}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!process\+Block@{process\+Block}}
+\index{process\+Block@{process\+Block}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{process\+Block()}{processBlock()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::process\+Block (\begin{DoxyParamCaption}\item[{const byte $\ast$}]{in\+\_\+block,  }\item[{byte $\ast$}]{out\+\_\+block }\end{DoxyParamCaption})}
+
+Chiffriert block\+\_\+len bytes ab in\+\_\+block unter Verwendung der Rundenschlüssel in der Schlüsseltabelle key\+\_\+schedule mittels D\+ES Das Ergebnis wird in den block\+\_\+len bytes ab out\+\_\+block gespeichert. Als Betriebsmodus wird der E\+C\+B-\/\+Modus verwendet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em in\+\_\+block} & zeigt auf die block\+\_\+len Bytes, welche chiffriert werden sollen\\
+\hline
+{\em out\+\_\+block} & zeigt auf einen Speicherbereich, der mindestens out\+\_\+block Bytes groß sein muss und in welchen das chiffrierte Ergebnis geschrieben wird. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDESCipher_aaf4fd9b18be0689fc3c9de0484dfd66c}\label{classDESCipher_aaf4fd9b18be0689fc3c9de0484dfd66c}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!set\+Bit@{set\+Bit}}
+\index{set\+Bit@{set\+Bit}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{set\+Bit()}{setBit()}}
+{\footnotesize\ttfamily void D\+E\+S\+Cipher\+::set\+Bit (\begin{DoxyParamCaption}\item[{byte $\ast$}]{array,  }\item[{int}]{array\+\_\+len,  }\item[{int}]{pos,  }\item[{bool}]{value }\end{DoxyParamCaption}) const}
+
+set\+Bit setzt das pos-\/te Bit in array auf den Wert von value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & zeigt auf ein array\+\_\+len Byte großes Feld.\\
+\hline
+{\em array\+\_\+len} & gibt die Größe des array in Bytes an. Damit das Bit gesetzt werden kann, muss pos $<$ 8$\ast$array\+\_\+len sein.\\
+\hline
+{\em pos} & gibt an, dass das pos-\/te Bit ab array gesetzt werden soll.\\
+\hline
+{\em value} & Das pos-\/te Bit wird auf value gesetzt. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classDESCipher_a726a2b9846d18e19770eea6d046b3d42}\label{classDESCipher_a726a2b9846d18e19770eea6d046b3d42}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!ev@{ev}}
+\index{ev@{ev}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{ev}{ev}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::ev\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        32, 1, 2, 3, 4, 5,
+        4, 5, 6, 7, 8, 9,
+        8, 9, 10, 11, 12, 13,
+        12, 13, 14, 15, 16, 17,
+        16, 17, 18, 19, 20, 21,
+        20, 21, 22, 23, 24, 25,
+        24, 25, 26, 27, 28, 29,
+        28, 29, 30, 31, 32, 1
+\}
+\end{DoxyCode}
+ev wird am Anfang der functionF Funktion für die Expansion und Permutation des r\+\_\+in verwendet. \mbox{\Hypertarget{classDESCipher_a4ed481831857615035c294e6a4fcee32}\label{classDESCipher_a4ed481831857615035c294e6a4fcee32}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!fp@{fp}}
+\index{fp@{fp}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{fp}{fp}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::fp\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        40, 8, 48, 16, 56, 24, 64, 32,
+        39, 7, 47, 15, 55, 23, 63, 31,
+        38, 6, 46, 14, 54, 22, 62, 30,
+        37, 5, 45, 13, 53, 21, 61, 29,
+        36, 4, 44, 12, 52, 20, 60, 28,
+        35, 3, 43, 11, 51, 19, 59, 27,
+        34, 2, 42, 10, 50, 18, 58, 26,
+        33, 1, 41, 9, 49, 17, 57, 25
+\}
+\end{DoxyCode}
+fp wird am Ende der process\+Block Funktion für die Permutation des Ergebnis der Rundendurchläufe verwendet. \mbox{\Hypertarget{classDESCipher_aa9e5743835ee06b59c6fad7cf954fde2}\label{classDESCipher_aa9e5743835ee06b59c6fad7cf954fde2}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!ip@{ip}}
+\index{ip@{ip}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{ip}{ip}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::ip\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        58, 50, 42, 34, 26, 18, 10, 2,
+        60, 52, 44, 36, 28, 20, 12, 4,
+        62, 54, 46, 38, 30, 22, 14, 6,
+        64, 56, 48, 40, 32, 24, 16, 8,
+        57, 49, 41, 33, 25, 17, 9, 1,
+        59, 51, 43, 35, 27, 19, 11, 3,
+        61, 53, 45, 37, 29, 21, 13, 5,
+        63, 55, 47, 39, 31, 23, 15, 7
+\}
+\end{DoxyCode}
+ip wird am Anfang der process\+Block Funktion für die Permutation des in\+\_\+block verwendet. \mbox{\Hypertarget{classDESCipher_a15e4c952af35d6b2d19655422b63a54e}\label{classDESCipher_a15e4c952af35d6b2d19655422b63a54e}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!key\+\_\+schedule@{key\+\_\+schedule}}
+\index{key\+\_\+schedule@{key\+\_\+schedule}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{key\+\_\+schedule}{key\_schedule}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::key\+\_\+schedule\mbox{[}16\mbox{]}\mbox{[}6\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}
+
+In key\+\_\+schedule werden die 16 6-\/\+Byte großen Rundenschlüssel gespeichert. Die Felder werden von der compute\+Key\+Schedule gesetzt. Jeder Rundenschlüssel wird der Reihe nach über die feistel Funktion an die f Funktion gegeben, um dort zusammen mit dem r\+\_\+in Zustand verarbeitet zu werden.
+
+Das 2D Array kann mit der get\+Key\+Schedule Funktion ausgegeben werden. \mbox{\Hypertarget{classDESCipher_acde876e8b143237759022dd47f867945}\label{classDESCipher_acde876e8b143237759022dd47f867945}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!pc1@{pc1}}
+\index{pc1@{pc1}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{pc1}{pc1}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::pc1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        57, 49, 41, 33, 25, 17, 9,
+        1, 58, 50, 42, 34, 26, 18,
+        10, 2, 59, 51, 43, 35, 27,
+        19, 11, 3, 60, 52, 44, 36,
+
+        63, 55, 47, 39, 31, 23, 15,
+        7, 62, 54, 46, 38, 30, 22,
+        14, 6, 61, 53, 45, 37, 29,
+        21, 13, 5, 28, 20, 12, 4
+\}
+\end{DoxyCode}
+pc1 wird in der compute\+Key\+Schedule Funktion verwendet, um für jedes Bit von jedem Rundenschlüssel zu berechnen, welches Bit des Rundenschlüssels auf welches Bit des key gesetzt werden soll. \mbox{\Hypertarget{classDESCipher_a16cb4a171e849e673cfaf3d864614e81}\label{classDESCipher_a16cb4a171e849e673cfaf3d864614e81}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!pc2@{pc2}}
+\index{pc2@{pc2}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{pc2}{pc2}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::pc2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        14, 17, 11, 24, 1, 5,
+        3, 28, 15, 6, 21, 10,
+        23, 19, 12, 4, 26, 8,
+        16, 7, 27, 20, 13, 2,
+        41, 52, 31, 37, 47, 55,
+        30, 40, 51, 45, 33, 48,
+        44, 49, 39, 56, 34, 53,
+        46, 42, 50, 36, 29, 32
+\}
+\end{DoxyCode}
+pc2 wird wie pc1 in der compute\+Key\+Schedule Funktion verwendet, um für jedes Bit von jedem Rundenschlüssel zu berechnen, welches Bit des Rundenschlüssels auf welches Bit des key gesetzt werden soll. \mbox{\Hypertarget{classDESCipher_af44d8fee3816aeefffd2049697a177cc}\label{classDESCipher_af44d8fee3816aeefffd2049697a177cc}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!pp@{pp}}
+\index{pp@{pp}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{pp}{pp}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::pp\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        16, 7, 20, 21,
+        29, 12, 28, 17,
+        1, 15, 23, 26,
+        5, 18, 31, 10,
+        2, 8, 24, 14,
+        32, 27, 3, 9,
+        19, 13, 30, 6,
+        22, 11, 4, 25
+\}
+\end{DoxyCode}
+pp wird abschließend in der f Funktion für eine Permutation mit dem Ergebnis der S-\/\+Boxen verwendet. Das Ergebnis dieser Permutation wird dann über r\+\_\+out zurückgeliefert. \mbox{\Hypertarget{classDESCipher_af65a5877e08227f4f1817cc6c49dd9bb}\label{classDESCipher_af65a5877e08227f4f1817cc6c49dd9bb}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!sbox@{sbox}}
+\index{sbox@{sbox}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{sbox}{sbox}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::sbox\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+Bei sbox handelt es sich um 8 64-\/\+Bit Felder bzw. 8 4x16 Matrizen. Das sind die S-\/\+Boxen, welche über die compute\+S\+Box Funktion für die Permutationen in der f Funktion (functionF) verwendet werden. \mbox{\Hypertarget{classDESCipher_a28b1d159bad4462f7d89902cd65a8885}\label{classDESCipher_a28b1d159bad4462f7d89902cd65a8885}} 
+\index{D\+E\+S\+Cipher@{D\+E\+S\+Cipher}!total\+\_\+rot@{total\+\_\+rot}}
+\index{total\+\_\+rot@{total\+\_\+rot}!D\+E\+S\+Cipher@{D\+E\+S\+Cipher}}
+\subsubsection{\texorpdfstring{total\+\_\+rot}{total\_rot}}
+{\footnotesize\ttfamily byte D\+E\+S\+Cipher\+::total\+\_\+rot\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+        1, 2, 4, 6, 8, 10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28
+\}
+\end{DoxyCode}
+total\+\_\+rot gibt die Anzahl der zyklischen Linksverschiebungen für jeden Rundenschlüssel an. Das wird in der compute\+Key\+Schedule Funktion verwendet. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+D\+E\+S/D\+E\+S\+Cipher.\+h\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+D\+E\+S/D\+E\+S\+Cipher.\+cpp\end{DoxyCompactItemize}

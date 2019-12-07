@@ -1,0 +1,44 @@
+\hypertarget{classCatch_1_1Capturer}{}\section{Catch\+:\+:Capturer Class Reference}
+\label{classCatch_1_1Capturer}\index{Catch\+::\+Capturer@{Catch\+::\+Capturer}}
+
+
+Collaboration diagram for Catch\+:\+:Capturer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classCatch_1_1Capturer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_a86b0b27acc803a4e1310c10820f3038f}\label{classCatch_1_1Capturer_a86b0b27acc803a4e1310c10820f3038f}} 
+{\bfseries Capturer} (\hyperlink{classCatch_1_1StringRef}{String\+Ref} macro\+Name, \hyperlink{structCatch_1_1SourceLineInfo}{Source\+Line\+Info} const \&line\+Info, Result\+Was\+::\+Of\+Type result\+Type, \hyperlink{classCatch_1_1StringRef}{String\+Ref} names)
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_a0695ebf77f7cdcb344c73bcb3d9131e4}\label{classCatch_1_1Capturer_a0695ebf77f7cdcb344c73bcb3d9131e4}} 
+void {\bfseries capture\+Value} (size\+\_\+t index, std\+::string const \&value)
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_a60d08e6db2e54740bb2298bbbec3bc0b}\label{classCatch_1_1Capturer_a60d08e6db2e54740bb2298bbbec3bc0b}} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries capture\+Values} (size\+\_\+t index, T const \&value)
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_a76f2a097cfeb3042688300b81eb9bcbc}\label{classCatch_1_1Capturer_a76f2a097cfeb3042688300b81eb9bcbc}} 
+{\footnotesize template$<$typename T , typename... Ts$>$ }\\void {\bfseries capture\+Values} (size\+\_\+t index, T const \&value, Ts const \&... values)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_aefa14693d28906e5e7b06975af38aaed}\label{classCatch_1_1Capturer_aefa14693d28906e5e7b06975af38aaed}} 
+std\+::vector$<$ \hyperlink{structCatch_1_1MessageInfo}{Message\+Info} $>$ {\bfseries m\+\_\+messages}
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_a29edecce81d56837945ba2585c0ff941}\label{classCatch_1_1Capturer_a29edecce81d56837945ba2585c0ff941}} 
+\hyperlink{structCatch_1_1IResultCapture}{I\+Result\+Capture} \& {\bfseries m\+\_\+result\+Capture} = get\+Result\+Capture()
+\item 
+\mbox{\Hypertarget{classCatch_1_1Capturer_a1c3bea0fde97a7663ece4b81187fa9ed}\label{classCatch_1_1Capturer_a1c3bea0fde97a7663ece4b81187fa9ed}} 
+size\+\_\+t {\bfseries m\+\_\+captured} = 0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+D\+E\+S/catch.\+hpp\end{DoxyCompactItemize}

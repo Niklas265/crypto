@@ -8,7 +8,7 @@
 using namespace std;
 
 /**
- * @class A class for classic ciphers.
+ * A class for classic ciphers.
  * @author Christoph Karg
  *
  * This class is a base class for block ciphers.

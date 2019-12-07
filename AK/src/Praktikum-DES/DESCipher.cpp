@@ -130,8 +130,6 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
     }
 }
 
-// TODO: privaten attribute mit in doxygen ausgeben
-
 
 byte DESCipher::computeSBox(byte id, byte line, byte col) {
     /******************************************************************************

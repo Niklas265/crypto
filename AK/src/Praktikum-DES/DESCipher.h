@@ -5,22 +5,70 @@
 
 class DESCipher : public BlockCipher {
 private:
+    /**
+     * ip wird am Anfang der processBlock Funktion für die
+     * Permutation des in_block verwendet.
+     */
     static byte ip[64];
 
+    /**
+     * fp wird am Ende der processBlock Funktion für die
+     * Permutation des Ergebnis der Rundendurchläufe verwendet.
+     */
     static byte fp[64];
 
+    /**
+     * ev wird am Anfang der functionF Funktion für die Expansion
+     * und Permutation des r_in verwendet.
+     */
     static byte ev[48];
 
+    /**
+     * pc1 wird in der computeKeySchedule Funktion verwendet, um
+     * für jedes Bit von jedem Rundenschlüssel zu berechnen, welches
+     * Bit des Rundenschlüssels auf welches Bit des key gesetzt werden
+     * soll.
+     */
     static byte pc1[];
 
+    /**
+     * pc2 wird wie pc1 in der computeKeySchedule Funktion verwendet, um
+     * für jedes Bit von jedem Rundenschlüssel zu berechnen, welches
+     * Bit des Rundenschlüssels auf welches Bit des key gesetzt werden
+     * soll.
+     */
     static byte pc2[];
 
+    /**
+     * Bei sbox handelt es sich um 8 64-Bit Felder bzw. 8 4x16 Matrizen.
+     * Das sind die S-Boxen, welche über die computeSBox Funktion für
+     * die Permutationen in der f Funktion (functionF) verwendet werden.
+     */
     static byte sbox[8][64];
 
+    /**
+     * pp wird abschließend in der f Funktion für eine Permutation mit
+     * dem Ergebnis der S-Boxen verwendet. Das Ergebnis dieser
+     * Permutation wird dann über r_out zurückgeliefert.
+     */
     static byte pp[32];
 
+    /**
+     * total_rot gibt die Anzahl der zyklischen Linksverschiebungen
+     * für jeden Rundenschlüssel an. Das wird in der computeKeySchedule
+     * Funktion verwendet.
+     */
     static byte total_rot[16];
 
+    /**
+     * In key_schedule werden die 16 6-Byte großen Rundenschlüssel
+     * gespeichert. Die Felder werden von der computeKeySchedule
+     * gesetzt. Jeder Rundenschlüssel wird der Reihe nach über die
+     * feistel Funktion an die f Funktion gegeben, um dort zusammen mit dem
+     * r_in Zustand verarbeitet zu werden.
+     *
+     * Das 2D Array kann mit der getKeySchedule Funktion ausgegeben werden.
+     */
     byte key_schedule[16][6];
 
 public:
