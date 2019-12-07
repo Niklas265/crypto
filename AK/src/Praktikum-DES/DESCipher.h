@@ -160,7 +160,7 @@ public:
                       byte* cipher_text, int cipher_len);
 
     /*
-     * 
+     *
      */
     void processBlock(const byte* in_block, byte* out_block);
 
