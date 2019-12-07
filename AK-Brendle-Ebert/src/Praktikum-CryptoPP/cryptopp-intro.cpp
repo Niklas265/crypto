@@ -81,19 +81,13 @@ void DataFlowExercise() {
         // die readFromFile Funktion nutzen, nicht verändert. Falls zukünftige
         // Funktionen das Verwenden von tolower(c) bei readFromFile() erwarten, 
         // müsste readFromFile abgeändert werden.
-        // Beim Lesen von Dateien wird davon ausgegangen, dass wir uns beim
-        // Aufrufen des Programms im 'bin' Folder befinden. 
-        // Wenn dieses Skript aus dem Debug-Ordner mit './bin/cryptopp-intro' 
-        // gestartet wird, müssten wir stattdessen "../data/base64data.txt" 
-        // verwenden. Dies kann durch die Auswertung von argv[0] automatisiert 
-        // werden, aber wir dachten diese Funktionalität wurde nicht erwartet.
-        if (!Toolbox::readFromFile("../../data/base64data.txt", src, /*skipNewlines=*/true)) {
+        if (!Toolbox::readFromFile("data/base64data.txt", src, /*skipNewlines=*/true)) {
             // Das Öffnen der Datei ist fehlgeschlagen. Wir fahren Sie trotzdem 
             // fort, um die anderen Aufgaben auszuführen.
-            cerr << "Auslesen der File ../../data/base64data.txt fehlgeschlagen. Continuing." << endl;
+            cerr << "Auslesen der File data/base64data.txt fehlgeschlagen. Continuing." << endl;
         }
 
-        cout << "File ../../data/base64data.txt Inhalt: " << src << endl;
+        cout << "File data/base64data.txt Inhalt: " << src << endl;
 
         dst = "";
         // Dekodiert Base64 kodierte Daten in src. Die kodierten Daten 
@@ -180,11 +174,11 @@ void EncryptionExercise_Part2() {
     string cypher_text;
 
     string src;
-    if (!Toolbox::readFromFile("../../data/aescipher.txt", src, true)) {
-        cerr << "Auslesen der File ../../data/aescipher.txt fehlgeschlagen. Continuing." << endl;
+    if (!Toolbox::readFromFile("data/aescipher.txt", src, true)) {
+        cerr << "Auslesen der File data/aescipher.txt fehlgeschlagen. Continuing." << endl;
     }
 
-    cout << "File ../../data/aescipher.txt Inhalt: " << src << endl;
+    cout << "File data/aescipher.txt Inhalt: " << src << endl;
 
     // Die Funktion SetKeyWithIV benötigt den Schlüssel und IV als Bytes 
     // dekodiert und die beiden Argumente werden über ein Byte-Array übergeben.

@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classPRNG.html" title="PRNG" alt="" coords="5,5,67,32"/>
-<area shape="rect" id="node2" href="$classBlumBlumShubGenerator.html" title="BlumBlumShubGenerator" alt="" coords="115,5,284,32"/>
+<area shape="rect" id="node1" href="$classBlockCipher.html" title="BlockCipher" alt="" coords="5,5,99,32"/>
+<area shape="rect" id="node2" href="$classDESCipher.html" title="DESCipher" alt="" coords="147,5,235,32"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blumblumshubgenerator',['BlumBlumShubGenerator',['../classBlumBlumShubGenerator.html',1,'']]]
+  ['blockcipher',['BlockCipher',['../classBlockCipher.html',1,'']]]
 ];
