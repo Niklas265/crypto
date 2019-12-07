@@ -290,8 +290,10 @@ void DESCipher::functionF
     // von r_in welchen Bits in expand zugewiesen werden.
     // Diese Funktionalität implementiert die permutate
     // Funktion.
+    // Das bedeutet, dass das i = 0,1,...,48-te Bit in expand auf das
+    // (ev[i]-1)-te Bit des r_in gesetzt wird.
     byte expand[6];
-    permutate(ev, 48, r_in, 32, expand, 48);
+    permutate(ev, 48, r_in, 4, expand, 6);
 
     // Im zweiten Schritt wird expand XOR key berechnet.
     // Das Ergebnis wird im expand array gespeichert.
@@ -347,6 +349,8 @@ void DESCipher::functionF
     z[3] = (s[6] << 4) + s[7];
     // Abschließend werden die 32 Bits ab z mit der pp Tabelle
     // permutiert. Das Ergebnis wird im r_out Array gespeichert.
+    // Das bedeutet, dass das i = 0,1,...,63-te Bit in r_out auf das
+    // (pp[i]-1)-te Bit des z gesetzt wird.
     permutate(pp, 32, z, 4, r_out, 4);
 }
 
@@ -423,8 +427,10 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
 
     // Als Erstes werden die 64 Bit ab in_block mit ip permutiert.
     // Das Ergebnis dieser Permutation wird in tmp gespeichert.
+    // Das bedeutet, dass das i = 0,1,...,63-te Bit in tmp auf das
+    // (ip[i]-1)-te Bit des in_block gesetzt wird.
     byte tmp[8];
-    permutate(ip, 64, in_block, 64, tmp, 64);
+    permutate(ip, 64, in_block, 8, tmp, 8);
 
     // Danach werden in jedem Rundendurchlauf die 64 bit in zwei 32 Bit Teile eingeteilt.
     // Die ersten 32 Bit in ab *tmp bilden den ersten und rechten Teil,
@@ -445,14 +451,22 @@ void DESCipher::processBlock(const byte *in_block, byte *out_block) {
     }
 
     // Im letzten Schleifendurchlauf wird der rechte und linke Teil
-    // vertauscht, TODO
+    // vertauscht. In DES findet dieser Tausch nicht statt. Aus
+    // diesem Grund machen wir den Tausch des letzten Schleifendurchlaufs
+    // wieder rückgängig. Dieses Ergebnis wird in roundResult geschrieben.
     byte roundResult[8];
+    // Der Reihe nach werden die zwei 32 Bit Teile in einen 64 Bit Block
+    // geschrieben
     for(int i = 0; i < 4; i++) {
         roundResult[i] = tmp[i+4];
         roundResult[i+4] = tmp[i];
     }
 
-    permutate(fp, 64, roundResult, 64, out_block, 64);
+    // Abschließend werden die 64 Bit in roundResult mit der fp Tabelle
+    // permutiert.
+    // Das bedeutet, dass das i = 0,1,...,63-te Bit in out_block auf das
+    // (fp[i]-1)-te Bit des roundResult gesetzt wird.
+    permutate(fp, 64, roundResult, 8, out_block, 8);
 }
 
 
@@ -485,9 +499,12 @@ void DESCipher::setBit
 }
 
 // unrolls key_schedule into (param) key_schedule2
+// Die 16 6-Byte großen Rundenschlüssel in der key_schedule der DESCipher Klasse
+// werden hintereinander in der durch key_schedule2 spezifizierten Position abgespeichert.
 void DESCipher::getKeySchedule(byte *key_schedule2) {
     for (size_t i = 0; i < 16; i++) {
         for (size_t j = 0; j < 6; j++) {
+            // Ab keySchedule muss darum 16*6=96 Byte Speicher reserviert sein.
             key_schedule2[i * 6 + j] = key_schedule[i][j];
         }
     }

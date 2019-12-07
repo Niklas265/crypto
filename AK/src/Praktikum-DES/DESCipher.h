@@ -176,6 +176,22 @@ public:
 
     /**
      * Implementation der Feistel-Chiffre.
+     * Dabei wird l_out auf r_in gesetzt. Weiter wird die
+     * f Funktion mit r_in und key aufgerufen und die
+     * Ausgabe der Funktion wird mit l_in XOR'd und in
+     * r_out geschrieben.
+     *
+     * @param l_in zeigt auf den 32 Bit großen linken Teil.
+     *
+     * @param r_in zeigt auf den 32 Bit großen rechten Teil.
+     *
+     * @param key zeigt auf einen 48 Bit großen Rundenschlüssel.
+     *
+     * @param l_out In l_out wird der berechnete linke Teil
+     * geschrieben.
+     *
+     * @param r_out In r_out wird der berechnete rechte Teil
+     * geschrieben.
      */
     void feistel(const byte* l_in,
                const byte* r_in,
@@ -185,12 +201,23 @@ public:
                int rnd=0);
 
     /**
-     * Implementation der DES-Funktion f
+     * Implementation der DES-Funktion f. Sie ist eine
+     * beliebige injektive Abbildung von
+     * {0, 1}^(32) × {0, 1}^(48) nach {0, 1}^(32).
+     * Dabei sind r_in und key die Eingaben und r_out die
+     * Ausgabe der Funktion.
      *
-     * @param r_in
-     * @param key
-     * @param r_out
-     * @param rnd
+     * @param r_in zeigt auf einen 32 Bit großen Speicherblock.
+     * Diese 32 Bit werden mit dem Rundenschlüssel key verarbeitet.
+     *
+     * @param key zeigt auf einen 48 Bit großen Rundenschlüssel.
+     *
+     * @param r_out In r_out wird die 32 Bit Ausgabe der f Funktion
+     * geschrieben.
+     *
+     * @param rnd ist optional, gibt die aktuelle DES Runde an und
+     * wird in der aktuellen Implementation nicht verwendet. Sie kann
+     * in der Zukunft für Debug Ausgaben verwendet werden.
      */
     void functionF(const byte* r_in,
                  const byte* key,
