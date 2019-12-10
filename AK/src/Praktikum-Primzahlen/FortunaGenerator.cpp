@@ -32,10 +32,10 @@ FortunaGenerator::FortunaGenerator() {
 
 bool FortunaGenerator::incCntr() {
     // ctr is 16 char array
-    for (int i = 15; i >= 0; i--) {
+    for (int i = 0; i < 16; i++) {
         if (cntr[i] == 0xff) {
             cntr[i] = 0;
-            if (i == 0) {
+            if (i == 15) {
                 return false;
             }
         } else {
@@ -74,27 +74,34 @@ void FortunaGenerator::reseed(byte* seed, unsigned int size) {
 }
 
 bool FortunaGenerator::getBit() {
+    byte ret;
+    getBlock(&ret, 1);
+    byte mask = 0x1;
+    ret &= mask;
+    return ret;
 }
 
 byte FortunaGenerator::getByte() {
+    byte ret;
+    getBlock(&ret, 1);
+    return ret;
 }
 
 void FortunaGenerator::generateBlocks(byte* buffer, unsigned int n) {
-
-    if (sizeof(buffer) < 16*n) {
-        cerr << "TODO" << endl;
-        return;
+    if (!seeded || getTimeStamp() - last_reseed > 500) {
+        byte seed[32];
+        string urandomPath = "/dev/urandom";
+        ifstream urandStream(urandomPath, ios::binary);
+        urandStream.read((char*)seed,32);
+        urandStream.close();
+        reseed(seed,32);
     }
 
-    if (cntr == 0) {
-        cerr << "TODO" << endl;
-    }
+    // AES Implementierung für die Verschlüsselung aus der CryptoPP-Bibliothek
+    // im ECB Modus
+    ECB_Mode<AES>::Encryption aes_enc;
 
     for (int i = 0; i < n; i++) {
-        // AES Implementierung für die Verschlüsselung aus der CryptoPP-Bibliothek
-        // im ECB Modus
-        ECB_Mode<AES>::Encryption aes_enc;
-
         // Verwendung der 16 Bytes des 'key'-Arrays für zukünftige Verschlüsselung
         // mit dem AES Objekt
         aes_enc.SetKey(key, sizeof(key));
@@ -113,7 +120,27 @@ void FortunaGenerator::generateBlocks(byte* buffer, unsigned int n) {
 }
 
 void FortunaGenerator::getBlock(byte* buffer, unsigned int n) {
-    int num = n /
+    unsigned int num16Blocks;
+    if (n >= 2) {
+        num16Blocks = (n-1) / 16 + 1;
+    } else {
+        num16Blocks = 1;
+    }
+
+    byte* blockBuffer = (byte*)malloc(num16Blocks * 16);
+
+    if(blockBuffer == NULL) {
+        cerr << "Allocating Memory failed." << endl;
+        return;
+    }
+
+    generateBlocks(blockBuffer, num16Blocks);
+
+    for (unsigned int i = 0; i < n; i++) {
+        buffer[i] = blockBuffer[i];
+    }
+
+    free(blockBuffer);
 }
 
 uint32_t FortunaGenerator::getTimeStamp() const {

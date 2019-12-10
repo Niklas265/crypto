@@ -8,16 +8,6 @@ DESCipher::DESCipher() {
 DESCipher::~DESCipher() {
 }
 
-// Vertauscht size bytes ab *a und *b
-void exchange(byte* l, byte* r, int size) {
-    byte tmp[size];
-    for(int i = 0; i < size; i++) {
-        tmp[i] = l[i];
-        l[i] = r[i];
-        r[i] = tmp[i];
-    }
-}
-
 void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
 /******************************************************************************
  * Aufgabe 5
@@ -125,7 +115,13 @@ void DESCipher::computeKeySchedule(const byte *key, bool encmode) {
     // und so weiter.
     if (!encmode) {
         for (int i = 0; i < 8; i++) {
-            exchange(key_schedule[i], key_schedule[15-i], 6);
+            // Vertauscht 6 bytes, also die Größe eines Rundenschlüssels
+            // ab key_schedule[i] und key_schedule[15-i]
+            for(int j = 0; j < 6; j++) {
+                byte tmp = key_schedule[i][j];
+                key_schedule[i][j] = key_schedule[15-i][j];
+                key_schedule[15-i][j] = tmp;
+            }
         }
     }
 }
