@@ -50,8 +50,6 @@ bool FortunaGenerator::incCntr() {
 void FortunaGenerator::reseed(byte* seed, unsigned int size) {
     byte keySeedConcat[32+size];
 
-    incCntr();
-
     seeded = true;
 
     for (int i = 0; i < 32; i++) {
@@ -69,6 +67,8 @@ void FortunaGenerator::reseed(byte* seed, unsigned int size) {
             new ArraySink(key, 32)
         )
     );
+
+    incCntr();
 
     last_reseed = getTimeStamp();
 }
@@ -88,7 +88,8 @@ byte FortunaGenerator::getByte() {
 }
 
 void FortunaGenerator::generateBlocks(byte* buffer, unsigned int n) {
-    if (!seeded || getTimeStamp() - last_reseed > 500) {
+    // TODO: 500000 zurück
+    if (!seeded || getTimeStamp() - last_reseed > 500000) {
         byte seed[32];
         string urandomPath = "/dev/urandom";
         ifstream urandStream(urandomPath, ios::binary);
@@ -121,6 +122,9 @@ void FortunaGenerator::generateBlocks(byte* buffer, unsigned int n) {
 
 void FortunaGenerator::getBlock(byte* buffer, unsigned int n) {
     unsigned int num16Blocks;
+
+    // n / 16 + 1
+
     if (n >= 2) {
         num16Blocks = (n-1) / 16 + 1;
     } else {
@@ -141,6 +145,8 @@ void FortunaGenerator::getBlock(byte* buffer, unsigned int n) {
     }
 
     free(blockBuffer);
+
+    generateBlocks(key, 2);
 }
 
 uint32_t FortunaGenerator::getTimeStamp() const {

@@ -111,7 +111,7 @@ void fortuna() {
 		 << endl << endl;
 
 	FortunaGenerator fortunaGenerator;
-	for (int i = 0; i < 16; i++) {
+	/*for (int i = 0; i < 16; i++) {
 	    fortunaGenerator.cntr[i] = 0xff;
 	}
 	fortunaGenerator.cntr[15] = 0xf;
@@ -132,7 +132,7 @@ void fortuna() {
 
     for (int i = 0; i < 10; i++) {
         cout << (int)fortunaGenerator.getBit() << endl;
-    }
+    }*/
 
     //----------------------
     // Aufgabe 2f
@@ -148,8 +148,6 @@ void fortuna() {
         cout << (int)buf[i] << ' ';
     }
     cout << endl;
-
-
 }
 
 int main() {
