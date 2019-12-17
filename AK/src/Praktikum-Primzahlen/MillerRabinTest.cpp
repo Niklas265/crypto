@@ -120,7 +120,16 @@ bool MillerRabinTest::isPrime(PRNG* rng, const Integer& n, unsigned int s) const
             return false;
         }
     }
+
+    Integer b;
+    Integer e;
+    if (!isPerfectPower(n, b, e)) {
+        cout << "F" << flush;
+        return false;
+    }
+    cout << "WORKED" << endl;
     return true;
+
 }
 
 

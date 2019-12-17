@@ -88,8 +88,7 @@ byte FortunaGenerator::getByte() {
 }
 
 void FortunaGenerator::generateBlocks(byte* buffer, unsigned int n) {
-    // TODO: 500000 zurück
-    if (!seeded || getTimeStamp() - last_reseed > 500000) {
+    if (!seeded || getTimeStamp() - last_reseed > 500) {
         byte seed[32];
         string urandomPath = "/dev/urandom";
         ifstream urandStream(urandomPath, ios::binary);

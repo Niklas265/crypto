@@ -37,7 +37,7 @@ void millerRabin() {
 
 	MillerRabinTest millerRabinTest;
 	Integer n("121399589920585397786647347761633");
-	for (int i = 3; i < n; i++) {
+	for (int i = 6; i < n; i++) {
 	    cout << i << endl;
 	    if (millerRabinTest.witness(Integer(i), n)) {
 	        cout << "n zusammengesetzt mit Witness " << i << endl;
@@ -99,9 +99,9 @@ void millerRabin() {
             b, e);
     cout << "b: " << b << " e: " << e << endl;
 
-    int primeSizes[] = {512, 1024, 2048, 4096};
+    int primeSizes[] = {128, 512, 1024, 2048, 4096};
     for (int primeSize : primeSizes) {
-        cout << primeSize << " Bit Prime: " << randomPrime(primeSize, 20) << endl;
+        cout << primeSize << " Bit Prime: " << randomPrime(primeSize, 2) << endl;
     }
 }
 
