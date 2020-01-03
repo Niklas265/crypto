@@ -17,7 +17,6 @@ int VigenereBreaker::gcd(int a, int b) const {
     } while (r != 0);
 
     return a;
-
 }
 
 

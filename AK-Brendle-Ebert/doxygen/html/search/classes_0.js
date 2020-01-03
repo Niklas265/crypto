@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blockcipher',['BlockCipher',['../classBlockCipher.html',1,'']]]
+  ['fortunagenerator',['FortunaGenerator',['../classFortunaGenerator.html',1,'']]]
 ];

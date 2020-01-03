@@ -23,4 +23,4 @@ SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
         ${PROJECT_SOURCE_DIR}/CMakeModules)
 ADD_SUBDIRECTORY( Praktikum-DES )
 
-#ADD_SUBDIRECTORY( Praktikum-Primzahlen )
+ADD_SUBDIRECTORY( Praktikum-Primzahlen )

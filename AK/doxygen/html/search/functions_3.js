@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['encrypt',['encrypt',['../classBlockCipher.html#a702dd06a7078ef55c4e9a6482893b07d',1,'BlockCipher::encrypt()'],['../classDESCipher.html#a61a76488e8087e92ba7f6b827c72db61',1,'DESCipher::encrypt()']]]
+  ['inccntr',['incCntr',['../classFortunaGenerator.html#a0318cf55c5566b536931e028bff55804',1,'FortunaGenerator']]],
+  ['isperfectpower',['isPerfectPower',['../classMillerRabinTest.html#a91724157cb0fc9286d9061859af0093c',1,'MillerRabinTest']]],
+  ['isprime',['isPrime',['../classMillerRabinTest.html#ad8ec4eb195d5d597ea4dbca4e9c71be2',1,'MillerRabinTest']]]
 ];

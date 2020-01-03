@@ -5,16 +5,17 @@
       <config projectName="AngewandteKryptographie" targetName="polybius" />
       <config projectName="AngewandteKryptographie" targetName="vigenere" />
       <config projectName="AngewandteKryptographie" targetName="functions" />
-      <config projectName="AngewandteKryptographie" targetName="desTest" />
-      <config projectName="AngewandteKryptographie" targetName="desAufgabe3" />
+      <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
       <config projectName="AngewandteKryptographie" targetName="hellostudent" />
       <config projectName="AngewandteKryptographie" targetName="coindex" />
       <config projectName="AngewandteKryptographie" targetName="kasiski" />
       <config projectName="AngewandteKryptographie" targetName="polybius-test" />
+      <config projectName="AngewandteKryptographie" targetName="desAufgabe3" />
       <config projectName="AngewandteKryptographie" targetName="helloworld" />
-      <config projectName="AngewandteKryptographie" targetName="cryptopp-intro" />
+      <config projectName="AngewandteKryptographie" targetName="desAufgabe_10_b" />
       <config projectName="AngewandteKryptographie" targetName="searchshift" />
       <config projectName="AngewandteKryptographie" targetName="calculate" />
+      <config projectName="AngewandteKryptographie" targetName="primes" />
       <config projectName="AngewandteKryptographie" targetName="des" />
     </generated>
   </component>
@@ -25,12 +26,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03877d79-aa4f-4875-a788-6f1bc6e771ef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Praktikum-DES/desAufgabe_10_b.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-DES/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-DES/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-DES/catch.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Praktikum-DES/desTest.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-Primzahlen/FortunaGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-Primzahlen/FortunaGenerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Praktikum-Primzahlen/MillerRabinTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Praktikum-Primzahlen/MillerRabinTest.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,9 +43,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-desTest" />
-  </component>
   <component name="ProjectId" id="1SvoHZtz10dqa4HhSjiQrpDKxTX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -60,7 +55,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.overridden" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Praktikum-CryptoPP" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../BrendleCrypto/angewandte-kryptographie/AK/src" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
@@ -68,7 +64,7 @@
       <recent name="$PROJECT_DIR$/Praktikum-CryptoPP" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.cryptopp-intro">
+  <component name="RunManager" selected="CMake Application.primes">
     <configuration name="calculate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="calculate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="calculate">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -94,7 +90,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="desTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="desTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="desTest">
+    <configuration name="desAufgabe_10_b" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="desAufgabe_10_b" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="desAufgabe_10_b">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -129,6 +125,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="primes" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="primes" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="primes">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="searchshift" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AngewandteKryptographie" TARGET_NAME="searchshift" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AngewandteKryptographie" RUN_TARGET_NAME="searchshift">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -149,7 +150,8 @@
       <item itemvalue="CMake Application.cryptopp-intro" />
       <item itemvalue="CMake Application.des" />
       <item itemvalue="CMake Application.desAufgabe3" />
-      <item itemvalue="CMake Application.desTest" />
+      <item itemvalue="CMake Application.desAufgabe_10_b" />
+      <item itemvalue="CMake Application.primes" />
       <item itemvalue="CMake Application.coindex" />
       <item itemvalue="CMake Application.kasiski" />
       <item itemvalue="CMake Application.searchshift" />
@@ -187,7 +189,9 @@
       <workItem from="1575469366371" duration="14532000" />
       <workItem from="1575502454972" duration="48000" />
       <workItem from="1575502512652" duration="4012000" />
-      <workItem from="1575719597737" duration="7350000" />
+      <workItem from="1575719597737" duration="7608000" />
+      <workItem from="1575989580935" duration="9577000" />
+      <workItem from="1577882575242" duration="6662000" />
     </task>
     <servers />
   </component>
@@ -209,10 +213,42 @@
       <screen x="3840" y="360" width="3440" height="1440" />
     </state>
     <state x="4374" y="864" key="#com.intellij.fileTypes.FileTypeChooser/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1575725288884" />
-    <state x="5336" y="823" key="FileChooserDialogImpl" timestamp="1575502555030">
+    <state x="5336" y="823" width="432" height="484" key="FileChooserDialogImpl" timestamp="1577883802179">
       <screen x="3840" y="360" width="3440" height="1440" />
     </state>
-    <state x="5336" y="823" key="FileChooserDialogImpl/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1575502555030" />
+    <state x="5336" y="823" width="432" height="484" key="FileChooserDialogImpl/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1577883802179" />
+    <state width="1623" height="389" key="GridCell.Tab.0.bottom" timestamp="1577894327528">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="389" key="GridCell.Tab.0.bottom/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1577894327528" />
+    <state width="1623" height="389" key="GridCell.Tab.0.center" timestamp="1577894327528">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="389" key="GridCell.Tab.0.center/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1577894327528" />
+    <state width="1623" height="389" key="GridCell.Tab.0.left" timestamp="1577894327528">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="389" key="GridCell.Tab.0.left/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1577894327528" />
+    <state width="1623" height="389" key="GridCell.Tab.0.right" timestamp="1577894327528">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="389" key="GridCell.Tab.0.right/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1577894327528" />
+    <state width="1623" height="481" key="GridCell.Tab.1.bottom" timestamp="1576003340932">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="481" key="GridCell.Tab.1.bottom/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1576003340932" />
+    <state width="1623" height="481" key="GridCell.Tab.1.center" timestamp="1576003340932">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="481" key="GridCell.Tab.1.center/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1576003340932" />
+    <state width="1623" height="481" key="GridCell.Tab.1.left" timestamp="1576003340931">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="481" key="GridCell.Tab.1.left/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1576003340931" />
+    <state width="1623" height="481" key="GridCell.Tab.1.right" timestamp="1576003340932">
+      <screen x="3840" y="360" width="3440" height="1440" />
+    </state>
+    <state width="1623" height="481" key="GridCell.Tab.1.right/3840.360.3440.1440/0.0.3840.2160/7280.540.1920.1080@3840.360.3440.1440" timestamp="1576003340932" />
     <state x="5057" y="715" key="SettingsEditor" timestamp="1575502615645">
       <screen x="3840" y="360" width="3440" height="1440" />
     </state>

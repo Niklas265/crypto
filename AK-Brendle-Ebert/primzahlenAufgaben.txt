@@ -1,0 +1,11 @@
+Aufgabe 3a ist in der Doxygen zur Funktion witness der MillerRabinTest Klasse enthalten.
+
+
+
+Aufgabe 3d
+Ein solider Beweis für 
+n =  121399589920585397786647347761633
+wäre die Zahl
+a = 75781800534175607000551656659711
+weil (a^(n-1) mod n) = 16653426980040619868264702183795 und somit ungleich 1 ist.
+Dadurch ist das Fermat-Kriterium nicht erfüllt und somit ist n keine Primzahl.
