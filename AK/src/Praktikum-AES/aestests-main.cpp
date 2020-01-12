@@ -112,6 +112,7 @@ void mulTest() {
         a++;
     }
     cout << endl << cntr << " wrong values" << endl;
+    assert(cntr == 0);
 }
 
 void mulTest2() {
@@ -125,13 +126,10 @@ void mulTest2() {
 
     for (size_t i=0; i<a.size(); i++) {
         byte m = AESMath::rpmul(a[i], b[i]);
-        cout << AESMath::format(a[i]) << " & " << AESMath::format(b[i]) << " & "
-        << AESMath::format(m) << "\\\\ %" << endl;
+        //cout << AESMath::format(a[i]) << " & " << AESMath::format(b[i]) << " & "
+        //<< AESMath::format(m) << "\\\\ %" << endl;
         assert(m == expectedOut[i]);
     }
-
-    byte x = 3;
-    cout << "-->" << AESMath::format(AESMath::rpmul(x,2)) << endl;
 }
 
 void xtimeTest() {
@@ -167,8 +165,8 @@ void testxTime() {
     vector<byte> expectedOut = { 0xae, 0x4d, 0xca, 0x39, 0xe9, 0x07, 0x02, 0x96 };
 
     for (size_t i=0; i<inp.size(); i++) {
-        cout << AESMath::format(inp[i]) << " & " <<  AESMath::format(AESMath::xtime(inp[i]))
-             << " \\\\ %" << endl;
+        //cout << AESMath::format(inp[i]) << " & " <<  AESMath::format(AESMath::xtime(inp[i]))
+        //     << " \\\\ %" << endl;
         assert(AESMath::xtime(inp[i]) == expectedOut[i]);
     }
 }
@@ -360,7 +358,8 @@ void mixColumnsTest() {
     cout << state.format() << endl;
     state.mixColumns();
     cout << state.format() << endl;
-
+    state.invMixColumns();
+    cout << state.format() << endl;
 }
 
 void shiftRowsTest() {
@@ -379,6 +378,8 @@ void shiftRowsTest() {
     state.set(s);
     cout << state.format() << endl;
     state.shiftRows();
+    cout << state.format() << endl;
+    state.invShiftRows();
     cout << state.format() << endl;
 
 }
@@ -399,6 +400,8 @@ void subBytesTest() {
     state.set(s);
     cout << state.format() << endl;
     state.subBytes();
+    cout << state.format() << endl;
+    state.invSubBytes();
     cout << state.format() << endl;
 
 }
@@ -442,11 +445,15 @@ void aesTest2() {
     string msg("Dies ist ein Test mit einem langen Satz!!!!");
     plain_text = AESCipher::toVector(msg);
 
+    //vector<byte> plain_text {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
+    //                     0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff};
+
     bool debug_mode=true;
     AESCipher aes(debug_mode);
 
     aes.setKey(key);
     aes.process(plain_text, cipher_text, false);
+
     aes.process(cipher_text, plain_text, true);
 
     string msg2 = AESCipher::toString(plain_text);
@@ -466,25 +473,38 @@ void hexEncoding() {
     s = BlockCipher::toHexString(v);
 
     cout << "Hex-String: " << s << endl;
+}
 
+void subWordTest() {
+    AESMath aesmath;
+    AESKeySchedule key_schedule(aesmath, true);
 
+    cout << '*' <<  (unsigned int)key_schedule.subWord(0x12345678) << endl;
+    cout << AESMath::format(aesmath.sBox(0x12)) << endl;
+    cout << AESMath::format(aesmath.sBox(0x34)) << endl;
+    cout << AESMath::format(aesmath.sBox(0x56)) << endl;
+    cout << AESMath::format(aesmath.sBox(0x78)) << endl;
+
+    exit(0);
 }
 
 
 int main() {
-    //aesMathTest();
-    xtimeTest();
+    aesMathTest();
+    //xtimeTest();
     testxTime();
-    mulTest();
+    mulTest();  // Aufgabe 5f
     mulTest2();
-    //invTest();
-    //parityTest();
-    //atransTest();
+    invTest();
+    parityTest();
+    atransTest();
     //generator();
     //inverseElements();
     //sboxTest();
 
-    //stateTest();
+    stateTest();
+
+    //subWordTest();
 
     //keyScheduleTest128();
     //keyScheduleTest192();
@@ -495,7 +515,7 @@ int main() {
     //subBytesTest();
     //shiftRowsTest();
     //aesTest();
-    //aesTest2();
+    aesTest2();
 
     return 0;
 }

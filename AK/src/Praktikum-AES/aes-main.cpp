@@ -96,7 +96,7 @@ int main(int argc, char **argv) {
             if (mode==AESCipher::Encryption) {
                 aes.writeStream(out_file, out_text, true);
             } else {
-                aes.writeStream(out_file, out_text, mode);
+                aes.writeStream(out_file, out_text, false); // <-- was set to mode
             }
 
             out_file.close();

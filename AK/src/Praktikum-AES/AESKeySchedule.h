@@ -19,7 +19,7 @@ private:
     size_t nr;
     size_t nb;
     vector<word> r_con;
-
+public:
     word rotWord(word w) const;
     word subWord(word w) const;
 

@@ -13,21 +13,48 @@ bool AESCipher::encrypt(const vector<byte>& plain_text, vector<byte>& cipher_tex
     /*
      * Aufgabe 24b
      */
-  return false;
+
+    if (plain_text.size() % 16 != 0) {
+        return false;
+    }
+
+    cipher_text.resize(plain_text.size());
+
+    for(int i = 0; i < plain_text.size(); i+= 16) {
+        encryptBlock(&plain_text[i], &cipher_text[i]);
+    }
+
+    return true;
 }
 
-bool AESCipher::decrypt(const vector<byte>& plain_text, vector<byte>& cipher_text) {
+bool AESCipher::decrypt(const vector<byte>& cipher_text, vector<byte>& plain_text) {
     /*
      * Aufgabe 24c
      */
-    return false;
+    if (cipher_text.size() % 16 != 0) {
+        return false;
+    }
+
+    plain_text.resize(cipher_text.size());
+
+    for(int i = 0; i < cipher_text.size(); i+= 16) {
+        decryptBlock(&cipher_text[i], &plain_text[i]);
+    }
+
+    return true;
 }
 
 bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
     /*
      * Aufgabe 24a
      */
-  return false;
+
+    if (mode == Encryption) {
+        return encrypt(in, out);
+    }
+    else {
+        return decrypt(in, out);
+    }
 }
 
 bool AESCipher::setKey(const vector<byte>& key) {
@@ -45,12 +72,69 @@ void AESCipher::decryptBlock(const byte *cipher_text, byte *plain_text) {
     /*
      * Aufgabe 23
      */
+
+    state.set(cipher_text);
+    debugMessage(0, "iinput " + state.format());
+    state.addKey(key_schedule.getRoundKey(key_schedule.getNrOfRounds()));
+    debugMessage(0, "ik_sch " + key_schedule.formatRoundKey(key_schedule.getNrOfRounds()));
+
+    // final round included in loop
+
+    for (int i = 1; i < key_schedule.getNrOfRounds(); i++) {
+        debugMessage(i, "istart " + state.format());
+        state.invShiftRows();
+        debugMessage(i, "is_row " + state.format());
+        state.invSubBytes();
+        debugMessage(i, "is_box " + state.format());
+        state.addKey(key_schedule.getRoundKey(key_schedule.getNrOfRounds()-i));
+        debugMessage(i, "ik_sch " + key_schedule.formatRoundKey(key_schedule.getNrOfRounds()-i));
+        debugMessage(i, "ik_add " + state.format());
+        state.invMixColumns();
+    }
+
+    debugMessage(key_schedule.getNrOfRounds(), "istart " + state.format());
+    state.invShiftRows();
+    debugMessage(key_schedule.getNrOfRounds(), "is_row " + state.format());
+    state.invSubBytes();
+    debugMessage(key_schedule.getNrOfRounds(), "is_box " + state.format());
+    state.addKey(key_schedule.getRoundKey(0));
+    debugMessage(key_schedule.getNrOfRounds(), "ik_sch " + key_schedule.formatRoundKey(0));
+
+    state.get(plain_text);
+    debugMessage(key_schedule.getNrOfRounds(), "ioutput " + state.format());
 }
 
 void AESCipher::encryptBlock(const byte *plain_text, byte *cipher_text) {
     /*
      * Aufgabe 22
      */
+    state.set(plain_text);
+    debugMessage(0, "input " + state.format());
+    state.addKey(key_schedule.getRoundKey(0));
+    debugMessage(0, "k_sch " + key_schedule.formatRoundKey(0));
+
+    for(int i = 1; i < key_schedule.getNrOfRounds(); i++) {
+        debugMessage(i, "start " + state.format());
+        state.subBytes();
+        debugMessage(i, "s_box " + state.format());
+        state.shiftRows();
+        debugMessage(i, "s_row " + state.format());
+        state.mixColumns();
+        debugMessage(i, "m_col " + state.format());
+        state.addKey(key_schedule.getRoundKey(i));
+        debugMessage(i, "k_sch " + key_schedule.formatRoundKey(i));
+    }
+
+    // Final Round
+    debugMessage(key_schedule.getNrOfRounds(), "start " + state.format());
+    state.subBytes();
+    debugMessage(key_schedule.getNrOfRounds(), "s_box " + state.format());
+    state.shiftRows();
+    debugMessage(key_schedule.getNrOfRounds(), "s_row " + state.format());
+    state.addKey(key_schedule.getRoundKey(key_schedule.getNrOfRounds()));
+    debugMessage(key_schedule.getNrOfRounds(), "k_sch " + key_schedule.formatRoundKey(key_schedule.getNrOfRounds()));
+    state.get(cipher_text);
+    debugMessage(key_schedule.getNrOfRounds(),"output " + state.format());
 }
 
 vector<byte> AESCipher::toVector(const string& msg, size_t block_len) {
