@@ -14,13 +14,23 @@ bool AESCipher::encrypt(const vector<byte>& plain_text, vector<byte>& cipher_tex
      * Aufgabe 24b
      */
 
+    // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu verschlüsselnde
+    // Klartext muss eine größe eines vielfachen von 16 haben. Ansonsten wird
+    // false zurückgegeben, was einen Fehler signalisiert.
     if (plain_text.size() % 16 != 0) {
         return false;
     }
 
+    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe de
+    // plain_textes gesetzt, damit der verschlüsselte Klartext dort gespeichert
+    // werden kann.
     cipher_text.resize(plain_text.size());
 
+    // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
     for(int i = 0; i < plain_text.size(); i+= 16) {
+        // an encryptBlock werden der Reihe nach 16 Bytes des plain_texts
+        // übergeben. Auch die Position, an dem die 16 verschlüsselten Bytes
+        // geschrieben werden sollen, werden übergeben.
         encryptBlock(&plain_text[i], &cipher_text[i]);
     }
 
@@ -31,18 +41,31 @@ bool AESCipher::decrypt(const vector<byte>& cipher_text, vector<byte>& plain_tex
     /*
      * Aufgabe 24c
      */
+
+    // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu entschlüsselnde
+    // Ciphertext muss eine größe eines vielfachen von 16 haben. Ansonsten wird
+    // false zurückgegeben, was einen Fehler signalisiert.
     if (cipher_text.size() % 16 != 0) {
         return false;
     }
 
+    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe de
+    // cipher_texts gesetzt, damit der Klartext dort gespeichert
+    // werden kann.
     plain_text.resize(cipher_text.size());
 
+    // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
     for(int i = 0; i < cipher_text.size(); i+= 16) {
+        // an decryptBlock werden der Reihe nach 16 Bytes des cipher_text
+        // übergeben. Auch die Position, an dem die 16 entschlüsselten Bytes
+        // geschrieben werden sollen, werden übergeben.
         decryptBlock(&cipher_text[i], &plain_text[i]);
     }
 
     return true;
 }
+
+// TODO
 
 bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
     /*

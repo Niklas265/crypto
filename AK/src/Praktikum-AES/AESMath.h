@@ -96,7 +96,11 @@ public:
      * sBox für die Substitution.
      *
      * sBox wendet zwei bijektive Abbildungen auf b an und liefert das Ergebnis
-     * als byte zurück.
+     * als byte zurück. Als erstes wird dabei b auf sein multiplikatives
+     * Inverses abgebildet. Zweitens wird das im ersten Schritt
+     * berechnete multiplikative Inverse von b mit einer in atrans berechneten
+     * affinen Abbildung über GF(2) abgebildet. In dieser Implemenation werden
+     * Lookup Tabellen verwendet, um dieses Prozess zu beschläunigen.
      *
      * @param b Eingabebyte, auf welches die zwei bijektive Abbildungen
      * angewendet werden.
@@ -108,9 +112,6 @@ public:
     /**
      * invSBox um die Substitution der sBox rückgängig zu machen.
      * Zum Beispiel: Angenommen sBox(1) = 10, dann ist invSBox(10) = 1.
-     *
-     * invSBox wendet zwei bijektive Abbildungen auf b an und liefert das
-     * Ergebnis als byte zurück.
      *
      * @param b Eingabebyte, auf welches die zwei bijektive Abbildungen
      * angewendet werden.

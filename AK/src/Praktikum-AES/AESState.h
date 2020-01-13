@@ -75,19 +75,82 @@ public:
      *  Reihe 3 um 3 Byte nach rechts zyklisch verschiebt.
      */
     void shiftRows();
+
+    /**
+     * Führt die Basisoperation SubBytes auf den internen Zustand aus.
+     * SubBytes transformiert den Zustand mit Hilfe einer Substritution mit
+     * der SBox, wobei jedes Byte des state über die sBox Funktion einen neuen
+     * Wert zugewiesen bekommt.
+     * sBox wendet zwei bijektive Abbildungen auf jedes Byte b in state an.
+     * Als erstes wird dabei b auf sein multiplikatives
+     * Inverses abgebildet. Zweitens wird das im ersten Schritt
+     * berechnete multiplikative Inverse von b mit einer in atrans berechneten
+     * affinen Abbildung über GF(2) abgebildet. In dieser Implemenation werden
+     * Lookup Tabellen verwendet, um dieses Prozess zu beschläunigen.
+     */
     void subBytes();
+
+    /**
+     * Führt die Basisoperation MixColumns auf den internen Zustand aus.
+     * Dabei wird der Zustand spaltenweise transformiert, wobei eine Spalte
+     * als Vektor interpretiert wird und mit einer vorbestimmten 4x4 Matrix
+     * multipliziert wird.
+     */
     void mixColumns();
 
     /**
      * invShiftRows macht die shiftRows Funktion wieder rückgänig.
      * Dafür wird die Reihe 1 wird um 3 Byte, Reihe 2 um 2 und
-     * Reihe 3 um 1 Byte nach rechts zyklisch verschoben. Wird für eine State
-     * shiftRows und danach invShiftRows aufgerufen, dann ist darauf
-     * resulierende State die gleiche wie vor dem Aufruf von shiftRows().
+     * Reihe 3 um 1 Byte nach rechts zyklisch verschoben. Da das shiften
+     * zyklisch ist kann an dieser Stelle ein rechtsshift anstelle eines
+     * linksshifts gemacht werden.
+     * Wird für eine State shiftRows und danach invShiftRows aufgerufen, dann ist
+     * die darauf resulierende State die gleiche wie vor dem Aufruf von shiftRows().
+     *
+     * Jede Basisoperation auf den state kann invertiert werden. Diese
+     * Eigenschaft wird hier benötigt, um einen verschlüsselten Text wieder
+     * zu entschlüsseln. Für das entschlüsseln werden die Basisoperation durch
+     * ihre inversen Paare ersetzt und in umgekehrter Reihenfolge auf den
+     * state, also des cipher_texts, angewandt.
      */
     void invShiftRows();
+
+    /**
+     * invSubBytes macht die subBytes Substitution wieder rückgänig.
+     *
+     * Jede Basisoperation auf den state kann invertiert werden. Diese
+     * Eigenschaft wird hier benötigt, um einen verschlüsselten Text wieder
+     * zu entschlüsseln. Für das entschlüsseln werden die Basisoperation durch
+     * ihre inversen Paare ersetzt und in umgekehrter Reihenfolge auf den
+     * state, also des cipher_texts, angewandt.
+     */
     void invSubBytes();
+
+    /**
+     * invMixColumns macht die mixColumns Transformation wieder rückgänig.
+     *
+     * Jede Basisoperation auf den state kann invertiert werden. Diese
+     * Eigenschaft wird hier benötigt, um einen verschlüsselten Text wieder
+     * zu entschlüsseln. Für das entschlüsseln werden die Basisoperation durch
+     * ihre inversen Paare ersetzt und in umgekehrter Reihenfolge auf den
+     * state, also des cipher_texts, angewandt.
+     */
     void invMixColumns();
+
+    /**
+     * addKey implementiert die AddRoundKey Transformation, wobei der
+     * Rundenschlüssel in key auf den internen Zustand addiert wird. Bei dieser
+     * Addition wird jedes Byte des Zustand mit dem entsprechenden Byte des
+     * Rundenschlüssels mit XOR verknüpft. Der Rundenschlüssel muss dabei
+     * die Größe der state haben. Da diese in unserer Implementierung fest
+     * gesetzt ist, muss jeder Rundenschlüssel eine Größe von 16 Byte haben.
+     *
+     * Jeder Rundenschlüssel besteht aus 16 Bytes der key_schedule.
+     *
+     * @param key Zeiger auf den key, welcher der Rundenschlüssel ist,
+     * der für die AddRoundKey Transformation verwendet wird. Dieser
+     * Rundenschlüssel muss eine Größe von 16 Byte, also 4 words haben.
+     */
     void addKey(const word* key);
 
     string format() const;

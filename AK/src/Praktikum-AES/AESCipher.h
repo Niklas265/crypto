@@ -10,11 +10,27 @@
 
 using namespace std;
 
+/**
+ *
+ */
 class AESCipher : public BlockCipher {
 private:
+    /**
+     * Flag zum Aktivieren von Debug-Ausgaben
+     */
     bool debug_mode;
+    /**
+     * Ein Objekt der Klasse AESMath für das Rechnen über GF(256).
+     */
     AESMath aesmath;
+    /**
+     * Ein Objekt der Klasse AESKeySchedule für die Rundenschlüssel.
+     */
     AESKeySchedule key_schedule;
+    /**
+     * Ein Objekt der Klasse AESState für die 16 Byte große state des AES.
+     * Weiter sind dort die Basisoperationen auf die state implementiert.
+     */
     AESState state;
 
     void debugMessage(size_t round, string msg);
