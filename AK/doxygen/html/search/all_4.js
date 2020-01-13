@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['inccntr',['incCntr',['../classFortunaGenerator.html#a0318cf55c5566b536931e028bff55804',1,'FortunaGenerator']]],
-  ['isperfectpower',['isPerfectPower',['../classMillerRabinTest.html#a91724157cb0fc9286d9061859af0093c',1,'MillerRabinTest']]],
-  ['isprime',['isPrime',['../classMillerRabinTest.html#ad8ec4eb195d5d597ea4dbca4e9c71be2',1,'MillerRabinTest']]]
+  ['encrypt_5fgiven',['encrypt_given',['../structgengetopt__args__info.html#a2cc94a70a7e771ee78c947d08dd8cf1d',1,'gengetopt_args_info']]],
+  ['encrypt_5fhelp',['encrypt_help',['../structgengetopt__args__info.html#a31a0c7c5b907732c8f4f74717bfdb8bc',1,'gengetopt_args_info']]]
 ];

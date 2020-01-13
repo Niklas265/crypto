@@ -87,6 +87,7 @@ void AESState::set(const byte* in) {
      * Aufgabe 14a
      */
 
+    // kopiert die 16 Bytes ab in an state
     for (int i = 0; i < 16; i++) {
         state[i] = in[i];
     }

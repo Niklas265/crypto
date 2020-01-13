@@ -1,0 +1,81 @@
+\hypertarget{classAESState}{}\section{A\+E\+S\+State Class Reference}
+\label{classAESState}\index{A\+E\+S\+State@{A\+E\+S\+State}}
+
+
+Collaboration diagram for A\+E\+S\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=140pt]{classAESState__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classAESState_a2cc9414a52e4f828dce31db66af44f12}\label{classAESState_a2cc9414a52e4f828dce31db66af44f12}} 
+{\bfseries A\+E\+S\+State} (const \hyperlink{classAESMath}{A\+E\+S\+Math} \&aesmath, bool debug\+\_\+mode=false)
+\item 
+\mbox{\Hypertarget{classAESState_a289634d47fcbde24b1464c8b82ee04f5}\label{classAESState_a289634d47fcbde24b1464c8b82ee04f5}} 
+void {\bfseries set} (const byte $\ast$in)
+\item 
+\mbox{\Hypertarget{classAESState_a374f83c433060db458a586923b2aa116}\label{classAESState_a374f83c433060db458a586923b2aa116}} 
+void {\bfseries get} (byte $\ast$out)
+\item 
+\mbox{\Hypertarget{classAESState_aed74abc14779f7d8fcbfea6f06649640}\label{classAESState_aed74abc14779f7d8fcbfea6f06649640}} 
+void {\bfseries shift\+Rows} ()
+\item 
+\mbox{\Hypertarget{classAESState_ab18b4607210ae88bd825e7b9ca4529a6}\label{classAESState_ab18b4607210ae88bd825e7b9ca4529a6}} 
+void {\bfseries sub\+Bytes} ()
+\item 
+\mbox{\Hypertarget{classAESState_a88494d311817ef8ac87984fdc475b138}\label{classAESState_a88494d311817ef8ac87984fdc475b138}} 
+void {\bfseries mix\+Columns} ()
+\item 
+\mbox{\Hypertarget{classAESState_a08dcc6810da02059f3dea7ef0ad50a8e}\label{classAESState_a08dcc6810da02059f3dea7ef0ad50a8e}} 
+void {\bfseries inv\+Shift\+Rows} ()
+\item 
+\mbox{\Hypertarget{classAESState_abfa9f233a7776649ac044d581f88f240}\label{classAESState_abfa9f233a7776649ac044d581f88f240}} 
+void {\bfseries inv\+Sub\+Bytes} ()
+\item 
+\mbox{\Hypertarget{classAESState_a5a16a03a1569836f8876d9822e8d3874}\label{classAESState_a5a16a03a1569836f8876d9822e8d3874}} 
+void {\bfseries inv\+Mix\+Columns} ()
+\item 
+\mbox{\Hypertarget{classAESState_abdd8d914886e56653c5a78d3605abf1d}\label{classAESState_abdd8d914886e56653c5a78d3605abf1d}} 
+void {\bfseries add\+Key} (const word $\ast$key)
+\item 
+\mbox{\Hypertarget{classAESState_a968bcb473d9dfb281f9d753d621792c9}\label{classAESState_a968bcb473d9dfb281f9d753d621792c9}} 
+string {\bfseries format} () const
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classAESState_a40b1c825513553815de61e1f8e2b89be}\label{classAESState_a40b1c825513553815de61e1f8e2b89be}} 
+byte {\bfseries get\+Cell} (size\+\_\+t row, size\+\_\+t col)
+\item 
+\mbox{\Hypertarget{classAESState_a8fc413a6fdf8211a8c81341c5fb98b2f}\label{classAESState_a8fc413a6fdf8211a8c81341c5fb98b2f}} 
+void {\bfseries set\+Cell} (size\+\_\+t row, size\+\_\+t col, byte b)
+\item 
+\mbox{\Hypertarget{classAESState_ad0b0ce9b90a20e90ebe714a96cb0513c}\label{classAESState_ad0b0ce9b90a20e90ebe714a96cb0513c}} 
+void {\bfseries shift\+Row} (size\+\_\+t row, size\+\_\+t shift)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classAESState_a0ecd8ba384844aec6e8ad93b9ad1477b}\label{classAESState_a0ecd8ba384844aec6e8ad93b9ad1477b}} 
+byte {\bfseries state} \mbox{[}16\mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classAESState_a7cd68a8ad4ea900df93a9adca4531a04}\label{classAESState_a7cd68a8ad4ea900df93a9adca4531a04}} 
+bool {\bfseries debug\+\_\+mode}
+\item 
+\mbox{\Hypertarget{classAESState_afd42377ff30e9d15bfef8a09e768380e}\label{classAESState_afd42377ff30e9d15bfef8a09e768380e}} 
+const \hyperlink{classAESMath}{A\+E\+S\+Math} $\ast$ {\bfseries math}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+A\+E\+S/A\+E\+S\+State.\+h\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+A\+E\+S/A\+E\+S\+State.\+cpp\end{DoxyCompactItemize}

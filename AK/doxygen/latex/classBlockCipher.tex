@@ -1,0 +1,57 @@
+\hypertarget{classBlockCipher}{}\section{Block\+Cipher Class Reference}
+\label{classBlockCipher}\index{Block\+Cipher@{Block\+Cipher}}
+
+
+Inheritance diagram for Block\+Cipher\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{classBlockCipher__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBlockCipher_a3c95996f1004e8bbf2b681168d1bd0a9}\label{classBlockCipher_a3c95996f1004e8bbf2b681168d1bd0a9}} 
+{\bfseries Block\+Cipher} (unsigned int in\+\_\+block\+\_\+len=8)
+\item 
+\mbox{\Hypertarget{classBlockCipher_aa6feefe4bf7b8844c44e06240439715a}\label{classBlockCipher_aa6feefe4bf7b8844c44e06240439715a}} 
+virtual bool {\bfseries decrypt} (const vector$<$ byte $>$ \&plain\+\_\+text, vector$<$ byte $>$ \&cipher\+\_\+text)=0
+\item 
+\mbox{\Hypertarget{classBlockCipher_a6b9e82d14004c855a47d79e9de8b3450}\label{classBlockCipher_a6b9e82d14004c855a47d79e9de8b3450}} 
+virtual bool {\bfseries encrypt} (const vector$<$ byte $>$ \&plain\+\_\+text, vector$<$ byte $>$ \&cipher\+\_\+text)=0
+\item 
+\mbox{\Hypertarget{classBlockCipher_a2d97a0cb8efa9109eefea09c7019f064}\label{classBlockCipher_a2d97a0cb8efa9109eefea09c7019f064}} 
+virtual bool {\bfseries set\+Key} (const vector$<$ byte $>$ \&key)=0
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBlockCipher_ae55a65434bf1d4b59375916a0e58664c}\label{classBlockCipher_ae55a65434bf1d4b59375916a0e58664c}} 
+static byte {\bfseries hex\+To\+Byte} (byte xdigit)
+\item 
+\mbox{\Hypertarget{classBlockCipher_a6c951af389b9ddb9f40c410d18ab5c66}\label{classBlockCipher_a6c951af389b9ddb9f40c410d18ab5c66}} 
+static bool {\bfseries read\+Stream} (istream \&strm, vector$<$ byte $>$ \&data, bool hex\+\_\+mode)
+\item 
+\mbox{\Hypertarget{classBlockCipher_a3839442ae65dd2a710a015b53e9117bf}\label{classBlockCipher_a3839442ae65dd2a710a015b53e9117bf}} 
+static void {\bfseries write\+Stream} (ostream \&strm, const vector$<$ byte $>$ \&data, bool hex\+\_\+mode, int columns=30)
+\item 
+\mbox{\Hypertarget{classBlockCipher_a58dfa6f0548071b3988c8c8990e54c93}\label{classBlockCipher_a58dfa6f0548071b3988c8c8990e54c93}} 
+static bool {\bfseries hex\+String\+To\+Vector} (string s, vector$<$ byte $>$ \&data)
+\item 
+\mbox{\Hypertarget{classBlockCipher_ad000d34ae66e52ee8484a651793d7dfa}\label{classBlockCipher_ad000d34ae66e52ee8484a651793d7dfa}} 
+static string {\bfseries to\+Hex\+String} (const vector$<$ byte $>$ \&data)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBlockCipher_ab29ee03262fd620cd0659e860972faf0}\label{classBlockCipher_ab29ee03262fd620cd0659e860972faf0}} 
+unsigned int {\bfseries block\+\_\+len}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+A\+E\+S/Block\+Cipher.\+h\item 
+/home/sinflair/\+P/crypto/\+A\+K/src/\+Praktikum-\/\+A\+E\+S/Block\+Cipher.\+cpp\end{DoxyCompactItemize}
