@@ -22,7 +22,7 @@ void AESState::addKey(const word* key) {
      */
 
     // Der Reihe nach wird jede Cell, also jedes Byte in state mit dem
-    // Rundenschlüssel XOR'd.
+    // Rundenschlüssel XOR verknüpft.
     for (int col = 0; col < 4; col++) {
         byte keyWordAsByte[4];
         // Da der Rundenschlüssel als word übergeben wurde und die state ein
@@ -72,7 +72,7 @@ void AESState::subBytes() {
      * Aufgabe 17a
      */
 
-    // Für jedes Byte des state
+    // Auf jedes Byte des state
     for (int i = 0; i < 16; i++) {
         // wird die Substitution angewandt.
         state[i] = math->sBox(state[i]);
@@ -96,7 +96,7 @@ void AESState::set(const byte* in) {
      * Aufgabe 14a
      */
 
-    // kopiert die 16 Bytes ab in an state
+    // kopiert die 16 Bytes ab *in an state
     for (int i = 0; i < 16; i++) {
         state[i] = in[i];
     }
@@ -115,18 +115,18 @@ void AESState::mixColumns() {
                     {1,1,2,3},
                     {3,1,1,2}};
 
-    // Jede spalte des Zustands wird transformiert
+    // Jede spalte des state wird transformiert
     for (int col = 0; col < 4; col++) {
         // Dabei müssen die Zwischenergebnisse in einem separaten Speicher
         // gespeichert werden, da sonst in der Transformation benötigte
         // Daten von Zwischenergebnissen überschrieben werden.
         byte tmp[4] = {0,0,0,0};
-        // Jede Spalte wird als Vektor interpretiert. Die Spalte besteht aus
-        // 4 Reihen. Der Vektor wird mit Hilfe der Matrixmultiplikation
+        // Jede Spalte des state wird als Vektor interpretiert. Die Spalte des state besteht aus
+        // 4 Reihen. Dieser Vektor wird mit Hilfe der Matrixmultiplikation
         // über GF(256) mit der 4x4 Matrix in m multipliziert.
-        // Dafür muss für jede Zeile der Matrix, also 4 mal, die jeweilige
-        // Zeile der Matrix mit der aktuell zu transformierenden Spalte
-        // multipliziert werden und die Ergebnisse aller Zeilen der Matrix muss
+        // Dafür muss für jede Zeile der Matrix m, also 4 mal, die jeweilige
+        // Zeile der Matrix mit dem Vektor der aktuell zu transformierenden Spalte der state
+        // multipliziert werden und die Ergebnisse aller Zeilen der Matrix m müssen zusammen
         // addiert werden. Da über GF(256) addiert und multipliziert wird, können
         // die Methoden der AESMath Klasse verwendet werden.
         for (int row = 0; row < 4; row++) {
@@ -160,18 +160,18 @@ void AESState::invMixColumns() {
     // Matrix m, mit der multipliziert wird, wurde so geändert, damit die
     // mixColumns Funktion invertiert wird.
 
-    // Jede spalte des Zustands wird transformiert
+    // Jede spalte des state wird transformiert
     for (int col = 0; col < 4; col++) {
         // Dabei müssen die Zwischenergebnisse in einem separaten Speicher
         // gespeichert werden, da sonst in der Transformation benötigte
         // Daten von Zwischenergebnissen überschrieben werden.
         byte tmp[4] = {0,0,0,0};
-        // Jede Spalte wird als Vektor interpretiert. Die Spalte besteht aus
-        // 4 Reihen. Der Vektor wird mit Hilfe der Matrixmultiplikation
+        // Jede Spalte des state wird als Vektor interpretiert. Die Spalte des state besteht aus
+        // 4 Reihen. Dieser Vektor wird mit Hilfe der Matrixmultiplikation
         // über GF(256) mit der 4x4 Matrix in m multipliziert.
-        // Dafür muss für jede Zeile der Matrix, also 4 mal, die jeweilige
-        // Zeile der Matrix mit der aktuell zu transformierenden Spalte
-        // multipliziert werden und die Ergebnisse aller Zeilen der Matrix muss
+        // Dafür muss für jede Zeile der Matrix m, also 4 mal, die jeweilige
+        // Zeile der Matrix mit dem Vektor der aktuell zu transformierenden Spalte der state
+        // multipliziert werden und die Ergebnisse aller Zeilen der Matrix m müssen zusammen
         // addiert werden. Da über GF(256) addiert und multipliziert wird, können
         // die Methoden der AESMath Klasse verwendet werden.
         for (int row = 0; row < 4; row++) {
