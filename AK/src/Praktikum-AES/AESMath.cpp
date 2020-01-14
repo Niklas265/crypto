@@ -10,28 +10,42 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
     /*
      * Aufgabe 5a
      */
-
+    
     // 3 ist das erzeugende Element
 
+    // Lookup Tabelle für g^i für alle Elemente i aus GF(256).
+    // i ist die Position in der Tabelle.
     byte a = 1;
     byte b;
-
+    
+    // Der Fall 3^0 = 1
     exp_table.push_back(a);
 
-    // 254 because 256-2
+    // Fie Falle 3^1 bis 3^255 werden der Lookup Tabelle hinzugefügt.
+    // Für jedes i ist 3^i = 3^(i-1)*3. Dadurch kann das Ergebnis 
+    // des letzten Schleifendurchlaufs verwendet werden. 
     for (int i = 1; i < 256; i++) {
         // b = g^i
         b = rpmul(a,3);
+        // b wird an position i im exp_table gesetzt
         exp_table.push_back(b);
+        // im nächsten Schleifendurchlauf ist a = 3^(i-1).
         a = b;
     }
+    // Da der Generator 3 für exp verwendet wird, sind die
+    // 256 Werte in exp_table unique.
 
     /*
      * Aufgabe 5b
      */
 
-    // inverse = log
+    // Lookup Tabelle für log3(i) für alle Elemente i aus GF(256).
+    // i ist die Position in der Tabelle.
     for (int i = 0; i < 256; i++) {
+        // log3(3^i) ist gleich i. log ist die inverse Operation von exp.
+        // Da der Generator 3 für exp und log verwendet wird, sind die
+        // 256 Werte in exp_table unique. Dadurch werden auch die 256 Werte
+        // in log_table unique.
         log_table[exp_table[i]] = i;
     }
 
@@ -81,27 +95,6 @@ byte AESMath::add(byte a, byte b) {
     // Diese Rechnung wird als a XOR b implementiert.
     return a ^ b;
 }
-
-/*byte AESMath::atrans(byte x) {
-    /*
-     * Aufgabe 8
-     */
-
-    // 8x8 * 8x1 = 1x8
-
-    // 1 1 1 0 1 0 1 0 = 234
-    //x = 234;
-
-    // 1 1 1 1 1 0 0 0 = 4 = 0 + 0 = 0
-    // 0 1 1 1 1 1 0 0 = 3 = 1 + 1 = 0
-    // 0 0 1 1 1 1 1 0 = 3 = 1 + 1 = 0
-    // 0 0 0 1 1 1 1 1 = 2 = 0 + 0 = 0
-    // 1 0 0 0 1 1 1 1 = 3 = 1 + 0 = 1
-    // 1 1 0 0 0 1 1 1 = 3 = 1 + 0 = 1
-    // 1 1 1 0 0 0 1 1 = 4 = 0 + 1 = 1
-    // 1 1 1 1 0 0 0 1 = 3 = 1 + 1 = 0
-
-    // i and AND and then parity*/
 
 byte AESMath::atrans(byte x) {
     /*
@@ -180,6 +173,8 @@ byte AESMath::exp(byte i) const {
     /*
      * Aufgabe 5c
      */
+    // exp_table ist eine Lookup Tabelle für 3^i. An Index i in der Tabelle steht
+    // das Ergebnis für 3^i.
     return exp_table[i];
 }
 
@@ -187,12 +182,17 @@ byte AESMath::inv(byte b) const {
     /*
      * Aufgabe 6
      */
+    // Bei Eingabe 0 ebenfalls 0 zurückgeliefert.
     if (b == 0) return 0;
 
-    // Gesucht ist das ? in: g^i * ? = g^1, wobei b=g^i.
-    // multiplikative inverse: g^i * ? = g^1
-    // m-1-i
-    // 1) aus b i bekommen. 2)  g^m-1-i berechnen
+    // Gesucht ist das ? in: g^i ° ? = g^1 (über GF(256)), wobei b=g^i.
+    // log(b) liefert das i.
+    // Da '?' ein Element aus GF(256) ist, kann es auch durch den Generator 
+    // 3 mit 3^j erzeugt werden.
+    // Für das Inverse muss gelten, dass i+j = 1 (mod 256) ist. 
+    // Umgestellt ist das j = i-1 (mod 256). Da Der Fall 0 oben schon abgefangen ist,
+    // ist i-1 > 0 und dadurch kann i-1 (mod 256) zu 256-1-i umgeschrieben werden.
+    // Dadurch ist 3^(256-1-i) das Ergebnis.
     return exp(256-1-log(b));
 }
 
@@ -200,6 +200,8 @@ byte AESMath::log(byte b) const {
     /*
      * Aufgabe 5d
      */
+    // log_table ist eine Lookup Tabelle für log3(i). An Index i in der Tabelle steht
+    // das Ergebnis für log3(i).
   return log_table[b];
 }
 
@@ -207,13 +209,16 @@ byte AESMath::rpmul(byte a, byte b) {
     /*
      * Aufgabe 4
      */
-    // TODO
     byte p = 0;
     while (a > 0) {
+        // wenn aktuell niedrigstes Bit in a auf 1 ist
         if (a % 2 == 1) {
+            // wird p mit b XOR gerechnet.
             p = p ^ b;
         }
+        // in jedem schleifendurchlauf wird b mit xtime verdoppelt.
         b = xtime(b);
+        // und a wird um 1 Bit nach rechts geshiftet.
         a = a >> 1;
     }
     return p;
@@ -303,6 +308,8 @@ byte AESMath::sBox(byte b) const {
     /*
      * Aufgabe 9c
      */
+    // sbox ist eine Lookup Tabelle für die zweifache bijektive Abbildung der SBox. 
+    // An Index b in der Tabelle steht das Ergebnis für die SBox von b.
     return sbox[b];
 }
 
@@ -310,6 +317,8 @@ byte AESMath::invSBox(byte b) const {
     /*
      * Aufgabe 9d
      */
+    // inv_sbox ist eine Lookup Tabelle für das Inverse der zweifachen bijektive Abbildung der SBox. 
+    // An Index b in der Tabelle steht das Inverse für die SBox von b.
     return inv_sbox[b];
 }
 
@@ -317,9 +326,13 @@ byte AESMath::xtime(byte b) {
     /*
      * Aufgabe 3
      */
-    // wenn höchstwertigste Bit gesetzt ist, ann muss durch das irreduzible
-    // Polynom m(x) = 0x11b subtrahiert werden.
     byte r = b << 1;
+    // wenn höchstwertigste Bit gesetzt ist, dann muss durch das irreduzible
+    // Polynom m(x) = 0x11b subtrahiert werden.
+    // Die Subtraktion über GF(256) ist wie die Addition und ebenfalls über XOR
+    // implementierbar.
+    // In jedem Fall werden die Bits in b um 1 Bit nach links verschoben. 
+    // Der 1-fache Linksshift multipliziert b mit 2.
     if ((b & 0x80) == 0x80) {
         r ^= 0x1b;
     }
