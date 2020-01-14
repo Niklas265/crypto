@@ -18,9 +18,9 @@ AESKeySchedule::AESKeySchedule(const AESMath &aesmath, bool debug_mode)
     // r_con[i] = 2 •(RC[i-1]), gefolgt von 8 Nullbytes / 24 Nullbits.
     word a = 1;
     for (int i = 1; i < 11; i++) {
-        // 24 Nullbits werden angehangen
+        // 24 Nullbits werden angehängt
         r_con[i] = a << 24;
-        // implementiert die multiplikation mit 2 in 'r_con[i+1] = 02 •(RC[i])'
+        // implementiert die Multiplikation mit 2 in 'r_con[i+1] = 02 •(RC[i])'
         // für den nächsten Schleifendurchlauf.
         a = aesmath.mul(a, 2);
     }
@@ -67,7 +67,7 @@ bool AESKeySchedule::setKey(const vector<byte>& key) {
 
     // nk, also die Größe des (Cipher Key) Schlüssels (in 4-Byte-Wörtern)
     // wird aus dem Übergabeargument key berechnet.
-    // key ist ein vector aus byte werten. Da nk in 32 Bit (4-Byte) Wörtern
+    // key ist ein vector aus Byte werten. Da nk in 32 Bit (4-Byte) Wörtern
     // angegeben ist, werden die Byte in Bits umgerechnet und durch 32 geteilt.
     nk = key.size() * 8 / 32;
 
@@ -100,7 +100,7 @@ bool AESKeySchedule::setKey(const vector<byte>& key) {
     }
 
     // Im debug_mode werden Zwischenergebnisse über stdout ausgegeben.
-    // Die Ausgabe orientiert sich an der des FIPS-Standards (Seite 27).
+    // Die Ausgabe orientiert sich an der des FIPS-Standards 197 (Seite 27).
     if(debug_mode) {
         // Ausgabe der Header
         cout << " i|" << setw(15) << setfill(' ')
@@ -118,7 +118,7 @@ bool AESKeySchedule::setKey(const vector<byte>& key) {
     // werden (nb * (nr+1)) word Daten für die Schlüssel benötigt.
     for (int i = nk; i < nb * (nr+1); i++) {
         // Alle Zwischenergebnisse werden separat nach jedem Zwischenschritt
-        // in eine varible gespeichert, damit sie später, wenn debug_mode
+        // in eine Variable gespeichert, damit sie später, wenn debug_mode
         // aktiviert wurde, ausgegeben werden können. Die Variablen werden
         // alle bereits hier deklariert, damit sie auch später abgerufen
         // werden können.
@@ -173,7 +173,7 @@ bool AESKeySchedule::setKey(const vector<byte>& key) {
                 cout << string(15, ' ') << hex << setw(8) << setfill('0') << afterSubWord
                      << string(30, ' ') << "|      ";
             } else {
-                // ist keines davon der fall, dann wurden diese Zwischenergebnisse
+                // ist keines davon der Fall, dann wurden diese Zwischenergebnisse
                 // in diesem Schleifendurchlauf nicht verwendet und werden nicht
                 // ausgegeben.
                 cout << string(60, ' ');
