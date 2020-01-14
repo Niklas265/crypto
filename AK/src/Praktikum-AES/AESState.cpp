@@ -195,7 +195,7 @@ void AESState::shiftRow(size_t row, size_t shift) {
      */
 
     // in jedem Schleifendurchlauf wird die row des state um
-    // 1 Byte nach rechts verschoben
+    // 1 Byte nach links verschoben
     for (int i = 0; i < shift; i++) {
         // Das Byte der Spalte 0 muss zwischengespeichert werden, damit es
         // nicht überschrieben wird.
@@ -219,11 +219,11 @@ void AESState::shiftRows() {
      * Aufgabe 16a
      */
     // 0-te Spalte wird nicht geshiftet
-    // 1-te Spalte wird um 1 nach rechts geshiftet
+    // 1-te Spalte wird um 1 nach links geshiftet
     shiftRow(1, 1);
-    // 2-te Spalte wird um 2 nach rechts geshiftet
+    // 2-te Spalte wird um 2 nach links geshiftet
     shiftRow(2, 2);
-    // 3-te Spalte wird um 3 nach rechts geshiftet
+    // 3-te Spalte wird um 3 nach links geshiftet
     shiftRow(3, 3);
 }
 
@@ -233,16 +233,16 @@ void AESState::invShiftRows() {
      * Aufgabe 16b
      */
     // 0-te Spalte wird nicht geshiftet
-    // 1-te Spalte wird um 3 nach rechts geshiftet. Die Basisoperation shiftRows
-    // hatte die Spalte um 1 nach reshiftet. drei weitere Shifts bringen die
+    // 1-te Spalte wird um 3 nach links geshiftet. Die Basisoperation shiftRows
+    // hatte die Spalte um 1 nach reshiftet. drei weitere Linksshifts bringen die
     // Werte der Reihe wieder in die uhrsprüngliche Position.
     shiftRow(1, 3);
     // Die Basisoperation shiftRows
-    // hatte die Spalte um 2 nach reshiftet. 2 weitere Shifts bringen die
+    // hatte die Spalte um 2 nach links geshiftet. 2 weitere Linksshifts bringen die
     // Werte der Reihe wieder in die uhrsprüngliche Position.
     shiftRow(2, 2);
     // Die Basisoperation shiftRows
-    // hatte die Spalte um 3 nach reshiftet. 1 weiterer Shift bringen die
+    // hatte die Spalte um 3 nach links geshiftet. 1 weiterer Linksshifts bringt die
     // Werte der Reihe wieder in die uhrsprüngliche Position.
     shiftRow(3, 1);
 }
