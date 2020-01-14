@@ -13,69 +13,54 @@ bool AESCipher::encrypt(const vector<byte>& plain_text, vector<byte>& cipher_tex
     /*
      * Aufgabe 24b
      */
-
-    // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu verschlüsselnde
-    // Klartext muss eine größe eines vielfachen von 16 haben. Ansonsten wird
-    // false zurückgegeben, was einen Fehler signalisiert.
-    if (plain_text.size() % 16 != 0) {
-        return false;
-    }
-
-    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe de
-    // plain_textes gesetzt, damit der verschlüsselte Klartext dort gespeichert
-    // werden kann.
-    cipher_text.resize(plain_text.size());
-
-    // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
-    for(int i = 0; i < plain_text.size(); i+= 16) {
-        // an encryptBlock werden der Reihe nach 16 Bytes des plain_texts
-        // übergeben. Auch die Position, an dem die 16 verschlüsselten Bytes
-        // geschrieben werden sollen, werden übergeben.
-        encryptBlock(&plain_text[i], &cipher_text[i]);
-    }
-
-    return true;
+    // ruft process im mode Encryption auf.
+    // in plain_text steht der zu verschlüsselnde Klartext, welcher in cipher_text
+    // gespeichert wird.
+    return process(cipher_text, plain_text, Encryption);
 }
 
 bool AESCipher::decrypt(const vector<byte>& cipher_text, vector<byte>& plain_text) {
     /*
      * Aufgabe 24c
      */
-
-    // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu entschlüsselnde
-    // Ciphertext muss eine größe eines vielfachen von 16 haben. Ansonsten wird
-    // false zurückgegeben, was einen Fehler signalisiert.
-    if (cipher_text.size() % 16 != 0) {
-        return false;
-    }
-
-    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe de
-    // cipher_texts gesetzt, damit der Klartext dort gespeichert
-    // werden kann.
-    plain_text.resize(cipher_text.size());
-
-    // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
-    for(int i = 0; i < cipher_text.size(); i+= 16) {
-        // an decryptBlock werden der Reihe nach 16 Bytes des cipher_text
-        // übergeben. Auch die Position, an dem die 16 entschlüsselten Bytes
-        // geschrieben werden sollen, werden übergeben.
-        decryptBlock(&cipher_text[i], &plain_text[i]);
-    }
-
-    return true;
+    // ruft process im mode Decryption auf.
+    // in cipher_text steht der zu entschlüsselnde Ciphertext, welcher in plain_text
+    // gespeichert wird.
+    return process(cipher_text, plain_text, Decryption);
 }
 
 bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
     /*
      * Aufgabe 24a
      */
-    // Der mode gibt an, ob in verschlüsselt oder entschlüsselt werden soll.
-    // Das Ergebnis wird in beiden Fällen wird nach out geschrieben.
-    if (mode == Encryption) {
-        return encrypt(in, out);
+    
+    // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu ver- oder entschlüsselnde
+    // Text muss eine größe eines vielfachen von 16 haben. Ansonsten wird
+    // false zurückgegeben, was einen Fehler signalisiert.
+    if (in.size() % 16 != 0) {
+        return false;
     }
-    else {
-        return decrypt(in, out);
+    
+    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe des
+    // in Arrays gesetzt, damit das Ergebnis dort gespeichert
+    // werden kann.
+    out.resize(in.size());
+    
+    // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
+    for(int i = 0; i < in.size(); i+= 16) {
+        // Der mode gibt an, ob in verschlüsselt oder entschlüsselt werden soll.
+        // Das Ergebnis wird in beiden Fällen wird in out geschrieben.
+        if (mode == Encryption) {
+            // an encryptBlock werden der Reihe nach 16 Bytes des plain_texts
+            // übergeben. Auch die Position, &out[i], an dem die 16 verschlüsselten Bytes
+            // geschrieben werden sollen, werden übergeben.
+            encryptBlock(&in[i], &out[i]);
+        } else {
+            // an decryptBlock werden der Reihe nach 16 Bytes des cipher_text
+            // übergeben. Auch die Position, &out[i], an dem die 16 entschlüsselten Bytes
+            // geschrieben werden sollen, werden übergeben.
+            decryptBlock(&in[i], &out[i]);
+        }
     }
 }
 
