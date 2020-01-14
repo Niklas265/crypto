@@ -20,16 +20,16 @@ private:
      */
     bool debug_mode;
     /**
-     * Ein Objekt der Klasse AESMath für das Rechnen über GF(256).
+     * Ein Objekt der Klasse AESMath für das Rechnen über dem endlichen Körper GF(256).
      */
     AESMath aesmath;
     /**
-     * Ein Objekt der Klasse AESKeySchedule für die Rundenschlüssel.
+     * Ein Objekt der Klasse AESKeySchedule für die Verwaltung der Rundenschlüssel.
      */
     AESKeySchedule key_schedule;
     /**
      * Ein Objekt der Klasse AESState für die 16 Byte große state des AES.
-     * Weiter sind dort die Basisoperationen auf die state implementiert.
+     * Weiter sind dort die Basisoperationen die pro Runde auf den state angewendet werden implementiert.
      */
     AESState state;
 
