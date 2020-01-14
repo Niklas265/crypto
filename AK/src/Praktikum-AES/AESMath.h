@@ -36,15 +36,26 @@ using namespace std;
  */
 class AESMath {
 private:
-    // TODO: docu, auch docu in .cpp
+    /**
+    * Lookup Tabelle für log3(i) (über GF(256)).
+    */
     vector<byte> log_table;
+    /**
+    * Lookup Tabelle für 3^i (über GF(256)).
+    */
     vector<byte> exp_table;
+    /**
+    * Lookup Tabelle für die zwei bijektive Abbildungen der SBox.
+    */
     vector<byte> sbox;
+    /**
+    * Lookup Tabelle für das invertieren der zwei bijektiven Abbildungen der SBox.
+    * Macht die Substitution der sbox wieder rückgängig.
+    */
     vector<byte> inv_sbox;
 
 
 public:
-    // sets exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0)
     /**
      * Dieser Konstrukor setzt die Lookup-Tabellen exp_table, log_table, sbox
      * und inv_sbox.
@@ -52,7 +63,6 @@ public:
      * Nachdem diese Lookup Tabellen einmal berechnet wurden, können sie weiter
      * dazu verwendet werden, um Berechnungen in anderen Funktionen dieser
      * Klasse schneller abzuarbeiten.
-     * TODO: doxygen docu zu den lookup tabellen
      */
     AESMath();
     /**
@@ -71,9 +81,33 @@ public:
      * Polynomialrepräsentation.
      */
     static byte add(byte a, byte b);
-    // TODO: docu zu exp, inv, log
+    /**
+    * exp berechnet 3^i (über GF(256)).
+    * 3 ist ein Generator von GF(256).
+    *
+    * @param i Exponent als Byte in Polynomialrepräsentation.
+    * @param return Das Ergebnis von 3^i, 
+    * als Byte in Polynomialrepräsentation.
+    */
     byte exp(byte i) const;
+    /**
+    * inv berechnet das multiplikative Inverse von b.
+    * b ist ein Element in GF(256). Das Ergebnis ist ebenfalls ein Element
+    * in GF(256).
+    * Bei der Eingabe 0 wird 0 als Byte zurückgegeben.
+    *
+    * @param b Zu invertierendes Byte in Polynomialrepräsentation.
+    * @param return Das Inverse Element von b als Byte in Polynomialrepräsentation.
+    */
     byte inv(byte b) const;
+    /**
+    * log berechnet log3(i) (über GF(256)).
+    * 3 ist ein Generator von GF(256).
+    *
+    * @param i Zu berechnendes Byte in Polynomialrepräsentation.
+    * @param return Das Ergebnis von 3^i, 
+    * als Byte in Polynomialrepräsentation.
+    */
     byte log(byte i) const;
     /**
      * Polynommultiplikation auf dem endlichen Körper GF(256).
@@ -139,11 +173,15 @@ public:
     static byte atrans(byte x);
 
     /**
-     * Russische Bauernmultiplikation über GF(256). TODO: genauer
-     *
-     * @param a
-     * @param b
-     * @return
+     * Russische Bauernmultiplikation über GF(256).
+     * 
+     * Die Russische Bauernmultiplikation berechnet das Produkt zweier
+     * ganzer Zahlen a und b über GF(256).
+     * 
+     * @param a Ein Byte in Polynomialrepräsentation. a ist der Multiplikator.
+     * @param b Ein Byte in Polynomialrepräsentation. b ist der Multiplikand.
+     * @return Das Ergebnis der Polynommultiplikation von a ° b als Byte in
+     * Polynomialrepräsentation.
      */
     static byte rpmul(byte a, byte b);
     /**
@@ -161,7 +199,14 @@ public:
      */
     static byte parity(byte b);
     static void printTable(const vector<byte>& table);
-    // TODO
+    /**
+    * xtime multipliziert ein Element aus GF(256) mit 2 (über GF(256) und
+    * liefert das Ergebnis, welches ebenfalls ein Element aus GF(256) ist,
+    * als Byte in Polynomialrepräsentation zurück.
+    * 
+    * @param b Das zu multiplizierende Element aus GF(256) als Byte in Polynomialrepräsentation.
+    * @param return 2°b, ein Element aus GF(256) als Byte in Polynomialrepräsentation.
+    */ 
     static byte xtime(byte b);
 
     static string format(byte b);
