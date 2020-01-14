@@ -15,10 +15,13 @@ AESKeySchedule::AESKeySchedule(const AESMath &aesmath, bool debug_mode)
 
     r_con[0] = 0;
 
-    // RC[i] = x (i.e. ‘02’) •(RC[i-1]) = x^(i-1)
+    // r_con[i] = 2 •(RC[i-1]), gefolgt von 8 Nullbytes / 24 Nullbits.
     word a = 1;
     for (int i = 1; i < 11; i++) {
+        // 24 Nullbits werden angehangen
         r_con[i] = a << 24;
+        // implementiert die multiplikation mit 2 in 'r_con[i+1] = 02 •(RC[i])'
+        // für den nächsten Schleifendurchlauf.
         a = aesmath.mul(a, 2);
     }
 }
