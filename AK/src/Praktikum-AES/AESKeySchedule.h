@@ -12,7 +12,7 @@ using namespace std;
 /**
  * AESKeySchedule ist eine Klasse, um aus einem initialen
  * Cipher Key eine key_schedule für AES zu erzeugen. key_schedule wird
- * bereits beim setzten des Keys in setKey() erzeugt und kann dann von AES
+ * bereits beim setzen des Keys in setKey() erzeugt und kann dann von AES
  * in der addKey() Funktion von AES verwendet werden. key_schedule
  * enthält einen verschiedenen Rundenschlüssel für jede von AES durchlaufene Runde.
  */
@@ -33,6 +33,7 @@ private:
     vector<word> key_schedule;
     /**
      * Größe des (Cipher Key) Schlüssels (in 4-Byte-Wörtern)
+     * Die erlaubten Werte für nk sind: 4,6,8
      */
     size_t nk;
     /**
@@ -62,10 +63,10 @@ public:
     /**
      * subWord wendet auf jedes Byte des Eingabeword die sBox Funktion an
      * und liefert das Ergebnis als word zurück.
-     * @param w Ein aus 4 byte bestehendes word, auf welches die 4 sBox
+     * @param w Ein aus 4 Byte bestehendes word, auf welches die 4 sBox
      * Funktionsaufrufe ausgeführt werden.
      * @return Die 4 Byte Ergebnisse aus der sBox werden zusammengefügt
-     * und als word zurückgegeben.
+     * und als Word zurückgegeben.
      */
     word subWord(word w) const;
 
