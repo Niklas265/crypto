@@ -32,7 +32,7 @@ protected:
      * Interner Zustand (Array mit 16 Byte)
      *
      * Die state kann als rechteckiges array von bytes interpretiert werden.
-     * Dieses Array hat 4 Reihen und weil nb auf 4 gesetzt ist auch 4 Zeilen.
+     * Dieses Array hat 4 Reihen und weil nb auf 4 gesetzt ist auch 4 Zeilen (also eine Matrix mit Dimension 4x4).
      */
     byte state[16];
 
@@ -40,11 +40,11 @@ protected:
     void setCell(size_t row, size_t col, byte b);
 
     /**
-     * shiftRow führt eine zyklische Rechtsverschiebung der Zeile row der state
+     * shiftRow führt eine zyklische Linksverschiebung der Zeile row der state
      * um shift Positionen durch.
      *
      * @param row Zeile der State, die verschoben werden soll.
-     * @param shift Anzahl der Positionen, um die die row nach rechts
+     * @param shift Anzahl der Positionen, um die die row nach links
      * zyklisch verschoben werden wird.
      */
     void shiftRow(size_t row, size_t shift);
@@ -70,9 +70,10 @@ public:
 
     /**
      *  Führt die Basisoperation ShiftRows auf den internen Zustand aus.
-     *  ShiftRows shiftet die Reihen der state zyklisch um verschiedene offsets.
+     *  ShiftRows shiftet die Reihen der state zyklisch um verschiedene offsets nach links.
      *  Reihe 0 wird nicht verschoben. Reihe 1 wird um 1 Byte, Reihe 2 um 2 und
-     *  Reihe 3 um 3 Byte nach rechts zyklisch verschiebt.
+     *  Reihe 3 um 3 Byte nach rechts zyklisch verschiebt. Diese Offsets können 
+     *  bei anderen Werten für nb auch unterschiedlich sein. 
      */
     void shiftRows();
 
@@ -83,7 +84,7 @@ public:
      * Wert zugewiesen bekommt.
      * sBox wendet zwei bijektive Abbildungen auf jedes Byte b in state an.
      * Als erstes wird dabei b auf sein multiplikatives
-     * Inverses abgebildet. Zweitens wird das im ersten Schritt
+     * Inverses in GF(256) abgebildet. Zweitens wird das im ersten Schritt
      * berechnete multiplikative Inverse von b mit einer in atrans berechneten
      * affinen Abbildung über GF(2) abgebildet. In dieser Implemenation werden
      * Lookup Tabellen verwendet, um dieses Prozess zu beschläunigen.
@@ -93,7 +94,7 @@ public:
     /**
      * Führt die Basisoperation MixColumns auf den internen Zustand aus.
      * Dabei wird der Zustand spaltenweise transformiert, wobei eine Spalte
-     * als Vektor interpretiert wird und mit einer vorbestimmten 4x4 Matrix
+     * als Vektor interpretiert wird und mit einer vorbestimmten 4x4 Matrix in GF(256)
      * multipliziert wird.
      */
     void mixColumns();
@@ -101,26 +102,26 @@ public:
     /**
      * invShiftRows macht die shiftRows Funktion wieder rückgänig.
      * Dafür wird die Reihe 1 wird um 3 Byte, Reihe 2 um 2 und
-     * Reihe 3 um 1 Byte nach rechts zyklisch verschoben. Da das shiften
-     * zyklisch ist kann an dieser Stelle ein rechtsshift anstelle eines
+     * Reihe 3 um 1 Byte zyklisch nach links verschoben. Da das Shiften
+     * zyklisch ist, kann an dieser Stelle ein rechtsshift anstelle eines
      * linksshifts gemacht werden.
      * Wird für eine State shiftRows und danach invShiftRows aufgerufen, dann ist
-     * die darauf resulierende State die gleiche wie vor dem Aufruf von shiftRows().
+     * die daraus resultierende State die Gleiche wie vor dem Aufruf von shiftRows().
      *
      * Jede Basisoperation auf den state kann invertiert werden. Diese
      * Eigenschaft wird hier benötigt, um einen verschlüsselten Text wieder
-     * zu entschlüsseln. Für das entschlüsseln werden die Basisoperation durch
+     * entschlüsseln zu können. Für das Entschlüsseln werden die Basisoperationen durch
      * ihre inversen Paare ersetzt und in umgekehrter Reihenfolge auf den
      * state, also des cipher_texts, angewandt.
      */
     void invShiftRows();
 
     /**
-     * invSubBytes macht die subBytes Substitution wieder rückgänig.
+     * invSubBytes macht die subBytes Substitution wieder rückgängig.
      *
      * Jede Basisoperation auf den state kann invertiert werden. Diese
      * Eigenschaft wird hier benötigt, um einen verschlüsselten Text wieder
-     * zu entschlüsseln. Für das entschlüsseln werden die Basisoperation durch
+     * zu entschlüsseln. Für das Entschlüsseln werden die Basisoperationen durch
      * ihre inversen Paare ersetzt und in umgekehrter Reihenfolge auf den
      * state, also des cipher_texts, angewandt.
      */
@@ -131,7 +132,7 @@ public:
      *
      * Jede Basisoperation auf den state kann invertiert werden. Diese
      * Eigenschaft wird hier benötigt, um einen verschlüsselten Text wieder
-     * zu entschlüsseln. Für das entschlüsseln werden die Basisoperation durch
+     * zu entschlüsseln. Für das Entschlüsseln werden die Basisoperationen durch
      * ihre inversen Paare ersetzt und in umgekehrter Reihenfolge auf den
      * state, also des cipher_texts, angewandt.
      */
