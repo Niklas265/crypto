@@ -35,13 +35,13 @@ bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
      */
     
     // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu ver- oder entschlüsselnde
-    // Text muss eine größe eines vielfachen von 16 haben. Ansonsten wird
+    // Text muss als Größe ein Vielfaches von 16 besitzen. Ansonsten wird
     // false zurückgegeben, was einen Fehler signalisiert.
     if (in.size() % 16 != 0) {
         return false;
     }
     
-    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe des
+    // Der Vector ist im Grunde ein Array. Dieses Array wird auf die Größe des
     // in Arrays gesetzt, damit das Ergebnis dort gespeichert
     // werden kann.
     out.resize(in.size());
@@ -49,9 +49,9 @@ bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
     // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
     for(int i = 0; i < in.size(); i+= 16) {
         // Der mode gibt an, ob in verschlüsselt oder entschlüsselt werden soll.
-        // Das Ergebnis wird in beiden Fällen wird in out geschrieben.
+        // Das Ergebnis wird in beiden Fällen in out geschrieben.
         if (mode == Encryption) {
-            // an encryptBlock werden der Reihe nach 16 Bytes des plain_texts
+            // An encryptBlock werden der Reihe nach 16 Bytes des plain_texts
             // übergeben. Auch die Position, &out[i], an dem die 16 verschlüsselten Bytes
             // geschrieben werden sollen, werden übergeben.
             encryptBlock(&in[i], &out[i]);
