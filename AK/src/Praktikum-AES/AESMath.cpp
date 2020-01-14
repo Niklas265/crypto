@@ -22,13 +22,13 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
     // Der Fall 3^0 = 1 wird an die Position 0 des exp_table gepushed.
     exp_table.push_back(a);
 
-    // Fie Falle 3^1 bis 3^255 werden der Lookup Tabelle hinzugefügt.
+    // Die Fälle 3^1 bis 3^255 werden der Lookup Tabelle hinzugefügt.
     // Für jedes i ist 3^i = 3^(i-1)*3. Dadurch kann das Ergebnis 
-    // des letzten Schleifendurchlaufs verwendet werden. 
+    // des letzten Schleifendurchlaufs witerverwendet werden. 
     for (int i = 1; i < 256; i++) {
         // b = g^i
         b = rpmul(a,3);
-        // b wird an position i im exp_table gesetzt
+        // b wird an Position i im exp_table gesetzt
         exp_table.push_back(b);
         // im nächsten Schleifendurchlauf ist a = 3^(i-1).
         a = b;
@@ -64,7 +64,7 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
     // berechnete multiplikative Inverse von i mit einer in atrans implementierten
     // affinen Abbildung über GF(2) abgebildet.
     // Da der key im Wertebereich 0 bis 255 liegt, können die 256 Ergebnisse
-    // der 256 möglichen Eingaben an die sbox im vorfeld berechnet, in einer
+    // der 256 möglichen Eingaben an die sbox im Vorfeld berechnet, in einer
     // Lookup Tabelle sbox gespeichert und über die sBox() Funktion im weiteren
     // Programmverlauf verwendet werden.
     // Die sbox wird als Substitution in ByteSub von AES bei der Verschlüsselung
@@ -93,7 +93,7 @@ byte AESMath::add(byte a, byte b) {
     /*
      * Aufgabe 2
      */
-    // Für jedes i = 0,1,..,7: i-te Bit in a plus i-te Bit in b
+    // Für jedes i = 0,1,..,7: das i-te Bit in a plus das i-te Bit in b
     // mod 2 ergibt das i-te Bit des Rückgabebytes.
     // Diese Rechnung wird als a XOR b implementiert.
     return a ^ b;
@@ -140,7 +140,7 @@ byte AESMath::atrans(byte x) {
     // danach zurückgegeben wird.
     // Dieser Vektor ist im Standard vorgegeben.
     vector<byte> v2 = { 0, 1, 1, 0, 0, 0, 1, 1 };
-    // In ret wird das byte gespeichert, welches zurückgegeben wird.
+    // In ret wird das Byte gespeichert, welches zurückgegeben wird.
     byte ret = 0;
 
     // Die nachfolgenden Schleifen implementieren die Matrixmultiplikation von
@@ -152,11 +152,11 @@ byte AESMath::atrans(byte x) {
         // parity(x & v[i]) implementiert einen Teil der Matrixmultiplikation,
         // einer Zeile über GF(2). Speziell wird in jedem Schleifendurchlauf
         // ein Bit des Outputbytes berechnet.
-        // Bei der Matrixmultiplikation einer Zeilemit x wird jedes Bit der
+        // Bei der Matrixmultiplikation einer Zeile mit x wird jedes Bit der
         // Zeile mit jedem Bit in x multipliziert. Das wird von x & v[i]
         // implementiert. Weiter werden diese 8 Zwischenergebnisse über GF(2)
-        // addiert. Dabei wird der Reihe nach jedes Bit addiert und mod 2 wegen
-        // GF(2) gerechnet. Das ist das selbe wie zu überprüfen, ob die Anzahl
+        // addiert. Dabei wird der Reihe nach jedes Bit addiert und mod 2 (wegen der Berechnung über
+        // GF(2)) gerechnet. Das ist das selbe wie zu überprüfen, ob die Anzahl
         // der Eines im Ergebnis gerade oder ungerade ist.
         // Das wird von parity() implementiert.
         // Dieses (Ergebnis + v2[i]) % 2 implementiert die Addition über GF(2)
@@ -186,7 +186,7 @@ byte AESMath::inv(byte b) const {
     /*
      * Aufgabe 6
      */
-    // Bei Eingabe 0 ebenfalls 0 zurückgeliefert.
+    // Bei Eingabe 0 wird ebenfalls 0 zurückgeliefert.
     if (b == 0) return 0;
 
     // Gesucht ist das ? in: 3^i ° ? = 3^0 (über GF(256)), wobei b=3^i.
@@ -221,7 +221,7 @@ byte AESMath::rpmul(byte a, byte b) {
             // das XOR ist die Addition von p und b über GF(256)
             p = p ^ b;
         }
-        // in jedem schleifendurchlauf wird b mit xtime verdoppelt.
+        // in jedem Schleifendurchlauf wird b mit xtime verdoppelt.
         b = xtime(b);
         // und a wird um 1 Bit nach rechts geshiftet.
         a = a >> 1;
@@ -261,7 +261,7 @@ byte AESMath::parity(byte b) {
     // In jedem Schleifendurchlauf wird 1 Bit des Bytes überprüft
     for (int i = 0; i < 8; i++) {
         // b wird mit einer Bitmask nach != 0 überprüft. Die Bitmask hat 1 Bit
-        // auf 1 gesetzt, die anderen Bits des Bytes sind 0. Wenn das bit in b
+        // auf 1 gesetzt, die anderen Bits des Bytes sind 0. Wenn das Bit in b
         // an der gleichen Position wie in der Bitmask auf 1 ist, dann ist
         // != 0 Wahr und der counter cnt wird um 1 erhöht.
         if ((b & (1 << i)) != 0) cnt++;
@@ -314,9 +314,9 @@ byte AESMath::sBox(byte b) const {
     /*
      * Aufgabe 9c
      */
-    // sbox ist eine Lookup Tabelle für die zweifache bijektive Abbildung der SBox. 
-    // An Index b in der Tabelle steht das Ergebnis für die SBox von b. 
-    // Die Lookup Table wurde im Konstruktor dieser Klasse
+    // sbox ist eine Lookup Tabelle für die zweifache bijektive Abbildung der S-Box. 
+    // An Index b in der Tabelle steht das Ergebnis für die S-Box von b. 
+    // Die Lookup Tabelle wurde im Konstruktor dieser Klasse
     // berechnet.
     return sbox[b];
 }
@@ -325,8 +325,8 @@ byte AESMath::invSBox(byte b) const {
     /*
      * Aufgabe 9d
      */
-    // inv_sbox ist eine Lookup Tabelle für das Inverse der zweifachen bijektive Abbildung der SBox. 
-    // An Index b in der Tabelle steht das Inverse für die SBox von b. Die Lookup Table wurde im 
+    // inv_sbox ist eine Lookup Tabelle für das Inverse der zweifachen bijektive Abbildung der S-Box. 
+    // An Index b in der Tabelle steht das Inverse für die S-Box von b. Die Lookup Table wurde im 
     // Konstruktor dieser Klasse berechnet.
     return inv_sbox[b];
 }
@@ -336,7 +336,7 @@ byte AESMath::xtime(byte b) {
      * Aufgabe 3
      */
     byte r = b << 1;
-    // wenn höchstwertigste Bit gesetzt ist, dann muss durch das irreduzible
+    // wenn das höchstwertigste Bit gesetzt ist, dann muss durch das irreduzible
     // Polynom m(x) = 0x11b subtrahiert werden.
     // Die Subtraktion über GF(256) ist wie die Addition und ebenfalls über XOR
     // implementierbar.
