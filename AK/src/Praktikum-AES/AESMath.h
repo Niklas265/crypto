@@ -12,26 +12,27 @@ using namespace std;
  *
  * Im AES Algorithmus basiert die Mathematik auf dem endlichen Körper GF(256).
  * Diese Klasse implementiert Verfahren, um mit diesem Körper zu arbeiten.
- * Elemente von endlichen Körpern können addiert und multipliziert werden.
+ * Elemente von endlichen Körpern können addiert, multipliziert und das
+ * multiplikative Inverse berechnet werden.
  * Allerdings unterscheiden sich diese Verfahren von denen für Zahlen.
  *
  * Ein Körper ist eine algebraische Struktur mit (A, '⊕', '°').
  * (In den Folien ist das Symbole für die Division ° anders, aber das in der
- * Folie verwendete Symbole kann nicht richtig abebildet werden. In dieser
- * Dokumentation wird aus diesem Grund ° für die endlichen Körper Division
+ * Folie verwendete Symbole kann nicht richtig abgebildet werden. In dieser
+ * Dokumentation wird aus diesem Grund ° für die endlichen Körper Multiplikation
  * verwendet.) Der Körper hat die Eigenschaft, dass (A, ⊕) und (A\{0}, °)
  * kommutative Gruppen sind, dass das Distributivgesetz gilt und dass
  * ||A|| < ∞.
  *
  * Die Elemente im Körper werden in einem Byte als 8-Tupel über {0,1} dargestellt.
- * Sie werden als Polynome mit Grad 7 interpretiert und Koeffizienten in {0,1}
+ * Sie werden als Polynome mit Grad 7 und Koeffizienten in {0,1}
  * interpretiert. Das Element (h,g,f,e,d,c,b,a) ∈ (Z2)^8 steht für das Polynom
  * hx^7 + gx^6 + fx^5 + ex^4 + dx^3 + cx^2 + xb + a. Dabei ist a das
  * niedrigwertigste Bit des Bytes, b das zweit niedrigwertigste, ..., und h
  * das höchstwertigste bit des Bytes, in dem das Polynom gespeichert ist.
- * Das byte mit hexadezimalwert 57 (in binary 01010111) steht für das Polynom
- * x^6 + x^4 + x^2 + x + 1. An die Funktionen dieser Klasse werden bytes
- * übergeben. Diese bytes werden wie die hier beschriebenen Polynome
+ * Das Byte mit Hexadezimalwert 57 (in binary 01010111) steht für das Polynom
+ * x^6 + x^4 + x^2 + x + 1. An die Funktionen dieser Klasse werden Bytes
+ * übergeben. Diese Bytes werden wie die hier beschriebenen Polynome
  * interpretiert.
  */
 class AESMath {
@@ -61,12 +62,13 @@ public:
      * In der hier verwendeten Polynomialrepräsentation ist die Summe zweier
      * Elemente in GF(256) das Polynom mit den Koeffizienten, die durch die
      * Summe mod 2 der Koeffizienten der Elemente a und b gegeben sind.
+     * Die Addition über GF(256) kann als Polynomaddition implemeniert werden-
      * Dabei ist für jedes i = 0,1,..,7: i-te Bit in a + i-te Bit in b
      * mod 2 ergibt das i-te Bit des Ergebnisses. Diese Rechnung kann als a XOR b
      * implementiert werden.
      *
-     * @param a Ein Byte in Polynomialrepräsentation. a ist einer der Summanden.
-     * @param b Ein Byte in Polynomialrepräsentation. b ist einer der Summanden.
+     * @param a Ein Byte in Polynomialrepräsentation in GF(256). a ist einer der Summanden.
+     * @param b Ein Byte in Polynomialrepräsentation in GF(256). b ist einer der Summanden.
      * @return Das Ergebnis der Polynomaddition von a ⊕ b als Byte in
      * Polynomialrepräsentation.
      */
@@ -78,15 +80,15 @@ public:
     /**
      * Polynommultiplikation auf dem endlichen Körper GF(256).
      *
-     * Da in AES der endliche Körpert GF(256) fest gewählt ist, kann die
-     * Multiplikation effizient durch die im Konstruktur berechneten
+     * Da in AES der endliche Körper GF(256) fest gewählt ist, kann die
+     * Multiplikation effizient durch die im Konstruktor berechneten
      * Lookup Tabellen implementiert werden. Da (GF(256)\{0}, °) eine zyklische
      * Gruppe ist, besitzt sie ein erzeugendes Element g. Um a°b zu berechnen,
      * verwendet man den Generator g. Falls a=g^i und b=g^j ist, dann ist
      * a°b = g^i ° g^j = g^((i+j) mod 255).
      *
-     * @param a Ein Byte in Polynomialrepräsentation. a ist der Multiplikator.
-     * @param b Ein Byte in Polynomialrepräsentation. b ist der Multiplikand.
+     * @param a Ein Byte in Polynomialrepräsentation in GF(256). a ist der Multiplikator.
+     * @param b Ein Byte in Polynomialrepräsentation in GF(256). b ist der Multiplikand.
      * @return Das Ergebnis der Polynommultiplikation von a ° b als Byte in
      * Polynomialrepräsentation.
      */
@@ -96,15 +98,15 @@ public:
      * sBox für die Substitution.
      *
      * sBox wendet zwei bijektive Abbildungen auf b an und liefert das Ergebnis
-     * als byte zurück. Als erstes wird dabei b auf sein multiplikatives
-     * Inverses abgebildet. Zweitens wird das im ersten Schritt
+     * als Byte zurück. Als erstes wird dabei b auf sein multiplikatives
+     * Inverses in GF(256) abgebildet. Zweitens wird das im ersten Schritt
      * berechnete multiplikative Inverse von b mit einer in atrans berechneten
      * affinen Abbildung über GF(2) abgebildet. In dieser Implemenation werden
-     * Lookup Tabellen verwendet, um dieses Prozess zu beschläunigen.
+     * Lookup Tabellen verwendet, um diesen Prozess zu beschläunigen.
      *
      * @param b Eingabebyte, auf welches die zwei bijektive Abbildungen
      * angewendet werden.
-     * @return Ergebnis als byte der zwei auf b angewendeten bijektive
+     * @return Ergebnis als Byte der zwei auf b angewendeten bijektive
      * Abbildungen.
      */
     byte sBox(byte b) const;
@@ -126,9 +128,9 @@ public:
      * und ist umkehrbar. Eine vorgegebene 8x8 Matrix wird wird mit Hilfe der
      * Matrixmultiplikation mit dem Übergabeparameter x multipliziert und
      * anschließend mit einem weiteren 8 Elemente großen Vektor additiert.
-     * Wie erläutert werden diese Operationen über dem Körper GF(2) ausgeführt.
+     * Wie in sBox() erläutert werden diese Operationen über dem Körper GF(2) ausgeführt.
      *
-     * Diese Funktion wird bei der Berechnung der S-box im Konstruktor dieser
+     * Diese Funktion wird bei der Berechnung der S-Box im Konstruktor dieser
      * Klasse verwendet. Die S-Box wird wiederum bei der ByteSub Transformation
      * in AES verwendet.
      *
@@ -150,7 +152,7 @@ public:
      * Die Parity-Funktion berechnet die Anzahl der Einsen in der
      * Binärdarstellung eines Bytes und gibt an, ob diese gerade
      * oder ungerade ist. Ist sie ungerade, dann wird 1 zurückgegeben. Andernfalls
-     * wird zurückgegeben.
+     * wird 0 zurückgegeben.
      *
      * Diese Funktion wird als Hilfsfunktion in der Berechnung der
      * linearen Transformation verwendet.
