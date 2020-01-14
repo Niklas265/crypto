@@ -87,7 +87,9 @@ public:
      * Danach ist key_schedule ein nb(nr+1) word großes Array. Da
      * nr indirekt von der Größe des keys abhängt, ist key_schedule
      * für größere Keys größer als für kleinere Keys. Der key muss
-     * eine Schlüssellänge von 128, 192 oder 256 Bits haben.
+     * eine Schlüssellänge von 128, 192 oder 256 Bits haben. Für die
+     * Rundenschlüssel müssen insgesamt 4*nb(nr+1) Bytes innerhalb des
+     * Key Schedules erzeugt werden.
      *
      * @param key ein vector Array von bytes mit einer Größe von
      * 128, 192 oder 256 Bits. key ist der Cipher Key, mit welchem
@@ -99,10 +101,35 @@ public:
      */
     bool setKey(const vector<byte>& key);
 
+    /**
+    * Diese Methode liefert den Rundenschlüssel für die Runde round zurück.
+    *
+    * @param round Über den Parameter round wird festgelegt, welcher Rundenschlüssel zurückgegeben
+    * werden soll. Dieser Wert muss kleiner oder gleich nr sein.
+    *
+    * @return Zeiger auf ein Word, in welchem der Rundenschlüssel für Runde round
+    * gespeichert ist.
+    */
     const word* getRoundKey(size_t round);
-
+    
+    /**
+    * Gibt den Rundenschlüssel für Runde round als String zurück. Dabei
+    * wird das Word als Hexadezimalzahl kodiert.
+    *
+    * @param round Über den Parameter round wird festgelegt, welcher
+    * Rundenschlüssel zurückgegeben werden soll.
+    *
+    * @return Der Rundenschlüssel für die Runde round als hexadezimaler
+    * String
+    */
     string formatRoundKey(size_t round);
 
+    /**
+    * Diese Methode liefert die Anzahl der Runden zurück, die zur Verschlüsselung mit dem
+    * aktuellen Schüssel benötigt werden. Diese Anzahl befindet sich in der Variable nr.
+    *
+    * @return Anzahl der benötigten Runden.
+    */
     size_t getNrOfRounds() const;
 
 };
