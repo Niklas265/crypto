@@ -15,13 +15,13 @@ bool AESCipher::encrypt(const vector<byte>& plain_text, vector<byte>& cipher_tex
      */
 
     // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu verschlüsselnde
-    // Klartext muss eine größe eines vielfachen von 16 haben. Ansonsten wird
+    // Klartext muss als Größe ein Vielfaches von 16 besitzen. Ansonsten wird
     // false zurückgegeben, was einen Fehler signalisiert.
     if (plain_text.size() % 16 != 0) {
         return false;
     }
 
-    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe de
+    // Der Vector ist im Grunde ein Array. Dieses Array wird auf die Größe des
     // plain_textes gesetzt, damit der verschlüsselte Klartext dort gespeichert
     // werden kann.
     cipher_text.resize(plain_text.size());
@@ -43,20 +43,20 @@ bool AESCipher::decrypt(const vector<byte>& cipher_text, vector<byte>& plain_tex
      */
 
     // AES ist eine Blockchiffre mit Blocklänge 16 Bytes. Der zu entschlüsselnde
-    // Ciphertext muss eine größe eines vielfachen von 16 haben. Ansonsten wird
+    // Ciphertext muss als Größe ein Vielfaches von 16 besitzen. Ansonsten wird
     // false zurückgegeben, was einen Fehler signalisiert.
     if (cipher_text.size() % 16 != 0) {
         return false;
     }
 
-    // Der vector ist im grunde ein Array. Dieses Array wird auf die größe de
+    // Der Vector ist im grunde ein Array. Dieses Array wird auf die Größe des
     // cipher_texts gesetzt, damit der Klartext dort gespeichert
     // werden kann.
     plain_text.resize(cipher_text.size());
 
     // In jedem Schleifendurchlauf wird ein Block (16 Bytes) verschlüsselt.
     for(int i = 0; i < cipher_text.size(); i+= 16) {
-        // an decryptBlock werden der Reihe nach 16 Bytes des cipher_text
+        // An decryptBlock werden der Reihe nach 16 Bytes des cipher_text
         // übergeben. Auch die Position, an dem die 16 entschlüsselten Bytes
         // geschrieben werden sollen, werden übergeben.
         decryptBlock(&cipher_text[i], &plain_text[i]);
@@ -69,8 +69,8 @@ bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
     /*
      * Aufgabe 24a
      */
-    // Der mode gibt an, ob in verschlüsselt oder entschlüsselt werden soll.
-    // Das Ergebnis wird in beiden Fällen wird nach out geschrieben.
+    // Der mode gibt an, ob der Byte-Vektor in verschlüsselt oder entschlüsselt werden soll.
+    // Das Ergebnis wird in beiden Fällen nach out geschrieben.
     if (mode == Encryption) {
         return encrypt(in, out);
     }
@@ -159,7 +159,7 @@ void AESCipher::encryptBlock(const byte *plain_text, byte *cipher_text) {
     }
 
     // Final Round
-    // In der letzten Runde wird keine mixColumns Transformation auf die State
+    // In der letzten Runde wird keine mixColumns Transformation auf den State
     // angewandt. Ansonsten werden die Transformationen wie in den bisherigen Runden angewandt.
     debugMessage(key_schedule.getNrOfRounds(), "start " + state.format());
     state.subBytes();
@@ -170,7 +170,7 @@ void AESCipher::encryptBlock(const byte *plain_text, byte *cipher_text) {
     debugMessage(key_schedule.getNrOfRounds(), "k_sch " + key_schedule.formatRoundKey(key_schedule.getNrOfRounds()));
     
     // An dieser Stelle steht in state der verschlüsselte plain_text.
-    // die 16 Byte des State werden an die 16 Bytes ab *cipher_text kopiert.
+    // Die 16 Byte des State werden an die 16 Bytes ab *cipher_text kopiert.
     state.get(cipher_text);
     debugMessage(key_schedule.getNrOfRounds(),"output " + state.format());
 }
