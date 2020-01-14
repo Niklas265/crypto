@@ -70,7 +70,7 @@ bool AESCipher::process(const vector<byte>& in, vector<byte>& out, bool mode) {
      * Aufgabe 24a
      */
     // Der mode gibt an, ob in verschlüsselt oder entschlüsselt werden soll.
-    // Das Ergebnis in beiden Fällen wird nach out geschrieben.
+    // Das Ergebnis wird in beiden Fällen wird nach out geschrieben.
     if (mode == Encryption) {
         return encrypt(in, out);
     }
@@ -160,7 +160,7 @@ void AESCipher::encryptBlock(const byte *plain_text, byte *cipher_text) {
 
     // Final Round
     // In der letzten Runde wird keine mixColumns Transformation auf die State
-    // angewandt.
+    // angewandt. Ansonsten werden die Transformationen wie in den bisherigen Runden angewandt.
     debugMessage(key_schedule.getNrOfRounds(), "start " + state.format());
     state.subBytes();
     debugMessage(key_schedule.getNrOfRounds(), "s_box " + state.format());
@@ -168,6 +168,8 @@ void AESCipher::encryptBlock(const byte *plain_text, byte *cipher_text) {
     debugMessage(key_schedule.getNrOfRounds(), "s_row " + state.format());
     state.addKey(key_schedule.getRoundKey(key_schedule.getNrOfRounds()));
     debugMessage(key_schedule.getNrOfRounds(), "k_sch " + key_schedule.formatRoundKey(key_schedule.getNrOfRounds()));
+    
+    // An dieser Stelle steht in state der verschlüsselte plain_text.
     // die 16 Byte des State werden an die 16 Bytes ab *cipher_text kopiert.
     state.get(cipher_text);
     debugMessage(key_schedule.getNrOfRounds(),"output " + state.format());
