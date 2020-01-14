@@ -11,14 +11,15 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
      * Aufgabe 5a
      */
     
-    // 3 ist das erzeugende Element
+    // 3 ist ein erzeugende Element aus GF(256)
 
     // Lookup Tabelle für g^i für alle Elemente i aus GF(256).
-    // i ist die Position in der Tabelle.
+    // i ist die Position in der Tabelle. Für jeden key i ist
+    // exp_table[i] = g^i
     byte a = 1;
     byte b;
     
-    // Der Fall 3^0 = 1
+    // Der Fall 3^0 = 1 wird an die Position 0 des exp_table gepushed.
     exp_table.push_back(a);
 
     // Fie Falle 3^1 bis 3^255 werden der Lookup Tabelle hinzugefügt.
@@ -40,7 +41,8 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
      */
 
     // Lookup Tabelle für log3(i) für alle Elemente i aus GF(256).
-    // i ist die Position in der Tabelle.
+    // i ist die Position in der Tabelle. Für jeden Key i ist
+    // log_table[i] = log3(i)
     for (int i = 0; i < 256; i++) {
         // log3(3^i) ist gleich i. log ist die inverse Operation von exp.
         // Da der Generator 3 für exp und log verwendet wird, sind die
@@ -55,15 +57,16 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
      */
 
     // i steht für den key der sbox. Die value der sbox für key i ist eine
-    // Komposition aus zwei bijektiven Abbildungen.
+    // Komposition aus zwei bijektiven Abbildungen. Die sbox implementiert
+    // eine Substitution.
     // Als erstes wird dabei i auf sein multiplikatives Inverses abgebildet.
     // Das wird von inv(i) implementiert. Zweitens wird das im ersten Schritt
-    // berechnete multiplikative Inverse von i mit einer in atrans berechneten
+    // berechnete multiplikative Inverse von i mit einer in atrans implementierten
     // affinen Abbildung über GF(2) abgebildet.
     // Da der key im Wertebereich 0 bis 255 liegt, können die 256 Ergebnisse
     // der 256 möglichen Eingaben an die sbox im vorfeld berechnet, in einer
     // Lookup Tabelle sbox gespeichert und über die sBox() Funktion im weiteren
-    // Programmverlauf abgerufen werden.
+    // Programmverlauf verwendet werden.
     // Die sbox wird als Substitution in ByteSub von AES bei der Verschlüsselung
     // verwendet.
     for(int i = 0; i < 256; i++) {
@@ -80,7 +83,7 @@ AESMath::AESMath() : exp_table(), log_table(256, 0), sbox(), inv_sbox(256, 0) {
     // Wie bei der sbox können die 256 Ergebnisse
     // der 256 möglichen Eingaben an die inv_sbox im vorfeld berechnet, in einer
     // Lookup Tabelle inv_sbox gespeichert und über die invSBox() Funktion im weiteren
-    // Programmverlauf abgerufen werden.
+    // Programmverlauf verwendet werden.
     for (int i = 0; i < 256; i++) {
         inv_sbox[sbox[i]] = i;
     }
@@ -174,7 +177,8 @@ byte AESMath::exp(byte i) const {
      * Aufgabe 5c
      */
     // exp_table ist eine Lookup Tabelle für 3^i. An Index i in der Tabelle steht
-    // das Ergebnis für 3^i.
+    // das Ergebnis für 3^i. Die Lookup Table wurde im Konstruktor dieser Klasse
+    // berechnet.
     return exp_table[i];
 }
 
@@ -185,15 +189,14 @@ byte AESMath::inv(byte b) const {
     // Bei Eingabe 0 ebenfalls 0 zurückgeliefert.
     if (b == 0) return 0;
 
-    // Gesucht ist das ? in: g^i ° ? = g^1 (über GF(256)), wobei b=g^i.
+    // Gesucht ist das ? in: 3^i ° ? = 3^0 (über GF(256)), wobei b=3^i.
     // log(b) liefert das i.
     // Da '?' ein Element aus GF(256) ist, kann es auch durch den Generator 
     // 3 mit 3^j erzeugt werden.
-    // Für das Inverse muss gelten, dass i+j = 1 (mod 256) ist. 
-    // Umgestellt ist das j = i-1 (mod 256). Da Der Fall 0 oben schon abgefangen ist,
-    // ist i-1 > 0 und dadurch kann i-1 (mod 256) zu 256-1-i umgeschrieben werden.
-    // Dadurch ist 3^(256-1-i) das Ergebnis.
-    return exp(256-1-log(b));
+    // Für das Inverse muss gelten, dass i+j = 0 (mod 255) ist. 
+    // Umgestellt ist das j = -i (mod 255). Das kann zu 255-i umgeschrieben werden.
+    // Dadurch ist 3^(255-i) das Ergebnis.
+    return exp(255-log(b));
 }
 
 byte AESMath::log(byte b) const {
@@ -201,7 +204,8 @@ byte AESMath::log(byte b) const {
      * Aufgabe 5d
      */
     // log_table ist eine Lookup Tabelle für log3(i). An Index i in der Tabelle steht
-    // das Ergebnis für log3(i).
+    // das Ergebnis für log3(i). Die Lookup Table wurde im Konstruktor dieser Klasse
+    // berechnet.
   return log_table[b];
 }
 
@@ -214,6 +218,7 @@ byte AESMath::rpmul(byte a, byte b) {
         // wenn aktuell niedrigstes Bit in a auf 1 ist
         if (a % 2 == 1) {
             // wird p mit b XOR gerechnet.
+            // das XOR ist die Addition von p und b über GF(256)
             p = p ^ b;
         }
         // in jedem schleifendurchlauf wird b mit xtime verdoppelt.
@@ -232,6 +237,7 @@ byte AESMath::mul(byte a, byte b) const {
     if (a == 0 || b == 0) return 0;
 
     /**
+     * g steht für den Generator des endlichen Körpers GF(256) und ist gleich 3.
      * Um a°b = g^i ° g^j = g^((i+j) mod 255) zu berechnen, muss als erstes
      * das i in g^i für a und das j in g^j für b berechnet werden. Dafür wird
      * die Funktionn log() verwendet, welche die im Konstruktor berechnete
@@ -309,7 +315,9 @@ byte AESMath::sBox(byte b) const {
      * Aufgabe 9c
      */
     // sbox ist eine Lookup Tabelle für die zweifache bijektive Abbildung der SBox. 
-    // An Index b in der Tabelle steht das Ergebnis für die SBox von b.
+    // An Index b in der Tabelle steht das Ergebnis für die SBox von b. 
+    // Die Lookup Table wurde im Konstruktor dieser Klasse
+    // berechnet.
     return sbox[b];
 }
 
@@ -318,7 +326,8 @@ byte AESMath::invSBox(byte b) const {
      * Aufgabe 9d
      */
     // inv_sbox ist eine Lookup Tabelle für das Inverse der zweifachen bijektive Abbildung der SBox. 
-    // An Index b in der Tabelle steht das Inverse für die SBox von b.
+    // An Index b in der Tabelle steht das Inverse für die SBox von b. Die Lookup Table wurde im 
+    // Konstruktor dieser Klasse berechnet.
     return inv_sbox[b];
 }
 
