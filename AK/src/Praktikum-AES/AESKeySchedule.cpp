@@ -129,12 +129,14 @@ bool AESKeySchedule::setKey(const vector<byte>& key) {
         // berechneten Schlüsselteil.
         firsttemp = key_schedule[i-1];
         temp = firsttemp;
-        // TODO: genauer sagen was abläuft, on a higher level
+        // Nach dem Standard wird jedes nk-te word oder alternativ, wenn
+        // nk > 6 ist und i-4 ein vielfaches von nk ist, anderst transformiert.
         if (i % nk == 0) {
             // In jedem nk-ten Schleifendurchlauf wird auf temp rotWord und
-            // subWord angewendet. Das Ergebnis dieser Berechnungen wird
+            // subWord angewendet. In subWord wird auf jedes Byte des word
+            // die SBox angewandt. Das Ergebnis dieser Berechnungen wird
             // mit der nächsten, noch nicht in der Schleife verwendeten,
-            // Rundenkonstanten XOR'd.
+            // Rundenkonstanten XOR verknüpft.
             afterRotWord = rotWord(temp);
             afterSubWord = subWord(afterRotWord);
             afterRconiDivnk = r_con[i / nk];
@@ -148,7 +150,7 @@ bool AESKeySchedule::setKey(const vector<byte>& key) {
         }
         // Danach wird das (i-nk)-te key_schedule, also das im nk-t letzten
         // Schleifendurchlauf berechnete Ergebnis für key_schedule, mit
-        // dem bisherigen Zwischenergebnis temp XOR'd. Dieses Endergebnis wird
+        // dem bisherigen Zwischenergebnis temp XOR verknüpft. Dieses Endergebnis wird
         // dann mit push_back an die i-te Stelle in key_schedule gesetzt.
         afterwIminusNk = key_schedule[i-nk];
         aftertempXORwIminusNk = afterwIminusNk ^ temp;
