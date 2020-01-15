@@ -14,6 +14,7 @@ using namespace std;
  * Diese Klasse implementiert Verfahren, um mit diesem Körper zu arbeiten.
  * Elemente von endlichen Körpern können addiert und multipliziert werden.
  * Allerdings unterscheiden sich diese Verfahren von denen für Zahlen.
+ * Die Elemente haben ebenfalls ein inverses Element.
  *
  * Ein Körper ist eine algebraische Struktur mit (A, '⊕', '°').
  * (In den Folien ist das Symbole für die Division ° anders, aber das in der
@@ -24,12 +25,12 @@ using namespace std;
  * ||A|| < ∞.
  *
  * Die Elemente im Körper werden in einem Byte als 8-Tupel über {0,1} dargestellt.
- * Sie werden als Polynome mit Grad 7 interpretiert und Koeffizienten in {0,1}
- * interpretiert. Das Element (h,g,f,e,d,c,b,a) ∈ (Z2)^8 steht für das Polynom
+ * Sie werden als Polynome mit Grad 7 und Koeffizienten in {0,1}
+ * interpretiert. Das Element (h,g,f,e,d,c,b,a) ∈ {0,1}^8 steht für das Polynom
  * hx^7 + gx^6 + fx^5 + ex^4 + dx^3 + cx^2 + xb + a. Dabei ist a das
  * niedrigwertigste Bit des Bytes, b das zweit niedrigwertigste, ..., und h
  * das höchstwertigste bit des Bytes, in dem das Polynom gespeichert ist.
- * Das byte mit hexadezimalwert 57 (in binary 01010111) steht für das Polynom
+ * Das Byte mit Hexadezimalwert 57 (in binary 01010111) steht für das Polynom
  * x^6 + x^4 + x^2 + x + 1. An die Funktionen dieser Klasse werden bytes
  * übergeben. Diese bytes werden wie die hier beschriebenen Polynome
  * interpretiert.
@@ -59,7 +60,10 @@ private:
 public:
     /**
      * Dieser Konstrukor setzt die Lookup-Tabellen exp_table, log_table, sbox
-     * und inv_sbox.
+     * und inv_sbox. Die möglichen Eingabewerte für exp, log, sbox und insbox
+     * sind jeweils 256 Elemente groß. Dadurch kann das Ergebnis für jede
+     * mögliche Eingabe an exp_table, log_table, sbox und inv_sbox  bereits im
+     * Vorfeld berechnet werden.
      *
      * Nachdem diese Lookup Tabellen einmal berechnet wurden, können sie weiter
      * dazu verwendet werden, um Berechnungen in anderen Funktionen dieser
@@ -116,9 +120,9 @@ public:
      * Da in AES der endliche Körpert GF(256) fest gewählt ist, kann die
      * Multiplikation effizient durch die im Konstruktur berechneten
      * Lookup Tabellen implementiert werden. Da (GF(256)\{0}, °) eine zyklische
-     * Gruppe ist, besitzt sie ein erzeugendes Element g. Um a°b zu berechnen,
-     * verwendet man den Generator g. Falls a=g^i und b=g^j ist, dann ist
-     * a°b = g^i ° g^j = g^((i+j) mod 255).
+     * Gruppe ist, besitzt sie ein erzeugendes Element g. In diesem Fall ist
+     * g = 3. Um a°b zu berechnen, verwendet man den Generator g.
+     * Falls a=g^i und b=g^j ist, dann ist a°b = g^i ° g^j = g^((i+j) mod 255).
      *
      * @param a Ein Byte in Polynomialrepräsentation. a ist der Multiplikator.
      * @param b Ein Byte in Polynomialrepräsentation. b ist der Multiplikand.
@@ -149,7 +153,7 @@ public:
      * Zum Beispiel: Angenommen sBox(1) = 10, dann ist invSBox(10) = 1.
      * Dafür wird zuerst die affine Transformation atrans invertiert und
      * danach das multiplikative Inverse in GF(256) des Ergebnisses der
-     * invertierten affinen Transformation berechnen und zurückgegeben.
+     * invertierten affinen Transformation berechnet und zurückgegeben.
      * In dieser Implementation sind diese Werte bereits im inv_sbox Table
      * gecached, wo sie über den sbox Table berechnet worden sind.
      *
@@ -194,12 +198,12 @@ public:
      * Die Parity-Funktion berechnet die Anzahl der Einsen in der
      * Binärdarstellung eines Bytes und gibt an, ob diese gerade
      * oder ungerade ist. Ist sie ungerade, dann wird 1 zurückgegeben. Andernfalls
-     * wird zurückgegeben.
+     * wird 0 zurückgegeben.
      *
      * Diese Funktion wird als Hilfsfunktion in der Berechnung der
      * linearen Transformation verwendet.
      *
-     * @param b Das Byte welches nach einer geraden Anzahl von Einsen
+     * @param b Das Byte, welches nach einer geraden Anzahl von Einsen
      * überprüft wird.
      * @return 1, wenn die Anzahl der Eines in b ungerade ist. 0 wenn nicht.
      */

@@ -79,7 +79,7 @@ public:
 public:
     /**
      * Konstruktor der AESKeySchedule Klasse, in welchem r_con,
-     * also der Vektor zum Speichen der Rundenkonstanten berechnet wird.
+     * also der Vektor zum Speichen der Rundenkonstanten, berechnet wird.
      *
      * @param aesmath Zeiger auf ein Objekt der Klasse AESMath
      * @param debug_mode Flag zum Aktivieren von Debug-Ausgaben.
@@ -133,7 +133,7 @@ public:
 
     /**
     * Diese Methode liefert die Anzahl der Runden zurück, die zur Verschlüsselung mit dem
-    * aktuellen Schüssel benötigt werden. Diese Anzahl befindet sich in der Variable nr.
+    * aktuellen Schüssel benötigt werden. Diese Anzahl befindet sich in der Klassenvariable nr.
     *
     * @return Anzahl der benötigten Runden.
     */

@@ -29,7 +29,8 @@ using namespace std;
 class AESState {
 private:
     /**
-     * Flag zum Aktivieren von Debug-Ausgaben
+     * Flag zum Aktivieren von Debug-Ausgaben. Wenn True, dann werden
+     * Debug Ausgaben über stdout ausgegeben.
      */
     bool debug_mode;
     /**
@@ -40,13 +41,17 @@ private:
 
 protected:
     /**
-     * Interner Zustand (Array mit 16 Byte)
+     * Interner Zustand (Array mit 16 Byte) des AES
      *
      * Die state kann als rechteckiges array von bytes interpretiert werden.
      * Dieses Array hat 4 Reihen und weil nb auf 4 gesetzt ist auch 4 Zeilen
      * (also eine Matrix mit Dimension 4x4). Gespeichert ist es allerdings
      * in einem 1 dimensionalen Array, wobei  die Spalten hintereinander
      * konkateniert abgespeichert werden.
+     *
+     * Auf diesen 16 Bytes werden die in dieser Klasse implementiereten
+     * Transformationen angewandt, um eine 16 Byte große Eingabe in state
+     * zu ver- oder entschlüsseln.
      */
     byte state[16];
 
@@ -87,7 +92,7 @@ public:
      *  ShiftRows shiftet die Reihen der state zyklisch um verschiedene offsets
      *  nach links.
      *  Reihe 0 wird nicht verschoben. Reihe 1 wird um 1 Byte, Reihe 2 um 2 und
-     *  Reihe 3 um 3 Byte nach rechts zyklisch verschiebt. Diese Offsets können 
+     *  Reihe 3 um 3 Byte nach links zyklisch verschiebt. Diese Offsets können
      *  bei anderen Werten für nb auch unterschiedlich sein. 
      */
     void shiftRows();
@@ -100,9 +105,8 @@ public:
      * sBox wendet zwei bijektive Abbildungen auf jedes Byte b in state an.
      * Als erstes wird dabei b auf sein multiplikatives
      * Inverses in GF(256) abgebildet. Zweitens wird das im ersten Schritt
-     * berechnete multiplikative Inverse von b mit einer in atrans berechneten
-     * affinen Abbildung über GF(2) abgebildet. In dieser Implemenation werden
-     * Lookup Tabellen verwendet, um dieses Prozess zu beschläunigen.
+     * berechnete multiplikative Inverse von b mit einer
+     * affinen Abbildung abgebildet.
      */
     void subBytes();
 
@@ -118,8 +122,8 @@ public:
      * invShiftRows macht die shiftRows Funktion wieder rückgänig.
      * Dafür wird die Reihe 1 wird um 3 Byte, Reihe 2 um 2 und
      * Reihe 3 um 1 Byte zyklisch nach links verschoben. Da das Shiften
-     * zyklisch ist, kann an dieser Stelle ein rechtsshift anstelle eines
-     * linksshifts gemacht werden.
+     * zyklisch ist, kann an dieser Stelle ein Linkssshift anstelle eines
+     * Rechtsshifts verwendet werden.
      * Wird für eine State shiftRows und danach invShiftRows aufgerufen, dann ist
      * die daraus resultierende State die Gleiche wie vor dem Aufruf von shiftRows().
      *

@@ -11,12 +11,12 @@
 using namespace std;
 
 /**
- * Die Klasse AESCipher implementiert des Algorithmus AES.
+ * Die Klasse AESCipher implementiert den Algorithmus AES.
  *
  * AES ist eine Block Cipher von Joan Daemen und Vincent Rijmen.
  * AES verwendet das Rijndael Kryptosystem. Dieses ist ein symmetrisches
  * Kryptosystem.
- * Die Klasse bietet Methoden an, um 16 Byte Blöcke zu ver- und entschlüsseln.
+ * Die Klasse bietet Methoden an, um 16 Byte Blöcke mit AES zu ver- und entschlüsseln.
  * Für diese Operationen wird ein Schlüssel benötigt. In dieser Implementation
  * werden Schlüssel der Länge 128, 192 und 256 Bit unterstützt.
  * Wird ein 16 Byte plaintext mit einem Schlüssel k verschlüsselt, dann kann
@@ -27,7 +27,8 @@ using namespace std;
 class AESCipher : public BlockCipher {
 private:
     /**
-     * Flag zum Aktivieren von Debug-Ausgaben
+     * Flag zum Aktivieren von Debug-Ausgaben. Wenn True, dann werden
+     * Debug Ausgaben über stdout ausgegeben.
      */
     bool debug_mode;
     /**
@@ -57,7 +58,7 @@ public:
 
     /**
     * Die Methode setKey() ruft die Methode setKey des key_schedules auf, der den
-    * key_schedule für den übergebenen Schlüssel berechnet
+    * key_schedule für den übergebenen Schlüssel berechnet.
     *
     * @param key Schlüssel als Byte-Vektor, für den der Key-Schedule berechnet werden soll
     * @return True, wenn die Berechnung des Key-Schedules erfolgreich ablief. False, wenn
@@ -68,7 +69,7 @@ public:
     /**
     * Die Methode encryptBlock() verschlüsselt einen 16-Byte großen Plaintextblock
     * mit dem AES. Dafür werden für jede Runde der Reihe nach die Basisoperationen
-    * subBytes, shiftRows, mixColumns und addKey in dieser Reihenfolge aufgerufen.
+    * subBytes, shiftRows, mixColumns und addKey mehrmals auf den state angewandt.
     * Bei der Operation addKey wird darüber hinaus der Rundenschlüssel für die akuelle
     * Runde aus dem key_schedule benötigt. In der letzten Runde wird auf die
     * Basisoperation mixColumns verzichtet.
@@ -100,7 +101,7 @@ public:
      * Andernfalls, wenn mode auf Decryption gesetzt ist, wird die
      * Methode decrypt mit in als Ciphertext aufgerufen. Danach steht in out
      * der entschlüsselte Ciphetext.
-     * Für Documentation zur Ver- und Entschlüsselung siehe die encrypt() und
+     * Für die Dokumentation zur Ver- und Entschlüsselung siehe die encrypt() und
      * decrypt() Methoden.
      * Die Länge des Texts in in muss ein Vielfaches von 16 Byte sein.
      *
@@ -108,13 +109,13 @@ public:
      * Entschlüsselt werden soll.
      * @param out In out wird der Ver- oder Entschlüsselte Text von in
      * gespeichert. Es muss kein Speicher für out reserviert werden.
-     * @param mode Gibt an, ob der Text in in ver- oder entschlüsselt werden
+     * @param mode Gibt an, ob der Text in ver- oder entschlüsselt werden
      * soll. Ist mode gleich Encryption oder false, dann wird verschlüsselt.
      * Andernfalls wenn mode gleich Decryption oder true ist, wird entschlüsselt.
      * @return True, wenn der Text in in erfolgreich ver- oder entschlüsselt
      * werden konnte. False, wenn ein Fehler aufgetreten ist, was zum Beispiel
-     * der Fall ist, wenn die Eingabe in eine nicht unterstützte Länge hat.
-     * Die Länge des zu Texts in in muss ein Vielfaches von 16 Byte sein.
+     * der Fall ist, wenn die Eingabe 'in' eine nicht unterstützte Länge hat.
+     * Die Länge des zu Texts in 'in' muss ein Vielfaches von 16 Byte sein.
      */
     bool process(const vector<byte>& in, vector<byte>& out, bool mode);
 

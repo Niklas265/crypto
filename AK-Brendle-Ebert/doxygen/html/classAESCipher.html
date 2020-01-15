@@ -172,8 +172,8 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>block_len</b>
 <tr class="separator:ab29ee03262fd620cd0659e860972faf0 inherit pro_attribs_classBlockCipher"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Die Klasse <a class="el" href="classAESCipher.html">AESCipher</a> implementiert des Algorithmus AES.</p>
-<p>AES ist eine Block Cipher von Joan Daemen und Vincent Rijmen. AES verwendet das Rijndael Kryptosystem. Dieses ist ein symmetrisches Kryptosystem. Die Klasse bietet Methoden an, um 16 Byte Blöcke zu ver- und entschlüsseln. Für diese Operationen wird ein Schlüssel benötigt. In dieser Implementation werden Schlüssel der Länge 128, 192 und 256 Bit unterstützt. Wird ein 16 Byte plaintext mit einem Schlüssel k verschlüsselt, dann kann der aus der Verschlüsselung resultierende ciphertext mit demselben Schlüssel k entschlüsselt werden. Der entschlüsselte Text ist wieder derselbe wie der originale plaintext. </p>
+<div class="textblock"><p>Die Klasse <a class="el" href="classAESCipher.html">AESCipher</a> implementiert den Algorithmus AES.</p>
+<p>AES ist eine Block Cipher von Joan Daemen und Vincent Rijmen. AES verwendet das Rijndael Kryptosystem. Dieses ist ein symmetrisches Kryptosystem. Die Klasse bietet Methoden an, um 16 Byte Blöcke mit AES zu ver- und entschlüsseln. Für diese Operationen wird ein Schlüssel benötigt. In dieser Implementation werden Schlüssel der Länge 128, 192 und 256 Bit unterstützt. Wird ein 16 Byte plaintext mit einem Schlüssel k verschlüsselt, dann kann der aus der Verschlüsselung resultierende ciphertext mit demselben Schlüssel k entschlüsselt werden. Der entschlüsselte Text ist wieder derselbe wie der originale plaintext. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a51736a7005168423ddee6c07ea3b59a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a51736a7005168423ddee6c07ea3b59a7">&#9670;&nbsp;</a></span>decrypt()</h2>
@@ -330,7 +330,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>block_len</b>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Die Methode <a class="el" href="classAESCipher.html#af580c4fbade685bca77953f9600c98f3">encryptBlock()</a> verschlüsselt einen 16-Byte großen Plaintextblock mit dem AES. Dafür werden für jede Runde der Reihe nach die Basisoperationen subBytes, shiftRows, mixColumns und addKey in dieser Reihenfolge aufgerufen. Bei der Operation addKey wird darüber hinaus der Rundenschlüssel für die akuelle Runde aus dem key_schedule benötigt. In der letzten Runde wird auf die Basisoperation mixColumns verzichtet.</p>
+<p>Die Methode <a class="el" href="classAESCipher.html#af580c4fbade685bca77953f9600c98f3">encryptBlock()</a> verschlüsselt einen 16-Byte großen Plaintextblock mit dem AES. Dafür werden für jede Runde der Reihe nach die Basisoperationen subBytes, shiftRows, mixColumns und addKey mehrmals auf den state angewandt. Bei der Operation addKey wird darüber hinaus der Rundenschlüssel für die akuelle Runde aus dem key_schedule benötigt. In der letzten Runde wird auf die Basisoperation mixColumns verzichtet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">plain_text</td><td>Zeiger auf ein Byte-Array der Größe 16, welches mit dem AES verschlüsselt werden soll. </td></tr>
@@ -372,16 +372,16 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>block_len</b>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Überprüft, ob in die korrekte Länge hat und reserviert Speicher in out. out hat daraufhin (mindestens) die gleiche Länge wie die Eingabe in in. Wenn mode auf Encryption gesetzt ist, dann wird die Methode <a class="el" href="classAESCipher.html#a7bdb3f04dd3c3ee3d286a5c8b3891ea1">encrypt()</a> mit in als Plaintext aufgerufen. Danach steht in out der Ciphertext. Andernfalls, wenn mode auf Decryption gesetzt ist, wird die Methode decrypt mit in als Ciphertext aufgerufen. Danach steht in out der entschlüsselte Ciphetext. Für Documentation zur Ver- und Entschlüsselung siehe die <a class="el" href="classAESCipher.html#a7bdb3f04dd3c3ee3d286a5c8b3891ea1">encrypt()</a> und <a class="el" href="classAESCipher.html#a51736a7005168423ddee6c07ea3b59a7">decrypt()</a> Methoden. Die Länge des Texts in in muss ein Vielfaches von 16 Byte sein.</p>
+<p>Überprüft, ob in die korrekte Länge hat und reserviert Speicher in out. out hat daraufhin (mindestens) die gleiche Länge wie die Eingabe in in. Wenn mode auf Encryption gesetzt ist, dann wird die Methode <a class="el" href="classAESCipher.html#a7bdb3f04dd3c3ee3d286a5c8b3891ea1">encrypt()</a> mit in als Plaintext aufgerufen. Danach steht in out der Ciphertext. Andernfalls, wenn mode auf Decryption gesetzt ist, wird die Methode decrypt mit in als Ciphertext aufgerufen. Danach steht in out der entschlüsselte Ciphetext. Für die Dokumentation zur Ver- und Entschlüsselung siehe die <a class="el" href="classAESCipher.html#a7bdb3f04dd3c3ee3d286a5c8b3891ea1">encrypt()</a> und <a class="el" href="classAESCipher.html#a51736a7005168423ddee6c07ea3b59a7">decrypt()</a> Methoden. Die Länge des Texts in in muss ein Vielfaches von 16 Byte sein.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>Je nach mode der Plain- oder Ciphertext, der Ver- oder Entschlüsselt werden soll. </td></tr>
     <tr><td class="paramname">out</td><td>In out wird der Ver- oder Entschlüsselte Text von in gespeichert. Es muss kein Speicher für out reserviert werden. </td></tr>
-    <tr><td class="paramname">mode</td><td>Gibt an, ob der Text in in ver- oder entschlüsselt werden soll. Ist mode gleich Encryption oder false, dann wird verschlüsselt. Andernfalls wenn mode gleich Decryption oder true ist, wird entschlüsselt. </td></tr>
+    <tr><td class="paramname">mode</td><td>Gibt an, ob der Text in ver- oder entschlüsselt werden soll. Ist mode gleich Encryption oder false, dann wird verschlüsselt. Andernfalls wenn mode gleich Decryption oder true ist, wird entschlüsselt. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True, wenn der Text in in erfolgreich ver- oder entschlüsselt werden konnte. False, wenn ein Fehler aufgetreten ist, was zum Beispiel der Fall ist, wenn die Eingabe in eine nicht unterstützte Länge hat. Die Länge des zu Texts in in muss ein Vielfaches von 16 Byte sein. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True, wenn der Text in in erfolgreich ver- oder entschlüsselt werden konnte. False, wenn ein Fehler aufgetreten ist, was zum Beispiel der Fall ist, wenn die Eingabe 'in' eine nicht unterstützte Länge hat. Die Länge des zu Texts in 'in' muss ein Vielfaches von 16 Byte sein. </dd></dl>
 
 </div>
 </div>
@@ -408,7 +408,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>block_len</b>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Die Methode <a class="el" href="classAESCipher.html#aa0a48f50b134d4b23b48d147cbb9c395">setKey()</a> ruft die Methode setKey des key_schedules auf, der den key_schedule für den übergebenen Schlüssel berechnet</p>
+<p>Die Methode <a class="el" href="classAESCipher.html#aa0a48f50b134d4b23b48d147cbb9c395">setKey()</a> ruft die Methode setKey des key_schedules auf, der den key_schedule für den übergebenen Schlüssel berechnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Schlüssel als Byte-Vektor, für den der Key-Schedule berechnet werden soll </td></tr>
@@ -464,7 +464,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>block_len</b>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Flag zum Aktivieren von Debug-Ausgaben </p>
+<p>Flag zum Aktivieren von Debug-Ausgaben. Wenn True, dann werden Debug Ausgaben über stdout ausgegeben. </p>
 
 </div>
 </div>

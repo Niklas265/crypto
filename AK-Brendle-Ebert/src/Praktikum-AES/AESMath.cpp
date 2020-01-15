@@ -237,7 +237,7 @@ byte AESMath::mul(byte a, byte b) const {
     // Die Polynommultiplikation mit 0 ergibt ebenfalls 0.
     if (a == 0 || b == 0) return 0;
 
-    /**
+    /*
      * g steht für den Generator des endlichen Körpers GF(256) und ist gleich 3.
      * Um a°b = g^i ° g^j = g^((i+j) mod 255) zu berechnen, muss als erstes
      * das i in g^i für a und das j in g^j für b berechnet werden. Dafür wird
