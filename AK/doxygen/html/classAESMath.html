@@ -119,9 +119,9 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>format</b> (
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Diese Klasse bietet Hilfsfunktionen für AES an.</p>
-<p>Im AES Algorithmus basiert die Mathematik auf dem endlichen Körper GF(256). Diese Klasse implementiert Verfahren, um mit diesem Körper zu arbeiten. Elemente von endlichen Körpern können addiert und multipliziert werden. Allerdings unterscheiden sich diese Verfahren von denen für Zahlen.</p>
+<p>Im AES Algorithmus basiert die Mathematik auf dem endlichen Körper GF(256). Diese Klasse implementiert Verfahren, um mit diesem Körper zu arbeiten. Elemente von endlichen Körpern können addiert und multipliziert werden. Allerdings unterscheiden sich diese Verfahren von denen für Zahlen. Die Elemente haben ebenfalls ein inverses Element.</p>
 <p>Ein Körper ist eine algebraische Struktur mit (A, '⊕', '°'). (In den Folien ist das Symbole für die Division ° anders, aber das in der Folie verwendete Symbole kann nicht richtig abebildet werden. In dieser Dokumentation wird aus diesem Grund ° für die endlichen Körper Division verwendet.) Der Körper hat die Eigenschaft, dass (A, ⊕) und (A0}, °) kommutative Gruppen sind, dass das Distributivgesetz gilt und dass ||A|| &lt; ∞.</p>
-<p>Die Elemente im Körper werden in einem Byte als 8-Tupel über {0,1} dargestellt. Sie werden als Polynome mit Grad 7 interpretiert und Koeffizienten in {0,1} interpretiert. Das Element (h,g,f,e,d,c,b,a) ∈ (Z2)^8 steht für das Polynom hx^7 + gx^6 + fx^5 + ex^4 + dx^3 + cx^2 + xb + a. Dabei ist a das niedrigwertigste Bit des Bytes, b das zweit niedrigwertigste, ..., und h das höchstwertigste bit des Bytes, in dem das Polynom gespeichert ist. Das byte mit hexadezimalwert 57 (in binary 01010111) steht für das Polynom x^6 + x^4 + x^2 + x + 1. An die Funktionen dieser Klasse werden bytes übergeben. Diese bytes werden wie die hier beschriebenen Polynome interpretiert. </p>
+<p>Die Elemente im Körper werden in einem Byte als 8-Tupel über {0,1} dargestellt. Sie werden als Polynome mit Grad 7 und Koeffizienten in {0,1} interpretiert. Das Element (h,g,f,e,d,c,b,a) ∈ {0,1}^8 steht für das Polynom hx^7 + gx^6 + fx^5 + ex^4 + dx^3 + cx^2 + xb + a. Dabei ist a das niedrigwertigste Bit des Bytes, b das zweit niedrigwertigste, ..., und h das höchstwertigste bit des Bytes, in dem das Polynom gespeichert ist. Das Byte mit Hexadezimalwert 57 (in binary 01010111) steht für das Polynom x^6 + x^4 + x^2 + x + 1. An die Funktionen dieser Klasse werden bytes übergeben. Diese bytes werden wie die hier beschriebenen Polynome interpretiert. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a09bba3b08a03d0bd2abf1d20473bc895"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a09bba3b08a03d0bd2abf1d20473bc895">&#9670;&nbsp;</a></span>AESMath()</h2>
@@ -137,7 +137,7 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>format</b> (
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Dieser Konstrukor setzt die Lookup-Tabellen exp_table, log_table, sbox und inv_sbox.</p>
+<p>Dieser Konstrukor setzt die Lookup-Tabellen exp_table, log_table, sbox und inv_sbox. Die möglichen Eingabewerte für exp, log, sbox und insbox sind jeweils 256 Elemente groß. Dadurch kann das Ergebnis für jede mögliche Eingabe an exp_table, log_table, sbox und inv_sbox bereits im Vorfeld berechnet werden.</p>
 <p>Nachdem diese Lookup Tabellen einmal berechnet wurden, können sie weiter dazu verwendet werden, um Berechnungen in anderen Funktionen dieser Klasse schneller abzuarbeiten. </p>
 
 </div>
@@ -291,7 +291,7 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>format</b> (
         </tr>
       </table>
 </div><div class="memdoc">
-<p>invSBox um die Substitution der sBox rückgängig zu machen. Zum Beispiel: Angenommen sBox(1) = 10, dann ist invSBox(10) = 1. Dafür wird zuerst die affine Transformation atrans invertiert und danach das multiplikative Inverse in GF(256) des Ergebnisses der invertierten affinen Transformation berechnen und zurückgegeben. In dieser Implementation sind diese Werte bereits im inv_sbox Table gecached, wo sie über den sbox Table berechnet worden sind.</p>
+<p>invSBox um die Substitution der sBox rückgängig zu machen. Zum Beispiel: Angenommen sBox(1) = 10, dann ist invSBox(10) = 1. Dafür wird zuerst die affine Transformation atrans invertiert und danach das multiplikative Inverse in GF(256) des Ergebnisses der invertierten affinen Transformation berechnet und zurückgegeben. In dieser Implementation sind diese Werte bereits im inv_sbox Table gecached, wo sie über den sbox Table berechnet worden sind.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>Eingabebyte, auf welches die zwei bijektive Abbildungen angewendet werden. </td></tr>
@@ -354,7 +354,7 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>format</b> (
       </table>
 </div><div class="memdoc">
 <p>Polynommultiplikation auf dem endlichen Körper GF(256).</p>
-<p>Da in AES der endliche Körpert GF(256) fest gewählt ist, kann die Multiplikation effizient durch die im Konstruktur berechneten Lookup Tabellen implementiert werden. Da (GF(256)0}, °) eine zyklische Gruppe ist, besitzt sie ein erzeugendes Element g. Um a°b zu berechnen, verwendet man den Generator g. Falls a=g^i und b=g^j ist, dann ist a°b = g^i ° g^j = g^((i+j) mod 255).</p>
+<p>Da in AES der endliche Körpert GF(256) fest gewählt ist, kann die Multiplikation effizient durch die im Konstruktur berechneten Lookup Tabellen implementiert werden. Da (GF(256)0}, °) eine zyklische Gruppe ist, besitzt sie ein erzeugendes Element g. In diesem Fall ist g = 3. Um a°b zu berechnen, verwendet man den Generator g. Falls a=g^i und b=g^j ist, dann ist a°b = g^i ° g^j = g^((i+j) mod 255).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">a</td><td>Ein Byte in Polynomialrepräsentation. a ist der Multiplikator. </td></tr>
@@ -363,7 +363,6 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>format</b> (
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Das Ergebnis der Polynommultiplikation von a ° b als Byte in Polynomialrepräsentation. </dd></dl>
-<p>g steht für den Generator des endlichen Körpers GF(256) und ist gleich 3. Um a°b = g^i ° g^j = g^((i+j) mod 255) zu berechnen, muss als erstes das i in g^i für a und das j in g^j für b berechnet werden. Dafür wird die Funktionn <a class="el" href="classAESMath.html#a81dc0d4d9c71f76c9ab161b322af3dc0">log()</a> verwendet, welche die im Konstruktor berechnete Lookup Tabelle log verwendet. log liefert das i für log(a) und das j für log(b) zurück. Danach kann g^((i+j) mod 255) berechnet werden. Sowohl g, als auch das Ergebnis von ((i+j) mod 255) ist bekannt. Jetzt muss nur noch die "Polynomexponentation" angewendet werden, welches von der Funktion <a class="el" href="classAESMath.html#aed763f8e7b98d7d9c2bbf927b92f4c10">exp()</a> implementiert wird. <a class="el" href="classAESMath.html#aed763f8e7b98d7d9c2bbf927b92f4c10">exp()</a> liefert das Ergebnis von g^((i+j) mod 255) zurück und verwendet die im Konstruktor berechnete LookupTabelle exp.</p>
 
 </div>
 </div>
@@ -390,11 +389,11 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>format</b> (
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Die Parity-Funktion berechnet die Anzahl der Einsen in der Binärdarstellung eines Bytes und gibt an, ob diese gerade oder ungerade ist. Ist sie ungerade, dann wird 1 zurückgegeben. Andernfalls wird zurückgegeben.</p>
+<p>Die Parity-Funktion berechnet die Anzahl der Einsen in der Binärdarstellung eines Bytes und gibt an, ob diese gerade oder ungerade ist. Ist sie ungerade, dann wird 1 zurückgegeben. Andernfalls wird 0 zurückgegeben.</p>
 <p>Diese Funktion wird als Hilfsfunktion in der Berechnung der linearen Transformation verwendet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b</td><td>Das Byte welches nach einer geraden Anzahl von Einsen überprüft wird. </td></tr>
+    <tr><td class="paramname">b</td><td>Das Byte, welches nach einer geraden Anzahl von Einsen überprüft wird. </td></tr>
   </table>
   </dd>
 </dl>
