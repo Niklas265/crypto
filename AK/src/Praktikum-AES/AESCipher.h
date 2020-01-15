@@ -60,7 +60,7 @@ public:
     * key_schedule für den übergebenen Schlüssel berechnet
     *
     * @param key Schlüssel als Byte-Vektor, für den der Key-Schedule berechnet werden soll
-    * @ return True, wenn die Berechnung des Key-Schedules erfolgreich ablief. False, wenn
+    * @return True, wenn die Berechnung des Key-Schedules erfolgreich ablief. False, wenn
     * die Berechnung des Key-Schedules nicht erfolgreich war
     */
     bool setKey(const vector<byte>& key);
