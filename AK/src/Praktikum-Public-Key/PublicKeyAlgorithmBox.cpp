@@ -9,7 +9,10 @@ using namespace std;
 // #EEA()
 bool PublicKeyAlgorithmBox::EEA(const Integer& a, const Integer& b,
 		Integer& d, Integer& x, Integer& y) {
-        return false;
+
+
+
+    return false;
 } // EEA()
 
 // #modularExponentation()
@@ -31,7 +34,7 @@ bool PublicKeyAlgorithmBox::witness(const Integer& a, const Integer& n) {
 
 // randomInteger()
 Integer PublicKeyAlgorithmBox::randomInteger(const Integer& n) {
-  return Integer("1";
+  return Integer("1");
 }
 
 // #millerRabinTest()

@@ -19,12 +19,12 @@ ADD_SUBDIRECTORY( Praktikum-CryptoPP )
 
 ADD_SUBDIRECTORY( Praktikum-Vigenere )
 
-SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-        ${PROJECT_SOURCE_DIR}/CMakeModules)
 ADD_SUBDIRECTORY( Praktikum-DES )
 
 ADD_SUBDIRECTORY( Praktikum-Primzahlen )
 
 ADD_SUBDIRECTORY( Praktikum-AES )
 
-ADD_SUBDIRECTORY( Praktikum-Public-Key )
+ADD_SUBDIRECTORY( Praktikum-DH-Protokoll )
+
+# ADD_SUBDIRECTORY( Praktikum-Public-Key )
