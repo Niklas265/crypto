@@ -26,3 +26,5 @@ ADD_SUBDIRECTORY( Praktikum-DES )
 ADD_SUBDIRECTORY( Praktikum-Primzahlen )
 
 ADD_SUBDIRECTORY( Praktikum-AES )
+
+ADD_SUBDIRECTORY( Praktikum-Public-Key )
