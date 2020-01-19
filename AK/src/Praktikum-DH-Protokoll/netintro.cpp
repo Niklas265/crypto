@@ -41,6 +41,14 @@ void alice(string host, unsigned int port) {
 		len = client.Receive(buffer, MAXSIZE);
 		data.assign((char*) buffer, len);
 		cout << data << endl;
+        string s1 = "10232";
+        string s2 = "8934";
+        client.Send((byte*)s1.c_str(), s1.length());
+        client.Send((byte*)s2.c_str(), s2.length());
+
+        len = client.Receive(buffer, MAXSIZE);
+        data.assign((char*) buffer, len);
+        cout << "10232 + 8934 = " << data << endl;
 	}
 	catch (Socket::Err& err) {
 		// Dump the error message, of an exception is thrown
@@ -66,6 +74,22 @@ bool bob(Socket alice) {
 
 		alice.Send((byte*) msg.c_str(), msg.length());
 
+		string s1;
+		string s2;
+
+		int len = 0;
+
+        len = alice.Receive(buffer, MAXSIZE);
+        s1.assign((char*) buffer, len);
+        cout << "Recv s1 = " << s1 << endl;
+        len = alice.Receive(buffer, MAXSIZE);
+        s2.assign((char*) buffer, len);
+        cout << "Recv s2 = " << s2 << endl;
+
+        msg = to_string( stoi(s1) + stoi(s2) );
+        alice.Send((byte*) msg.c_str(), msg.length());
+
+        cout << "END" << endl;
 	} catch (Socket::Err& err) {
 		cout << "Error: " << err.GetWhat() << endl;
 	}
