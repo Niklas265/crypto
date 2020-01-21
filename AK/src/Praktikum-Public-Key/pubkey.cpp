@@ -21,12 +21,21 @@ void eeaExercise() {
 	/*********************************************************************
 	 * Aufgabe 3.
 	 *********************************************************************/
+
+    PublicKeyAlgorithmBox pb;
+    const Integer a = 102;
+    const Integer b = 75;
+    Integer d, x, y;
+    pb.EEA(a, b, d, x, y);
+    cout << "d: " << d << " x: " << x << " y: " << y << endl;
 }
 
 void invExercise() {
 	/*********************************************************************
 	 * Aufgabe 4.
 	 *********************************************************************/
+	// inv existeiert if eea() == true
+    a * ? (mod n) = 1
 }
 
 void modexpExercise() {
