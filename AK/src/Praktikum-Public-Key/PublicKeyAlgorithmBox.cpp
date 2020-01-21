@@ -10,14 +10,34 @@ using namespace std;
 bool PublicKeyAlgorithmBox::EEA(const Integer& a, const Integer& b,
 		Integer& d, Integer& x, Integer& y) {
 
+    if (b == 0) {
+        d = a;
+        x = 1;
+        y = 0;
+        return true;
+    }
 
+    Integer a2 = b;
+    Integer b2 = a % b;
+    Integer d2, x2, y2;
 
-    return false;
+    EEA(a2, b2, d2, x2, y2);
+
+    d = d2;
+    x = y2;
+    y = x2 - a / b * y2;
+
+    return d == 1;
 } // EEA()
 
 // #modularExponentation()
 Integer PublicKeyAlgorithmBox::modularExponentation(const Integer& a,
 		const Integer& b, const Integer& n) {
+
+    Integer d, x, y;
+
+    
+
   return Integer("1");
 } // modularExponentation()
 
