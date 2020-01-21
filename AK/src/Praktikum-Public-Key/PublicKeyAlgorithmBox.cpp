@@ -34,32 +34,135 @@ bool PublicKeyAlgorithmBox::EEA(const Integer& a, const Integer& b,
 Integer PublicKeyAlgorithmBox::modularExponentation(const Integer& a,
 		const Integer& b, const Integer& n) {
 
-    Integer d, x, y;
+    Integer c = 0;
+    Integer d = 1;
 
-    
+    for (int i = b.BitCount()-1; i >= 0; i--) {
+        c *= 2;
+        d = (d * d) % n;
+        if (b.GetBit(i)) {
+            c += 1;
+            d = (d * a) % n;
+        }
+    }
 
-  return Integer("1");
+    return d;
 } // modularExponentation()
 
 // #multInverse()
 bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
 		Integer& a_inv) {
-  return false;
+
+    Integer d, x, y;
+
+    EEA(a, n, d, x, y);
+
+    if (d == 1) {
+        while (x < 0) { // TODO: does the case exist where x < -n?
+            x += n;
+        }
+        a_inv = x;
+        return true;
+    }
+    return false;
 } // multInverse()
 
-// #witness()
+// #witness()   // TODO: copy pasted from Praktikum-Primzahlen
 bool PublicKeyAlgorithmBox::witness(const Integer& a, const Integer& n) {
-  return false;
+    //Implementierung des Witness-Algorithmus, der True zurückliefert, wenn n keine Primzahl ist
+
+    //sicherstellen, dass n ungerade Zahl ist
+    assert((n%2)==1);
+
+    //Berechne u und r so dass n-1 = u * 2^r
+    Integer nMinus1 = n-1;
+    Integer u,r;
+    Integer powerof2;
+
+    //Für jedes Bit in der Binärdarstellung von n-1
+    for(int i = 0; i < nMinus1.BitCount(); i++) {
+        //wenn das Bit an der i-ten Position 1 ist, dann Berechne u = (n-1)/ 2^i
+        if(nMinus1.GetBit(i)) {
+            powerof2 = Integer::Power2(i);
+            r = i;
+            u = nMinus1 / powerof2;
+            //wenn alle Kriterien für u und r erfüllt sind und die Division in der obigen Zeile ohne Rest
+            //durchgeführt werden konnte, dann brich die Schleife ab, da r und u gefunden wurde, sodass die Bedingung
+            //erfüllt ist
+            if(((nMinus1 % powerof2) == 0) && ((u % 2) == 1)) {
+                break;
+            }
+        }
+    }
+
+    Integer d = modularExponentation(a,u,n);
+    //Führe in jedem Schleifendurchlauf eine Quadratur von d durch, um a^(n-1) (mod n) zu berechnen
+    for(Integer i = 0; i < r; i++) {
+        Integer x = d;
+        d = (d*d) % n;
+        //wenn d=1 und x !=1 und x != -1 ist, dann gib True zurück, da n keine Primzahl sein kann, wenn n eine
+        //Quadratwurzel in Z Stern n besitzt, die ungleich 1 und -1 (also n-1) ist
+        if((d==1) && (x != 1) && (x != (n-1))) {
+            return true;
+        }
+    }
+    //wenn das Ergebnis der Berechnung a^(n-1) % n ungleich 1 ist (das Fermat-Kriterium also nicht erfüllt ist), dann gib
+    //True zurück, da n dann keine Primzahl ist
+    if(d != 1) {
+        return true;
+    }
+
+    return false;
 } // witness()
 
 // randomInteger()
 Integer PublicKeyAlgorithmBox::randomInteger(const Integer& n) {
-  return Integer("1");
+    NonblockingRng nonblockingRng;
+    Integer ret;
+    do {
+        ret.Randomize(nonblockingRng, n.BitCount());
+    } while (ret > n);  // TODO: check bounds, according to docu n is included
+                        //  in possible values for ret
+    return ret;
 }
 
-// #millerRabinTest()
+// #millerRabinTest()   // TODO: copy pasted too
 bool PublicKeyAlgorithmBox::millerRabinTest(Integer& n, unsigned int s) {
-	return true;
+    //Impementiert den Miller-Rabin Primzahltest, der feststellen kann, ob es sich bei n um eine Primzahl oder eine
+    //Zusammengesetze Zahl handelt
+
+    //Sicherstellen, dass die Zahl n > 2 und der Qualitätsparameter s größer gleich 0 ist
+    assert(n > 2);
+    assert(s >= 0);
+
+    //Wenn die Zahl gerade ist (also n % 2 = 0), dann gib False zurück. Die Zahl 2 ist die einzige gerade Primzahl.
+    //Da aber sichergestellt wird, dass die zu testende Zahl größer als 2 ist, kann geschlussfolgert werden,
+    //dass es sich sicher um keine Primzahl handelt, wenn n gerade ist
+    if((n % 2) == 0) {
+        return false;
+    }
+    //Durchlaufe die Schleife s-mal
+    for(int i = 0; i < s; i++) {
+        //Die zufällig erzeugte Zahl a muss in range 1 bis n-1 liegen. Da getInteger() eine Zahl im Raum von 0 bis n-1
+        //liefert, wird der Raum der erzeugten Zahlen um 1 reduziert und am Ende eins aufaddiert. So ist
+        //die kleinstmöglich erzeugbare Zahl 0+1 = 1 und die größtmöglich erzeugbare Zahl n-2+1 = n-1. Somit befindet
+        //sich die zufällig erzeugte Zahl in dem vom Algorithmus benötigten Bereich von {1,...,n-1}
+        Integer a = randomInteger(n-1)+1;
+
+        //Wenn der größte Gemeinsame Teiler der zufällig erzeugten Zahl und n größer als 1 ist, dann ist n
+        //keine Primzahl, da für eine Primzahl p gilt, dass der ggT aller Zahlen in Z Stern p (also alle Zahlen
+        //zwischen 1 und p-1 (inklusiv)) gleich 1 ist
+        if(Integer::Gcd(a,n) > 1) {
+            return false;
+        }
+        //wenn die Funktion Witness true zurückgibt -> Gib false zurück, da n dann keine Primzahl ist, da hierfür ein
+        //solider Beweis gefunden wurde
+        if(witness(a,n)) {
+            return false;
+        }
+    }
+
+    return true;
 } // millerRabinTest()
 
 // #randomPrime()
@@ -71,13 +174,27 @@ unsigned int PublicKeyAlgorithmBox::randomPrime(Integer &p,
 // #randomPrime()
 unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
 		unsigned int bitlen, unsigned int s) {
-  return 0;
+
+    NonblockingRng nonblockingRng;
+
+    do {
+        p.Randomize(nonblockingRng, bitlen);
+    } while (p % 4 != 3 || !millerRabinTest(p, s));
+    return 0;
 } // randomRabinPrime()
 
 // #modPrimeSqrt()
 bool PublicKeyAlgorithmBox::modPrimeSqrt(const Integer& y, const Integer& p,
 		vector<Integer>& v) {
-  return false;
+
+    if (p % 4 != 3) return false;
+
+    Integer x = modularExponentation(y, (p+1)/4, p);
+    v.clear();
+    v.push_back(x);
+    v.push_back(-x + p);
+
+    return true;
 }
 
 Integer PublicKeyAlgorithmBox::euklid(const Integer& a, const Integer& b,
