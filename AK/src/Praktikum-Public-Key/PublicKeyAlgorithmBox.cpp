@@ -10,23 +10,31 @@ using namespace std;
 bool PublicKeyAlgorithmBox::EEA(const Integer& a, const Integer& b,
 		Integer& d, Integer& x, Integer& y) {
 
+    // Es gilt gcd(a,0) = |a|. Da a laut Vorgabe in Doxygen eine positive Zahl
+    // ist, ist gcd(a,0) = a.
     if (b == 0) {
         d = a;
+        // Für {ax + by | x, y ∈ Z} ist a = gcd(a,b) und somit x = 1 und y = 0.
         x = 1;
         y = 0;
-        return true;
+        // Wenn (d =) gcd(a,b) == 1, dann wird True zurückgeliefert.
+        return d == 1;
     }
 
+    // Berechnen der Argumente für den rekursiven Aufruf von EEA.
     Integer a2 = b;
     Integer b2 = a % b;
     Integer d2, x2, y2;
 
     EEA(a2, b2, d2, x2, y2);
 
+    // Werte des rekursiven Aufruf von EEA werden ausgelesen und
+    // in den Zielvariablen gespeichert.
     d = d2;
     x = y2;
     y = x2 - a / b * y2;
 
+    // Wenn (d =) gcd(a,b) == 1, dann wird True zurückgeliefert.
     return d == 1;
 } // EEA()
 
@@ -34,17 +42,30 @@ bool PublicKeyAlgorithmBox::EEA(const Integer& a, const Integer& b,
 Integer PublicKeyAlgorithmBox::modularExponentation(const Integer& a,
 		const Integer& b, const Integer& n) {
 
-    Integer c = 0;
     Integer d = 1;
 
+    // Bei der Berechnung der modularen Exponentation wird die Binärdarstellung
+    // des Exponenten von b verwendet. Die Binärdarstellung kann über die
+    // GetBit() Funktion der Integer Klasse verwendet werden. Über alle Bits
+    // kann mit eine Schleife von Bit b.BitCount()-1 bis 0 iteriert werden.
     for (int i = b.BitCount()-1; i >= 0; i--) {
-        c *= 2;
+        // In jedem Schleifendurchlauf wird d quadriert. Die Multiplikation
+        // modulo n ist assoziativ. Dadurch kann der Zwischenwert nach jedem
+        // Zwischenschritt mod n gerechnet werden. Dadurch werden die Zwischen-
+        // werte nicht zu groß und die Berechung wird dadurch effizienter.
         d = (d * d) % n;
+        // Wenn ein Bit in b gleich 1 ist, dann wird d ebenfalls mit a
+        // multipliziert.
         if (b.GetBit(i)) {
-            c += 1;
             d = (d * a) % n;
         }
     }
+
+    // Mittels der in nbtheory.h deklarierten Methode a_exp_b_mod_c(a,b,n) kann
+    // überprüft werden, ob die implementierung des Algorithmus korrekt
+    // implementiert ist. Dieser Check kann für bessere Performance entfernt
+    // werden.
+    assert(d == a_exp_b_mod_c(a, b, n));
 
     return d;
 } // modularExponentation()
@@ -55,13 +76,29 @@ bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
 
     Integer d, x, y;
 
+    // a ist invertierbar modulo n, falls gcd(a,n) = 1. gcd(a,n) kann auch mit
+    // dem Erweiterten Algorithmus von Euklid berechnet werden.
+    // Wegen ZTK Satz 3.4 gibt es x,y ∈ Z, so dass gcd(a, n) = 1 = ax + ny.
+    // Somit gilt 1 ist kongruent zu ax+ny (mod n). Wegen mod n kürzt sich das
+    // ny raus und ist somit das gleiche wie 1 ist kongruent zu ax (mod n).
+    // Dadurch ist x das multiplikative Inverse von a mod n und dieses x kann
+    // ebenfalls durch den EEA berechnet werden.
     EEA(a, n, d, x, y);
 
+    // Bei EEA wird gcd(a,n) in d gespeichert.
     if (d == 1) {
+        // Laut Aufgabenstellung sollen keine negativen inversen zurückgegeben
+        // werden. Da -1 (mod n) = n-1 (mod n), kann ein berechnetes negatives
+        // Inverses zu einer positiven Inversen umgewandelt werden.
         if (x < 0) x += n;
+        // Das multiplikative Inverse von a wird über a_inv zurückgegeben.
         a_inv = x;
+        // True wird als Rückgabewert zurückgegeben, da ein multiplikatives
+        // Inverses existiert.
         return true;
     }
+    // gcd(a,n) != 1, das heißt, dass es kein inverses Element gibt.
+    // Dadurch wird false zurückgegeben.
     return false;
 } // multInverse()
 
@@ -178,11 +215,20 @@ unsigned int PublicKeyAlgorithmBox::randomPrime(Integer &p,
 unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
 		unsigned int bitlen, unsigned int s) {
 
+    // Ein nicht blockierender Pseudozufallszahlengenerator wird für das
+    // erzeugen von Zufallszahlen verwendet.
     NonblockingRng nonblockingRng;
 
+    // In jedem Schleifendurchlauf wird eine Zufallszahl mit maximaler Bitlänge
+    // bitlen erzeugt. Wenn gilt, dass p % 4 != 3 und
+    // laut dem Rabin Miller Test mit einer Wahrscheinlichkeit von 2^-s
+    // p eine Primzahl ist, dann wird die Schleife und die Funktion verlassen.
+    // Ist eine der beiden Bedingungen nicht erfüllt, dann wird der nächste
+    // Schleifendurchlauf ausgeführt, die Schleife wird also nicht verlassen.
     do {
         p.Randomize(nonblockingRng, bitlen);
     } while (p % 4 != 3 || !millerRabinTest(p, s));
+
     return 0;
 } // randomRabinPrime()
 
@@ -190,8 +236,17 @@ unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
 bool PublicKeyAlgorithmBox::modPrimeSqrt(const Integer& y, const Integer& p,
 		vector<Integer>& v) {
 
+    // Diese Methode berechnet die Quadratwurzeln nur, wenn p kongruent zu 3
+    // modulo 4 ist. Ist das nicht der Fall, dann wird false zurückgegeben.
     if (p % 4 != 3) return false;
 
+    // TODO: hier bin ich stehengeblieben. das folgende und die weiteren
+    //  aufgaben müssen noch dokumentiert werden. diese aufgabe auch.
+    // Laut Vorgabe ist angenommen dass p eine Primzahl ist.
+    // Es gilt, dass wenn p eine Primzahl mit der Eigenschaft ist, dass
+    // p kongruent zu 3 modulo 4 ist, dann sind x1,2 = +/- a^((p+1)/4) die
+    // beiden Lösungen für die Gleichung x² ist kongruent zu a (mod p). Dabei
+    // ist a ein quadratischer Rest modulo p.
     Integer x = modularExponentation(y, (p+1)/4, p);
     v.clear();
     v.push_back(x);

@@ -52,7 +52,7 @@ public:
 	 * (mod n). Wenn das Ergebnis dieser Berechnung ungleich 1 ist, dann ist die Zahl definitiv keine Primzahl und a
 	 * kann als Solider Beweis dafür angesehen werden, dass n keine Primzahl ist. Ein solider Beweis ist eine Zahl a
 	 * in Z Stern n, die beweist, dass n eine zusammengesetzte Zahl ist. Sei n also eine beliebige ungerade natürliche
-	 * Zahl, die größer 1 ist. Dann werden r und u so gewählt, dass n-1 = 2^r * u ist. Dann ist a eine solider Beweis,
+	 * Zahl, die größer 1 ist. Dann werden r und u so gewählt, dass n-1 = 2^r * u ist. Dann ist a ein solider Beweis,
 	 * falls: 1. a^u nicht kongruent zu +1 oder -1 (modulo n) und 2. Für alle i=1 bis r-1 gilt: a ^(2^i * u) ist
 	 * nicht kongruent zu -1 (modulo n). Wenn n eine beliebige, zusammengesetzte Zahl ist, die keine Primzahlpotenz ist,
 	 * dann sind mindestens die Hälfte aller Zahlen in Z Stern n solide Beweise dafür, dass n eine zusammengesetzte

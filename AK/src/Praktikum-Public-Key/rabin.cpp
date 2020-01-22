@@ -12,9 +12,6 @@
 
 using namespace std;
 
-// TODO: wahrscheinlich will er dass wir das im terminal ausgeben lassen damit
-//  er es sieht
-
 // #rabinParameters()
 void rabinParameters() {
 	/*********************************************************************
@@ -23,10 +20,15 @@ void rabinParameters() {
 
 	PublicKeyAlgorithmBox pb;
 	Integer p, q;
+	// unter Verwendung der Methode randomRabinPrime() werden zwei geeignete
+	// 256-Bit Primzahlen p und q als Parameter für das Rabin-Kryptosystem
+	//  generiert. Für das Rabin-Kryptosystem muss jede der beiden Primzahlen
+	// eine Rabin-Primzahl, ð, sein, bei der gilt, dass x ≡ 3 (mod 4), wobei x
+	// p bzw. q ist.
     pb.randomRabinPrime(p, 256, 50);
     pb.randomRabinPrime(q, 256, 50);
-	//cout << "Erste  256 Bit Rabin Primzahl p: " << p << endl;
-    //cout << "Zweite 256 Bit Rabin Primzahl q: " << q << endl;
+	cout << "Erste  256 Bit Rabin Primzahl p: " << p << endl;
+    cout << "Zweite 256 Bit Rabin Primzahl q: " << q << endl;
 }
 
 // #sqrtModPrimeExercise()
