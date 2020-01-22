@@ -43,6 +43,7 @@ void invExercise() {
     assert(a_inv == Integer(21711));
     assert(!pb.multInverse(Integer(10353), Integer(820344), a_inv));
     pb.multInverse(Integer(562312), Integer(57913313), a_inv);
+    cout << a_inv << endl;
     assert(a_inv == Integer(53494466));
 }
 

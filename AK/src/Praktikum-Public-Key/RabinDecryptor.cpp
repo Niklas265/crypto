@@ -11,22 +11,34 @@ RabinDecryptor::RabinDecryptor(const Integer& p, const Integer& q,
     this->p = p;
     this->q = q;
     this->padding = padding;
+    offset = 1;
+    while (offset <= padding) {
+        offset *= 10;
+    }
 }
 
 // #compute()
 bool RabinDecryptor::compute(const Integer& y, vector<Integer>& xv) {
 
-    if (y >= p || y >= q) return false;
+    // cant check anymore because y is padded
+    //if (y >= p || y >= q) return false;
 
-    vector<Integer> v;
+    Integer n = p * q;
+    vector<Integer> vp, vq;
     PublicKeyAlgorithmBox pb;
-    pb.modPrimeSqrt(y, p, v);
-    xv.push_back(v[0]);
-    xv.push_back(v[1]);
-    // v cleared by modPrimeSqrt
-    pb.modPrimeSqrt(y, q, v);
-    xv.push_back(v[0]);
-    xv.push_back(v[1]);
+    pb.modPrimeSqrt(y, p, vp);
+    pb.modPrimeSqrt(y, q, vq);
+
+    Integer d, mq, mp;
+    pb.EEA(p, q, d, mq, mp);
+    if (d != 1) return false;
+    if((mp * q) % p != 1) return false;
+    if((mq * p) % q != 1) return false;
+
+    xv.push_back((vp[0] * q * mp + vq[0] * p * mq) % n);
+    xv.push_back((vp[0] * q * mp + vq[1] * p * mq) % n);
+    xv.push_back((vp[1] * q * mp + vq[0] * p * mq) % n);
+    xv.push_back((vp[1] * q * mp + vq[1] * p * mq) % n);
 
     return true;
 }
@@ -42,7 +54,17 @@ bool RabinDecryptor::compute(const Integer& y, Integer& x) {
 
 // #compute2()
 bool RabinDecryptor::compute2(const Integer& y, Integer& x) {
-  return false;
+    vector<Integer> xv;
+    compute(y, xv);
+
+    for (auto xPadded : xv) {
+        if (xPadded % offset == padding) {
+            x = xPadded / offset;
+            return true;
+        }
+    }
+
+    return false;
 }
 
 RabinDecryptor::~RabinDecryptor() {

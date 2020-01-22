@@ -58,9 +58,7 @@ bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
     EEA(a, n, d, x, y);
 
     if (d == 1) {
-        while (x < 0) { // TODO: does the case exist where x < -n?
-            x += n;
-        }
+        if (x < 0) x += n;
         a_inv = x;
         return true;
     }
@@ -168,7 +166,12 @@ bool PublicKeyAlgorithmBox::millerRabinTest(Integer& n, unsigned int s) {
 // #randomPrime()
 unsigned int PublicKeyAlgorithmBox::randomPrime(Integer &p,
 		unsigned int bitlen, unsigned int s) {
-	return 0;
+    NonblockingRng nonblockingRng;
+
+    do {
+        p.Randomize(nonblockingRng, bitlen);
+    } while (!millerRabinTest(p, s));
+    return 0;
 } // randomPrime()
 
 // #randomPrime()
@@ -199,20 +202,80 @@ bool PublicKeyAlgorithmBox::modPrimeSqrt(const Integer& y, const Integer& p,
 
 Integer PublicKeyAlgorithmBox::euklid(const Integer& a, const Integer& b,
 		vector<Integer>& q) {
-  return Integer("1");
+
+    vector<Integer> r = {a, b};
+    int m = 1;
+
+    while (r[m] != 0) {
+        q.push_back(r[m-1] / r[m]);
+        r.push_back(r[m-1] - q[m-1]*r[m]);
+        m += 1;
+    }
+    m -= 1;
+
+    return r[m];
 }
 
 unsigned int PublicKeyAlgorithmBox::computeConvergents(const Integer& a,
 		const Integer& b, vector<Integer>& c, vector<Integer>& d) {
-  return 1;
+
+    vector<Integer> q;
+    euklid(a, b, q);
+
+    c.push_back(Integer(1));
+    c.push_back(q[0]);
+    for (int i = 2; i <= q.size(); i++) {
+        c.push_back(q[i-1] * c[i-1] + c[i-2]);
+    }
+
+    d.push_back(Integer("0"));
+    d.push_back(Integer(1));
+    for (int i = 2; i <= q.size(); i++) {
+        d.push_back(q[i-1] * d[i-1] + d[i-2]);
+    }
+
+    return 1;
 }
 
 // #sqrt()
 bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
-  return false;
+
+    Integer min = 1;
+    Integer max = x;    // probably x/2
+
+    while (min != max) {
+        Integer mid = (min + max) / 2;
+        Integer midSqrt = mid * mid;
+        if (midSqrt == x) {
+            s = mid;
+            return true;
+        }
+        // can probably optimize this out
+        if (max * max == x) {
+            s = max;
+            return true;
+        }
+        if (max-min == 1 && min * min != x) return false;
+
+        if (midSqrt > x) {
+            max = mid - 1;
+        } else {
+            min = mid;
+        }
+    }
+
+    return false;
 }
 
 void PublicKeyAlgorithmBox::generateRSAParams(Integer& p, Integer& q,
 		Integer& e, Integer& d, unsigned int bitlen, unsigned int s) {
+    randomPrime(p, bitlen, s);
+    randomPrime(q, bitlen, s);
+    Integer n = p * q;
+    Integer phiN = (p-1) * (q-1);
+    do {
+        e = randomInteger(n-2) + 1;
+    } while (Integer::Gcd(e, phiN) != 1);
+    multInverse(e, phiN, d);
 }
 
