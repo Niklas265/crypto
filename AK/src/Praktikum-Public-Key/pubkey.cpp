@@ -55,6 +55,7 @@ void invExercise() {
     // von 10353 modulo 820343. Falls ein solches existiert, dann wird es in
     // a_inv gespeichert.
     pb.multInverse(Integer(10353), Integer(820343), a_inv);
+    cout << "multiplikatives Inverses von 10353 modulo 820343: " << a_inv << endl;
     // Es wird erwartet, dass ein solches multiplikative Inverse existiert und
     // das dieses 21711 ist.
     assert(a_inv == Integer(21711));
@@ -65,6 +66,7 @@ void invExercise() {
     // Berechnet das multiplikatives Inverses von 562312 modulo 57913313.
     // Es wird erwartet, dass dieses 53494466 ist.
     pb.multInverse(Integer(562312), Integer(57913313), a_inv);
+    cout << "multiplikatives Inverses von 562312 modulo 57913313: " << a_inv << endl;
     assert(a_inv == Integer(53494466));
 }
 
@@ -78,9 +80,13 @@ void modexpExercise() {
 	// zweites und n als drittes Argument an modularExponentation übergeben
 	// werden.
 	// Berechnet 2^100000 % 23 und überprüft ob das Ergebnis gleich 12 ist.
-	assert(pb.modularExponentation(Integer(2), Integer(100000), Integer(23)) == Integer(12));
+	Integer ergebnis = pb.modularExponentation(Integer(2), Integer(100000), Integer(23));
+	cout << "2^100000 % 23 = " << ergebnis << endl;
+	assert(ergebnis == Integer(12));
     // Berechnet 2343947997^765 % 111 und überprüft ob das Ergebnis gleich 105 ist.
-	assert(pb.modularExponentation(Integer(2343947997), Integer(765), Integer(111)) == Integer(105));
+    ergebnis = pb.modularExponentation(Integer(2343947997), Integer(765), Integer(111));
+    cout << "2343947997^765 % 111 = " << ergebnis << endl;
+	assert(ergebnis == Integer(105));
 }
 
 void randExercise() {
@@ -140,13 +146,21 @@ void millerRabinExercise() {
 	// gewählt.
 	// millerRabinTest liefert True zurück, wenn mit der Fehlerwahrscheinlichkeit
 	// angenommen wird, dass es sich bei a um eine Primzahl handelt.
+	bool ergebnis = pb.millerRabinTest(a, 100);
+	cout << "279226292160650115722581212551219487007 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
 	assert(pb.millerRabinTest(a, 100));
 	Integer b = Integer("247278711133334795867191516244139839983");
-    assert(!pb.millerRabinTest(b, 100));
+    ergebnis = pb.millerRabinTest(b, 100);
+    cout << "247278711133334795867191516244139839983 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+    assert(!ergebnis);
     Integer c = Integer("192172622525902080249109244057747132167");
-    assert(!pb.millerRabinTest(c, 100));
+    ergebnis = pb.millerRabinTest(c, 100);
+    cout << "192172622525902080249109244057747132167 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+    assert(!ergebnis);
     Integer d = Integer("177387942943728133030691912202779547031");
-    assert(pb.millerRabinTest(d, 100));
+    ergebnis = pb.millerRabinTest(d, 100);
+    cout << "177387942943728133030691912202779547031 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+    assert(ergebnis);
 }
 
 int main(int argc, char** argv) {

@@ -119,18 +119,35 @@ void rabinAttack() {
 	 * Aufgabe 13.
 	 *********************************************************************/
 
+	// Beispiel einer Chosen Ciphertext Attacke auf das Rabin Kryptosystem
+	// Dabei darf ein beliebiger Ciphertext mit dem Rabin Kryptosystem
+	// entschlüsselt werden. Das Ziel ist es, n zu faktorisieren, das heißt
+	// p oder q ohne Kentniss von p und q zu bekommen.
+
+	// Um einen Ciphertext zu verschlüsseln wird eine RabinDecryptor Klasse
+	// erzeugt
     Integer p = Integer("728768879148869666628372866383");
     Integer q = Integer("1178365175275537416785439551531");
-
     RabinDecryptor rabinDecryptor(p, q, 0);
 
+    //  Die Klasse RabinAttack implementiert die Chosen Ciphertext Attacke
     RabinAttack rabinAttack;
+    // In f wird bei Erfolg ein Faktor von n, wobei n = p * q, gespeichert
     Integer f;
+    // factorize liefert bei Erfolg die Anzahl der Versuche zurück und bei
+    // keinem Erfolg wird -1 zurückgelifert.
+    // factorize bekommt das öffentliche n (=p*q) als erstes Übergabeargument.
+    // Die maximale Anzahl der Versuche wird im dritten Argument auf 5 gesetzt.
+    // Die Erfolgswahrscheinlichkeit liegt dadurch bei 1-0.5⁵.
+    // Dem zu verschlüsselnden Klartext wurde keine Markierung/Padding
+    // hinzugefügt. Mit Padding könnte der Angriff verhindert werden.
     int tries = rabinAttack.factorize(p * q, f, 5, rabinDecryptor);
     if (tries != -1) {
+        // Nach tries Versuchen wurde ein Faktor f gefunden.
         cout << "Found a factor f: " << f << endl;
         assert(f == p || f == q);
     } else {
+        // Nach 5 Versuchen wurde kein Faktor von n gefunden.
         cout << "Didnt find f after " << tries << " tries." << endl;
     }
 }

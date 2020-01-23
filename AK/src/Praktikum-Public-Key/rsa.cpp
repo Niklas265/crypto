@@ -54,9 +54,13 @@ void rsaDemo() {
     assert(outy == y);
 
     RSADecryptor rsaDecryptor(p, q, d);
-    Integer outx, outgarner;
+    Integer outx, outgarner, outcrt;
     rsaDecryptor.compute(outy, outx);
+    cout << outx << endl;
     assert(outx == x);
+    rsaDecryptor.crt(outy, outcrt);
+    cout << "CRT " << outcrt << endl;
+    assert(outcrt == x);
     rsaDecryptor.garner(outy, outgarner);
     assert(outgarner == x);
 }

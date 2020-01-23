@@ -51,6 +51,9 @@ int RabinAttack::factorize(const Integer& n, Integer& f, int max_tries,
         // werden und der Versuch wird abgebrochen.
         if (x == r || x-n == -r) continue;
         // Anhand von Fall (3) oder (4) kann man n faktorisieren.
+        // Das beudetet, dass die Erfolgswahrscheinlichkeit des Angriffs
+        // pro versuch bei 50% ist. Durch wiederholtes Ausführen kann die
+        // Erfolgswahrscheinlichkeit erhöht werden.
         // Betrachten wir Fall 3, aus dem folgt, dass:
         // x - r ≡ 0 (mod p) und x-r ≡ -2r (mod q)
         // Mit dem CRT:

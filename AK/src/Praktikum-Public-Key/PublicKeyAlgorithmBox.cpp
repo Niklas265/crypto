@@ -152,12 +152,15 @@ bool PublicKeyAlgorithmBox::witness(const Integer& a, const Integer& n) {
 
 // randomInteger()
 Integer PublicKeyAlgorithmBox::randomInteger(const Integer& n) {
+    // Ein nicht blockierender Pseudozufallszahlengenerator wird für das erzeugen
+    // von n.BitCount() Bit großen Zahlen verwendet.
     NonblockingRng nonblockingRng;
     Integer ret;
     do {
+        // Erzeugt einen zufälligen Integer im Bereich 0,1,n-1. Wenn ein Integer
+        // > n-1 gewürfelt worden ist, dann muss nochmal gewürfelt werden.
         ret.Randomize(nonblockingRng, n.BitCount());
-    } while (ret > n);  // TODO: check bounds, according to docu n is included
-                        //  in possible values for ret
+    } while (ret >= n);
     return ret;
 }
 
@@ -357,7 +360,7 @@ void PublicKeyAlgorithmBox::generateRSAParams(Integer& p, Integer& q,
     do {
         randomPrime(p, bitlen, s);
         randomPrime(q, bitlen, s);
-    } while(p != q);
+    } while(p == q);
     Integer n = p * q;
     // phiN gibt die Anzahl der Zahlen an, die Teilerfremd zu n sind.
     Integer phiN = (p-1) * (q-1);

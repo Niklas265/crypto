@@ -115,6 +115,15 @@ public:
      */
 	bool millerRabinTest(Integer& n, unsigned int s);
 
+	/***
+	 * randomInteger liefert einen zufälligen zufälligen Integer
+	 * im Bereich 0,1,...,n-1 zurück.
+	 *
+	 * @param n n gibt die Obergrenze des zu generierenden Integers an.
+	 * n ist exklusiv, das heißt der generierte Integer ist < n.
+	 * n ist vom Typ Integer und muss größer als 0 sein.
+	 * @return Einen zufälligen Integer im Bereich 0,1,...,n-1
+	 */
 	Integer randomInteger(const Integer& n);
 
 	/***
@@ -174,8 +183,13 @@ public:
 	bool sqrt(const Integer& x, Integer& s) const;
 
 	/***
-	 * generateRSAParams Generiert Werte, die zusammen einen RSA-Schlüssel bilden.
-	 *
+	 * generateRSAParams generiert Werte für einen RSA-Schlüssel. Speziell
+	 * besteht der RSA Schlüssel K aus n, p, q, e, d. n ist das Produkt
+	 * aus p * q und kann somit ebenfalls aus den Werten p und q berechnet
+	 * werden. n und e bilden den öffentlichen Schlüssel, p, q und d den
+	 * privaten Teil des Schlüssels. Es wird ebenfalls sichergestellt, dass
+	 * p != q, da sonst n einfach durch die Wurzel faktorisierbar ist.
+	 * Für die Sicherheit von N darf N nicht einfach faktorisierbar sein.
 	 *
 	 * @param p p ist eine bitlen-Bit Zufallszahl, die mit einer
 	 * Wahrscheinlichkeit von 1-2^-s eine Primzahl ist.
