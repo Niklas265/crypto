@@ -348,11 +348,18 @@ bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
 
 void PublicKeyAlgorithmBox::generateRSAParams(Integer& p, Integer& q,
 		Integer& e, Integer& d, unsigned int bitlen, unsigned int s) {
+    // Zwei bitlen-Bit große Zahlen, die jeweils mit Wahrscheinlichkeit
+    // 1-2^-s eine Primzahl ist, werden erzeugt und in p und q abgespeichert.
+    // Wenn p und q gleich sind, dann könnte N sehr einfach faktorisiert
+    // werden, indem die Wurzeln von N berechnet wird. Für die Sicherheit
+    // von N darf N nicht einfach faktorisierbar sein.
+    // Deshalb wird sichergestellt, dass p != q.
     do {
         randomPrime(p, bitlen, s);
         randomPrime(q, bitlen, s);
     } while(p != q);
     Integer n = p * q;
+    // phiN gibt die Anzahl der Zahlen an, die Teilerfremd zu n sind.
     Integer phiN = (p-1) * (q-1);
     do {
         e = randomInteger(phiN-2) + 1;
