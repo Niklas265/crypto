@@ -236,22 +236,30 @@ unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
 bool PublicKeyAlgorithmBox::modPrimeSqrt(const Integer& y, const Integer& p,
 		vector<Integer>& v) {
 
-    // Diese Methode berechnet die Quadratwurzeln nur, wenn p kongruent zu 3
+    // Diese Methode berechnet nur die Quadratwurzeln, wenn p kongruent zu 3
     // modulo 4 ist. Ist das nicht der Fall, dann wird false zurückgegeben.
     if (p % 4 != 3) return false;
 
-    // TODO: hier bin ich stehengeblieben. das folgende und die weiteren
-    //  aufgaben müssen noch dokumentiert werden. diese aufgabe auch.
-    // Laut Vorgabe ist angenommen dass p eine Primzahl ist.
+    // Laut Vorgabe wird angenommen, dass p eine Primzahl ist.
     // Es gilt, dass wenn p eine Primzahl mit der Eigenschaft ist, dass
     // p kongruent zu 3 modulo 4 ist, dann sind x1,2 = +/- a^((p+1)/4) die
     // beiden Lösungen für die Gleichung x² ist kongruent zu a (mod p). Dabei
-    // ist a ein quadratischer Rest modulo p.
+    // ist a ein quadratischer Rest modulo p und in unserem Fall ist a der
+    // Übergabeparameter y und x bzw die 2 x's sind die zu suchenden
+    // Quadratwurzeln.
+    // p kongruent zu 3 modulo 4 ist durch obige p % 4 == 3 abfrage gegeben.
+    // x1,2 = +/- a^((p+1)/4)
     Integer x = modularExponentation(y, (p+1)/4, p);
     v.clear();
+    // Der plus Fall
     v.push_back(x);
+    // Der minus Fall. Es gilt -x (mod p) = -x + p (mod p)
+    // Durch die Testwerte aus der Aufgabenstellung wurde angenommen, dass hier
+    // die zwei kleinsten POSITIVE Quadratwurzeln zurückgegeben werden soll.
     v.push_back(-x + p);
 
+    // Die Quadratwurzeln konnten berechnet werden. Dadurch wird True
+    // zurückgegeben.
     return true;
 }
 

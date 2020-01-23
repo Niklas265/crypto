@@ -39,11 +39,20 @@ void sqrtModPrimeExercise() {
 
 	PublicKeyAlgorithmBox pb;
 	vector<Integer> v;
+	// Berechnet die zwei Quadratwurzeln von 400040001 % 884249923643 und
+	// speichert diese im vector v ab.
 	pb.modPrimeSqrt(Integer("400040001"), Integer("884249923643"), v);
+	cout << "Quadratwurzeln von 400040001 mod 884249923643" << v[0] << ' '
+	     << v[1] << endl;
+	// Überprüfung und Ausgabe des Ergebnisses.
 	assert(v[0] == Integer("884249903642")  && v[1] ==  Integer("20001"));
 
     vector<Integer> v2;
+    // Berechnet die zwei Quadratwurzeln von 644640535034 % 868380007367 und
+    // speichert diese im vector v2 ab.
     pb.modPrimeSqrt(Integer("644640535034"), Integer("868380007367"), v2);
+    cout << "Quadratwurzeln von 644640535034 mod 868380007367" << v2[0] << ' '
+         << v2[1] << endl;
     assert(v2[0] == Integer("868378777318") && v2[1] ==  Integer("1230049"));
 }
 
@@ -55,33 +64,51 @@ void rabinDemo() {
 
     Integer p = Integer("728768879148869666628372866383");
     Integer q = Integer("1178365175275537416785439551531");
-    // n = p * q
-    RabinEncryptor rabinEncryptor = RabinEncryptor(p * q, 0);
+    // Der RabinEncryptor wird mit n = p * q initialisiert.
+    RabinEncryptor rabinEncryptor(p * q, 0);
     Integer y;
+    // Verschlüssle 234131892323212 mit dem Rabin Kryptosystem und speichere
+    // den verschlüsselten Klartext in y als Integer ab.
     rabinEncryptor.compute(Integer("234131892323212"), y);
     assert(y == Integer("54817743002848138258673996944"));
 
-    RabinDecryptor rabinDecryptor = RabinDecryptor(p, q, 0);
+    // Der RabinDecryptor entschlüsselt Zahlen, die mit n = p*q verschlüsselt
+    // worden sind.
+    RabinDecryptor rabinDecryptor(p, q, 0);
 
     vector<Integer> v;
+    // Entschlüssle y und speichere die 4 möglichen Klartexte im vector v ab.
     rabinDecryptor.compute(y, v);
-    //cout << v[0] << ' ' << v[1] << v[2] << ' ' << v[3] << endl;
+    cout <<"Die 4 möglichen Klartexte: " << v[0] << ' ' << v[1] << v[2] << ' ' << v[3] << endl;
     assert(v[0] == Integer("858755868013614750163033981532656431854843747105980613759161"));
     assert(v[1] == Integer("468253878381255984906252283528370901639136709523733710358252"));
     assert(v[2] == Integer("390501989632358765256781698004285530215707037816378795724121"));
     assert(v[3] == Integer("234131892323212"));
 
     Integer x1;
+    // Wird als zweites Argument ein Integer und kein vector an compute übergeben,
+    // dann wird nur eines der 4 möglichen Ergebnisse über x1 zurückgelifert.
     rabinDecryptor.compute(y, x1);
     assert(x1 == Integer("858755868013614750163033981532656431854843747105980613759161"));
 
     // With Padding
-    RabinEncryptor rabinEncryptorPadded = RabinEncryptor(p * q, Integer("987654321"));
+    // In der Implementierung wurde die Möglichkeit hinzugefügt, Klartexte
+    // mit einem Padding zu markieren. Dadurch kann der Dekodierer einen
+    // Hinweis darauf bekommen, welches der 4 möglichen Klartexte der
+    // tatsächliche Klartext ist. Das Padding muss beiden Parteien bekannt sein.
+    // Als Padding wird 987654321 festgelegt. Das beudetet, dass an einen
+    // zu verschlüsselnden Klartext x das padding angehangen wird. Zum Beispiel
+    // wenn x = 234131892323212, dann wird 234131892323212987654321
+    // verschlüsselt.
+    RabinEncryptor rabinEncryptorPadded(p * q, Integer("987654321"));
     Integer yPadded;
     rabinEncryptorPadded.compute2(Integer("234131892323212"), yPadded);
 
-    RabinDecryptor rabinDecryptorPadded = RabinDecryptor(p, q, Integer("987654321"));
+    RabinDecryptor rabinDecryptorPadded(p, q, Integer("987654321"));
     Integer x;
+    // Über die compute2 Methode wird spezifiziert, dass nach der Markierung
+    // in den 4 möglichen Klartexten gesucht werden soll. Der Klartext ohne
+    // Padding/Markierung wird über x zurückgelifert.
     rabinDecryptorPadded.compute2(yPadded, x);
     assert(x == Integer("234131892323212"));
 }
