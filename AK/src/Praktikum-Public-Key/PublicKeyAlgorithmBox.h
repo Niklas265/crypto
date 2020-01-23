@@ -117,6 +117,21 @@ public:
 
 	Integer randomInteger(const Integer& n);
 
+	/***
+	 * randomPrime generiert eine Zahl, die mit Wahrscheinlichkeit 1-2^-s eine Primzahl ist
+	 * und speichert diese Zahl im Parameter p ab. Die generierte Zahl hat ebenfalls eine
+	 * maximale Größe in Binardarstellung von bitlen Ziffern/Bits. Die generierte Zahl wird
+	 * mit einem Nicht Blockierenden Pseudozufallszahlengenerator generiert und mit
+	 * dem Rabin Miller Test auf nicht Prim überprüft.
+	 *
+	 * @param p In p wird die generierte Zahl als Integer abgespeichert.
+	 * @param bitlen bitlen gibt die Größe der zu erzeugenden Zahl in Bits an.
+	 * @param s s ist das s in 1-2^-s, welches die Wahrscheinlichkeit dafür angibt,
+	 * dass p tatsächlich eine Primzahl ist.
+	 * @return randomPrime gibt die Anzahl der generierten Zufallszahlen zurück,
+	 * die überprüft worden sind, bis eine dieser Zufallszahlen als wahrscheinlich
+	 * Prime evaluiert wurde.
+	 */
 	unsigned int randomPrime(Integer &p, unsigned int bitlen, unsigned int s);
 
 	/**
@@ -158,6 +173,27 @@ public:
 
 	bool sqrt(const Integer& x, Integer& s) const;
 
+	/***
+	 * generateRSAParams Generiert Werte, die zusammen einen RSA-Schlüssel bilden.
+	 *
+	 *
+	 * @param p p ist eine bitlen-Bit Zufallszahl, die mit einer
+	 * Wahrscheinlichkeit von 1-2^-s eine Primzahl ist.
+	 * p wird von dieser Methode gesetzt.
+	 * @param q q ist eine bitlen-Bit Zufallszahl, die mit einer
+	 * Wahrscheinlichkeit von 1-2^-s eine Primzahl ist.
+	 * q wird von dieser Methode gesetzt.
+	 * @param e e ist eine Zufallszahl mit der Eigenschaft,
+	 * dass der größte gemeinsame Teiler von e und ϕ(n) = 1 ist.
+	 * e wird von dieser Methode gesetzt.
+	 * @param d d ist das multiplikative Inverse von e mod ϕ(n)
+	 * d wird von dieser Methode gesetzt.
+	 * @param bitlen bitlen gibt die maximale Größe der zu generierenden Zufallszahlen
+	 * p und q in Binärdarstellung an. bitlen muss vom Caller gesetzt werden.
+	 * @param s s ist das s in 2^-s, welches die Fehlerwahrscheinlichkeit dafür
+	 * angibt, dass die generierte Zahl p keine Primzahl ist. Das selbe ist für
+	 * q der Fall. s muss vom Caller gesetzt werden.
+	 */
 	void generateRSAParams(Integer& p, Integer& q, Integer& e, Integer& d,
 			unsigned int bitlen = 256, unsigned int s = 30);
 };

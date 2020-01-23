@@ -166,13 +166,12 @@ bool PublicKeyAlgorithmBox::millerRabinTest(Integer& n, unsigned int s) {
     //Impementiert den Miller-Rabin Primzahltest, der feststellen kann, ob es sich bei n um eine Primzahl oder eine
     //Zusammengesetze Zahl handelt
 
-    //Sicherstellen, dass die Zahl n > 2 und der Qualitätsparameter s größer gleich 0 ist
-    assert(n > 2);
+    //Sicherstellen, dass der Qualitätsparameter s größer gleich 0 ist
     assert(s >= 0);
 
     //Wenn die Zahl gerade ist (also n % 2 = 0), dann gib False zurück. Die Zahl 2 ist die einzige gerade Primzahl.
-    //Da aber sichergestellt wird, dass die zu testende Zahl größer als 2 ist, kann geschlussfolgert werden,
-    //dass es sich sicher um keine Primzahl handelt, wenn n gerade ist
+    // Auf 2 wird deshalt speziell tetestet.
+    if (n == 2) return true;
     if((n % 2) == 0) {
         return false;
     }
@@ -203,12 +202,29 @@ bool PublicKeyAlgorithmBox::millerRabinTest(Integer& n, unsigned int s) {
 // #randomPrime()
 unsigned int PublicKeyAlgorithmBox::randomPrime(Integer &p,
 		unsigned int bitlen, unsigned int s) {
+    // Verwendung eines nicht blockierenden Pseudozufallszahlengenerators
+    // zum erzeugen von Zufallszahlen.
     NonblockingRng nonblockingRng;
 
+    // anzahlVersuche gibt die Anzahl der bisher generierten Zufallszahlen an,
+    // bis eine Zufallszahl gefunden wurde, die mit Wahrscheinlichkeit 1-2^-s
+    // eine Primzahl ist.
+    int anzahlVersuche = 0;
+
+    // Es wird so lange eine Zufallszahl p in {0,1,2^bitlen-1} generiert,
+    // bis p >= 2 und mit Wahrscheinlichkeit 1-2^-s eine Primzahl ist.
     do {
+        // Randomize erzeugt eine bitlen Bits große Zufallszahl mit dem
+        // Pseudozufallszahlengenerator nonblockingRng und speichert die
+        // erzeugte Zahl in p ab.
         p.Randomize(nonblockingRng, bitlen);
-    } while (!millerRabinTest(p, s));
-    return 0;
+        // Für jeden Versuch wird anzahlVersuche um 1 erhöht.
+        anzahlVersuche++;
+    } while (p < 2 || !millerRabinTest(p, s));
+    // Die Anzahl der bisher generierten Zufallszahlen an,
+    // bis eine Zufallszahl gefunden wurde, die mit Wahrscheinlichkeit 1-2^-s
+    // eine Primzahl ist, wird zurückgegeben.
+    return anzahlVersuche;
 } // randomPrime()
 
 // #randomPrime()
@@ -221,7 +237,7 @@ unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
 
     // In jedem Schleifendurchlauf wird eine Zufallszahl mit maximaler Bitlänge
     // bitlen erzeugt. Wenn gilt, dass p % 4 != 3 und
-    // laut dem Rabin Miller Test mit einer Wahrscheinlichkeit von 2^-s
+    // laut dem Rabin Miller Test mit einer Wahrscheinlichkeit von 1-2^-s
     // p eine Primzahl ist, dann wird die Schleife und die Funktion verlassen.
     // Ist eine der beiden Bedingungen nicht erfüllt, dann wird der nächste
     // Schleifendurchlauf ausgeführt, die Schleife wird also nicht verlassen.
@@ -332,12 +348,14 @@ bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
 
 void PublicKeyAlgorithmBox::generateRSAParams(Integer& p, Integer& q,
 		Integer& e, Integer& d, unsigned int bitlen, unsigned int s) {
-    randomPrime(p, bitlen, s);
-    randomPrime(q, bitlen, s);
+    do {
+        randomPrime(p, bitlen, s);
+        randomPrime(q, bitlen, s);
+    } while(p != q);
     Integer n = p * q;
     Integer phiN = (p-1) * (q-1);
     do {
-        e = randomInteger(n-2) + 1;
+        e = randomInteger(phiN-2) + 1;
     } while (Integer::Gcd(e, phiN) != 1);
     multInverse(e, phiN, d);
 }

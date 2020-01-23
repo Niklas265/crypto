@@ -40,11 +40,28 @@ int RabinAttack::factorize(const Integer& n, Integer& f, int max_tries,
         // (2) x ≡ −r (mod p) und x ≡ −r (mod q)
         // (3) x ≡ r (mod p) und x ≡ −r (mod q)
         // (4) x ≡ −r (mod p) und x ≡ r (mod q)
-        // Die Fälle (1) und (2) sind nicht verwertbar und y eignet sich
-        // nicht für die Attacke.
+        // Die Fälle (1) und (2) sind nicht verwertbar, weil
+        // der Faktor von n sonst nicht im Ergebnis des Chinesischen
+        // Restsatzes enthalten ist. Zum Beispiel bei Fall (1) folgt, dass
+        // x-r ≡ 0 (mod p) und x-r ≡ 0 (mod q)
+        // Anwendung des CRT:
+        // x-r ≡ 0 * q * mp - 0 * p * mq ≡ 0 (mod n)
+        // Also ist keiner der Faktoren von n ist enthalten.
+        // Wird Fall 1 oder 2 erkannt, dann kann mit diesem x nicht faktorisiert
+        // werden und der Versuch wird abgebrochen.
         if (x == r || x-n == -r) continue;
         // Anhand von Fall (3) oder (4) kann man n faktorisieren.
-        // TODO: da noch erklären warum das funktioniert
+        // Betrachten wir Fall 3, aus dem folgt, dass:
+        // x - r ≡ 0 (mod p) und x-r ≡ -2r (mod q)
+        // Mit dem CRT:
+        // x -r ≡ 0 * q * mp - 2 * r * p * mq ≡ -2 * r * p * mq (mod n)
+        // Nachdem das (mod n) herausgerechnet ist, ist die Gleichung:
+        // x - r = l * n - 2 * r * p * mq für ein l ∈ N
+        //       = p * (l * q - 2 * r * mq)
+        // Dieses Mal ist p, ein Faktor von n und ein Faktor von x-r.
+        // Weil n nur durch p und q teilbar ist, und p ein Faktor von x-r ist,
+        // ist der größte gemeinsame Teiler von n und x-r = p.
+        // Fall (4) kann auf analoge Weise analysiert werden.
         f = Integer::Gcd(x-r, n);
         // Falls die Attacke erfolgreich war, dann liefert die Methode die
         // Anzahl der Versuche zurück

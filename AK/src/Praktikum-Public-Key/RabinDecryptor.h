@@ -118,7 +118,7 @@ public:
      * entschlüsselnde Zahl als Integer.
      * @param x x ist ein Integer, in welchem bei Erfolg der entschlüsselte
      * Klartext ohne padding gespeichert wird.
-     * @return True, wenn das entschlüsseln erfolgreich war, false wenn nicht.
+     * @return True, wenn das Entschlüsseln erfolgreich war, false wenn nicht.
      */
 	bool compute2(const Integer& y, Integer& x);
 };
