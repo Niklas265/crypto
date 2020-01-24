@@ -22,12 +22,17 @@ using namespace CryptoPP;
  * welches der 4 entschlüsselten Möglichkeiten er originale Klartext sein
  * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
  * Geheimtext abgewehrt werden.
+ * Das Rabin Kryptosystem ist ein Public Key Kryptosystem.
  */
 class RabinEncryptor {
 private:
     /**
      * n soll das Produkt zweier Rabin Primzahlen sein.
      * Dies wird jedoch nicht überprüft.
+     * n ist ein Teil des öffentlichen Schlüssels.
+     * n wird sowohl bei der Ver- als auch bei der
+     * Entschlüsselung verwendet und gibt die Größe des Klartextraums und
+     * Geheimtextraums an, der Z_n ist.
      */
 	Integer n;
 	/**

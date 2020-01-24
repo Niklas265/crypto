@@ -16,6 +16,14 @@ public:
 	unsigned int computeConvergents(const Integer& a, const Integer& b,
 			vector<Integer>& c, vector<Integer>& d);
 
+	/***
+	 *
+	 *
+	 * @param a
+	 * @param b
+	 * @param q
+	 * @return
+	 */
 	Integer euklid(const Integer& a, const Integer& b, vector<Integer>& q);
 
 	/**
@@ -180,6 +188,19 @@ public:
 	 */
 	bool modPrimeSqrt(const Integer& y, const Integer& p, vector<Integer>& v);
 
+	/***
+	 * sqrt versucht die kleinste nicht-negativen ganzzahligen Quadratwurzel s
+	 * von x zu berechnen. Wird diese gefunden, dann wird true zurückgegeben.
+	 * Andernfalls wird false zurückgegeben. Der Algorithmus sucht in
+	 * Logarithmischer Zeit mit der binären Suche nach s.
+	 *
+	 * @param x Die Zahl als Integer, für welche die kleinste nicht negative
+	 * ganzzahlige Quadratwurzel gesucht werden soll.
+	 * @param s Wird die kleinste nicht negative ganzzahlige Quadratwurzel von x
+	 * gefunden, dann wird diese von dieser Methode in s geschrieben.
+	 * @return True, falls die kleinste nicht negative ganzzahlige Quadratwurzel
+	 * gefunden wurde, false wenn nicht.
+	 */
 	bool sqrt(const Integer& x, Integer& s) const;
 
 	/***

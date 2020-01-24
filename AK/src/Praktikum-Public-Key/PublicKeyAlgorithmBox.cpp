@@ -322,23 +322,62 @@ unsigned int PublicKeyAlgorithmBox::computeConvergents(const Integer& a,
 // #sqrt()
 bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
 
-    Integer min = 1;
-    Integer max = x;    // probably x/2
+    // Gesucht ist eine nicht-negativen ganzzahligen Quadratwurzel s von x.
+    // Mit anderen worten wird ein s gesucht, wobei s² = x ist, wobei s >= 0.
+    // Hier kann die Binären Suche eingesetzt werden, weil die möglichen
+    // Kandidaten von s = 0,1,2,...,x/2 auch quadriert sortiert sind.
+    // z.b. ist 2² < 3² < 4² < ....
+    // Angenommen x = 100, dann wird min auf 0 und max auf 50 gesetzt.
+    // Weiter gilt, dass 0² <= x <= 50²
+    // Für s gilt: 0 <= s <= 50. Eine Möglichkeit
+    // wäre, alle s von 0 bis 50 durchzuprobieren. Dieser Alogorithmus hätte
+    // allerdings lineare Laufzeit. Da die Kandidaten sortiert sind, kann
+    // auch die Binäre Suche als Algorithmus mit Logarithmischer Laufzeit
+    // verwendet werden.
+    Integer min = 0;
+    Integer max = x / 2;
 
-    while (min != max) {
+    while (min < max) {
+        // In jedem Schleifendurchlauf wird die Mitte von min und max bestimmt.
+        // Der Suchraum wird dadurch in der Mitte halbiert.
         Integer mid = (min + max) / 2;
+        // Zuerst wird überprüft, ob diese Zahl die gesuchte Zahl s ist.
         Integer midSqrt = mid * mid;
         if (midSqrt == x) {
+            // und wenn sie es ist, dann wird s auf mid gesetzt und true
+            // zurückgegeben.
             s = mid;
             return true;
         }
-        // can probably optimize this out
-        if (max * max == x) {
-            s = max;
-            return true;
+        // Spezieller Fall wenn der Suchraum nur noch 2 Elemente groß ist.
+        if (max-min == 1) {
+            // Wenn dieser Basic Block ausgeführt wird, dann ist
+            // min+1 = max und mid ist immer min, weil bei (min + max) / 2
+            // abgerundet wird. Da max auf mid - 1 gesetzt wird, wurde max² == x
+            // bisher noch nicht getestet.
+            if (max * max == x) {
+                s = max;
+                return true;
+            }
+            // Wenn dieser Basic Block ausgeführt wird, dann ist
+            // min² < x und max² > x
+            // Da allerdings min+1 = max ist, ist das gesuchte mid, wobei
+            // mid²=x ist, eine Gleitkommazahl. Laut der Aufgabenstellung
+            // soll nur nach Ganzzahligen Quadratwurzeln gesucht werden.
+            // Das ist also nicht der Fall und es wird false zurückgegeben.
+            return false;
         }
-        if (max-min == 1 && min * min != x) return false;
 
+        // Im Beispiel oben galt Für s gilt: 0 <= s <= 50.
+        // Da min=0 und max=50, ist mid = 25 und 25² = 2500.
+        // 2500 ist größer als das gesuchte 100. Weil sortiert ist, ist
+        // für alle s >= 25 s² > x. Dadurch fallen alle Kandidaten >= 25 weg.
+        // Das Setzten von max auf mid-1, also 24, stellt das dar.
+        // Übrig bleiben die Kandidaten 0 <= s <= 24. In jedem Schleifendurch-
+        // lauf werden die Möglichkeiten für s halbiert, wodurch logarithmische
+        // Laufzeit erreicht wird.
+        // Wäre mid² < x, dann wäre das gesuchte s im Bereich mid, mid+1,..,max,
+        // was durch das Setzten der Grenze min auf mid markiert wird.
         if (midSqrt > x) {
             max = mid - 1;
         } else {

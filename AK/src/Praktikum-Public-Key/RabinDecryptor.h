@@ -26,15 +26,18 @@ using namespace std;
  * welches der 4 entschlüsselten Möglichkeiten er originale Klartext sein
  * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
  * Geheimtext abgewehrt werden.
+ * Das Rabin Kryptosystem ist ein Public Key Kryptosystem.
  */
 class RabinDecryptor {
 private:
     /**
-     * p ist eine Rabin Primzahl.
+     * p ist eine Rabin Primzahl. Dabei gilt, dass p ≡ 3 (mod 4) ist.
+     * p ist Teil des privaten Schlüssels. p * q = n und p != q müssen gelten.
      */
 	Integer p;
     /**
-     * q ist eine Rabin Primzahl.
+     * q ist eine Rabin Primzahl. Dabei gilt, dass q ≡ 3 (mod 4) ist.
+     * q ist Teil des privaten Schlüssels. p * q = n und p != q müssen gelten.
      */
 	Integer q;
     /**

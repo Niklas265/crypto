@@ -18,11 +18,23 @@ void rsaParameters() {
 	 *********************************************************************/
 
 	PublicKeyAlgorithmBox pb;
+	// p q e und d werden von der Methode berechnet.
+	// p q und d bilden den privaten Schlüssel. e ist Teil des öffentlichen
+	// Schlüssels. Das n, der zweite Teil des öffentlichen Schlüssels, kann
+	// effizient mit p * q berechnet werden.
 	Integer p, q, e, d;
+	// 256 ist die bitlen, die maximale Bitgröße der zu generierenden
+	// Primzahlen p und q.
+	// 30 ist der Qualitätsparameter s. s ist das s in 1-2^-s, welches die
+	// Fehlerwahrscheinlichkeit dafür angibt, dass p keine Primzahl ist. Das
+	// gleiche gilt für q.
 	pb.generateRSAParams(p, q, e, d, 256, 30);
+	// e ∈ {1, 2, . . . , ϕ(n) − 1} muss wahr sein.
 	Integer phiN = (p-1)*(q-1);
 	assert(e >= 1 && e <= phiN-1);
+	// e und ϕ(n) müssen teilerfremd sein
 	assert(Integer::Gcd(e, phiN) == 1);
+	// d = e^−1 mod ϕ(n) muss wahr sein.
     pb.multInverse(e, phiN, d);
 	assert((e * d) % phiN == 1);
     cout << "p: " << p << " q: " << q << " e: " << e << " d: " << d << endl;
@@ -34,13 +46,22 @@ void rsaDemo() {
 	 * Aufgabe 16.
 	 *********************************************************************/
 
+	// Der RSA Schlüssel für das Beispiel ist vorgegeben.
+    // p q und d bilden den privaten Schlüssel. e ist Teil des öffentlichen
+    // Schlüssels. Das n, der zweite Teil des öffentlichen Schlüssels, kann
+    // effizient mit p * q berechnet werden.
 	Integer p = Integer("15192846618168946907");
     Integer q = Integer("10041530829891794273");
     Integer e = Integer("141290156426204318982571851806193576543");
     Integer d = Integer("73707354481439936713886319521045114527");
+
+    // x ist der zu verschlüsselnde Integer.
     Integer x = Integer("79372353861768787619084471254314002875");
+    // Es wird erwartet, dass x mit dem obigen Schlüssel zu y verschlüsselt
+    // wird. Es wird ebenfalls erwartet, dass y entschlüsselt wieder x ergibt.
     Integer y = Integer("47915958473033255778832465116435774510");
 
+    // Die gleichen Checks aus der rsaParameters Funktion von oben.
     Integer phiN = (p-1)*(q-1);
     assert(e >= 1 && e <= phiN-1);
     assert(Integer::Gcd(e, phiN) == 1);
@@ -48,20 +69,32 @@ void rsaDemo() {
     pb.multInverse(e, phiN, d);
     assert((e * d) % phiN == 1);
 
+    // RSAEncryptor bietet Methoden an, um eine Zahl mit dem RSA Kryptosystem
+    // zu verschlüsseln.
     RSAEncryptor rsaEncryptor(p * q, e);
     Integer outy;
+    // Verschlüsselt die Zahl x mit dem öffentlichen Schlüssel (n, e) und
+    // speichert das Ergebnis in outy ab.
     rsaEncryptor.compute(x, outy);
+    // Es wird erwartet, dass x mit dem obigen Schlüssel zu y verschlüsselt
+    // wird.
+    cout << "RSA Verschlüsselung: " << x << " > " << outy << endl;
     assert(outy == y);
 
+    // RSADecryptor bietet Methoden an, um eine Zahl mit dem RSA Kryptosystem
+    // zu entschlüsseln. Es wird erwartet, dass alle drei Methoden die
+    // verschlüsselte Zahl zur ursprünglichen, entschlüsselten Zahl x
+    // entschlüsseln.
     RSADecryptor rsaDecryptor(p, q, d);
     Integer outx, outgarner, outcrt;
     rsaDecryptor.compute(outy, outx);
-    cout << outx << endl;
+    cout << "RSA Entschlüsselung: " << outy << " --compute--> " << outx << endl;
     assert(outx == x);
     rsaDecryptor.crt(outy, outcrt);
-    cout << "CRT " << outcrt << endl;
+    cout << "RSA Entschlüsselung: " << outy << " --CRT--> " << outcrt << endl;
     assert(outcrt == x);
     rsaDecryptor.garner(outy, outgarner);
+    cout << "RSA Entschlüsselung: " << outy << " --Garner--> " << outgarner << endl;
     assert(outgarner == x);
 }
 
@@ -73,11 +106,24 @@ void sqrtExercise() {
 
 	PublicKeyAlgorithmBox pb;
 	Integer s;
+	// Suche Kleinste nicht negative Quadratwurzel s mit
+	// s² = 3157242151326374471752634944
 	pb.sqrt(Integer("3157242151326374471752634944"), s);
+	cout << "Kleinste nicht negative Quadratwurzel von 3157242151326374471752634944: "
+	     << s << endl;
 	assert(s == Integer("56189341972712"));
+    // Suche Kleinste nicht negative Quadratwurzel s mit
+    // s² = 11175843681943819792704729
     pb.sqrt(Integer("11175843681943819792704729"), s);
+    cout << "Kleinste nicht negative Quadratwurzel von 11175843681943819792704729: "
+         << s << endl;
     assert(s == Integer("3343029117723"));
+    // Suche Kleinste nicht negative Quadratwurzel s mit
+    // s² = 3343229819990029117723. Es wird erwartet, dass eine solche Zahl s
+    // nicht existiert.
     assert(!pb.sqrt(Integer("3343229819990029117723"), s));
+    cout << "Es wird erwartet, dass es keine Kleinste nicht negative "
+         << "Quadratwurzel von 3343229819990029117723 gibt." << endl;
 }
 
 // #factorizingAttack()
@@ -86,11 +132,16 @@ void factorizingAttack() {
 	 * Aufgabe 18.
 	 *********************************************************************/
 
+	// Beispiel für die Attacke auf RSA, bei der das ϕ(n) bekannt ist.
 	RSAAttack rsaAttack;
     Integer p, q;
+    // n ist das erste Argument, ϕ(n) das zweite.
+    // Bei Erfolg liefert factorizeN die Faktoren p und q von n im 3. und 4.
+    // Parameter zurück.
     rsaAttack.factorizeN(Integer("127869459623070904125109742803085324131"),
                          Integer("127869459623070904102412837477002840200"),
                          p, q);
+    // Es wird erwartet, dass n erfolgreich faktorisiert werden konnte.
     assert(p * q == Integer("127869459623070904125109742803085324131"));
 }
 

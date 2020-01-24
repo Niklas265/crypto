@@ -27,4 +27,4 @@ ADD_SUBDIRECTORY( Praktikum-AES )
 
 ADD_SUBDIRECTORY( Praktikum-DH-Protokoll )
 
-# ADD_SUBDIRECTORY( Praktikum-Public-Key )
+ADD_SUBDIRECTORY( Praktikum-Public-Key )

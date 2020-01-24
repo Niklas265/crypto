@@ -13,7 +13,7 @@ RSADecryptor::RSADecryptor(const Integer& p, const Integer& q,
 		const Integer& d) {
     // Setzen des privaten Teils (p,q,d) und des öffentlichen Teils n des
     // RSA Schlüssels. n ist laut Definition p * q, wobei p und q prim sind,
-    // aber das wird nicht überprüft.
+    // und p != q ist, aber das wird nicht überprüft.
     this->p = p;
     this->q = q;
     this->d = d;

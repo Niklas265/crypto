@@ -11,16 +11,26 @@ using namespace CryptoPP;
 
 /**
  * RSAEncryptor bietet die Funktion, eine Zahl mit dem RSA Kryptosystem
- * zu verschlüsseln. TODO: kann noch was zu RSA allgemein sagen, z.b. wann
- * es sicher ist etc...
+ * zu verschlüsseln. Bei der Verschlüsselung wird n, ein Teil des öffentlichen
+ * Schlüssels und e, ebenfalls ein Teil des öffentlichen Schlüssels verwendet.
+ * Die Sicherheit von RSA
+ * beruht auf dem Faktorisierungsproblem und dem Invertieren der modularen
+ * Potenzfunktion. Für keines der beiden Probleme ist ein Polynomialzeit
+ * Algorithmus bekannt. Könnten diese Probleme in effizienter Laufzeit gelöst
+ * werden, dann ist RSA nicht mehr sicher.
+ * Zusätzlich hängt die Sicherheit von der Qualität der Schlüssel und der
+ * geheimhaltung des privaten Schlüssels ab. Mit dem aktuellen Stand der
+ * Technik werden mindestens 2048 Bit pro p und q vorgeschlagen.
+ * RSA ist ein Public Key Kryptosystem.
  */
 class RSAEncryptor {
 private:
     /**
-     * Der öffentliche Teil n des Schlüssels, welcher aus n = p * q berechnet
-     * wird, wobei p und q prim sein sollten, das wird aber nicht überprüft.
-     * n wird im Konstruktor dieser Klasse gesetzt.
-     */
+    * n ist ein Teil des öffentlichen Schlüssels.
+    * n wird sowohl bei der Ver- als auch bei der
+    * Entschlüsselung verwendet und gibt die Größe des Klartextraums und
+    * Geheimtextraums an, der Z_n ist.
+    */
 	Integer n;
 	/**
 	 * Der öffentliche Teil e des Schlüsseln, mit dem ein zu verschlüsselnder
