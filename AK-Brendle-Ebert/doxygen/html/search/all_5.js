@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['formatroundkey',['formatRoundKey',['../classAESKeySchedule.html#a8ffabf92c36f2ea32a38b339a2595ba6',1,'AESKeySchedule']]]
+  ['getinteger',['getInteger',['../classMessageEncoder.html#aa9929ea044dd741fe56d568e39508390',1,'MessageEncoder']]],
+  ['getstring',['getString',['../classMessageEncoder.html#a208695b89295df88c7d32e749de2efbf',1,'MessageEncoder']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['help_5fgiven',['help_given',['../structgengetopt__args__info.html#ab9fd677f890731fd7d6f6c62e6dfc99c',1,'gengetopt_args_info']]],
-  ['help_5fhelp',['help_help',['../structgengetopt__args__info.html#afb4efa68a6f43a4d112e9b96ffe89101',1,'gengetopt_args_info']]]
+  ['oscar',['oscar',['../classDHProtocol.html#a041fa2b8f4e074a5433e76ca6c341ec3',1,'DHProtocol']]]
 ];
