@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log',['log',['../classAESMath.html#a81dc0d4d9c71f76c9ab161b322af3dc0',1,'AESMath']]]
+  ['oscar',['oscar',['../classDHProtocol.html#a041fa2b8f4e074a5433e76ca6c341ec3',1,'DHProtocol']]]
 ];

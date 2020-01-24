@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blockcipher',['BlockCipher',['../classBlockCipher.html',1,'']]]
+  ['messageencoder',['MessageEncoder',['../classMessageEncoder.html',1,'']]]
 ];
