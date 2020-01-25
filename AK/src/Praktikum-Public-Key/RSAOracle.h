@@ -10,6 +10,9 @@
 using namespace std;
 using namespace CryptoPP;
 
+/**
+ * TODO
+ */
 class RSAOracle {
 private:
 	Integer n;
