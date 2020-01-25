@@ -18,17 +18,6 @@ RSAAttack::~RSAAttack() {
 // #factorizeN()
 bool RSAAttack::factorizeN(const Integer& n, const Integer& phi_n, Integer& p,
 		Integer& q) const {
-    // Für die Attacke ist n und ϕ(n) von n bekannt ist.
-    // (1) n = p * q und (2) ϕ(n) = (p-1) * (q-1).
-    // Mit p und q kann RSA gebrochen werden, also es können verschlüsselte
-    // Nachrichten entschlüsselt werden.
-    // Indem man Gleichung (1) in Gleichung (2) mit p = n / q einsetzt:
-    // ϕ(n) = (p-1) * (n/q - 1)
-    // Diese Gleichung kann in eine Form gebracht werden, um p und q mit der
-    // Mitternachtsformel zu berechnen:
-    // 0 = p² + (ϕ(n) − n − 1)p + n
-    // Bei der Mitternachtsformel ist a = 1, b = ϕ(n) - n - 1 und c = n
-
     PublicKeyAlgorithmBox pb;
 
     // Berechnen von b für die Mitternachtsformel
@@ -38,7 +27,9 @@ bool RSAAttack::factorizeN(const Integer& n, const Integer& phi_n, Integer& p,
     Integer s;
     pb.sqrt(b * b - 4 * n, s);
 
-    // Berechnen der Mitternachtsformel für p und q
+    // Berechne Mitternachtsformel für die Gleichung
+    // 0 = p² + (ϕ(n) − n − 1)p + n um p und q zu berechnen.
+    // Bei der Mitternachtsformel ist a = 1, b = ϕ(n) - n - 1 und c = n
     Integer pTemp = (-b + s) / 2;
     Integer qTemp = (-b - s) / 2;
 
