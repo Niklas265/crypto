@@ -12,17 +12,45 @@ using namespace CryptoPP;
  */
 class PublicKeyAlgorithmBox {
 public:
-
+	/***
+	* In der Methode computeConvergents werden die Konvergenten des Kettenbruchs 
+	* von a/b berechnet. Die Konvergenten eines Kettenbruchs können auch als 
+	* Näherungsbruch bezeichnet werden. Sei [q1,...,qm] ein Kettenbruch. Für alle
+	* j mit 1 <= j <= m gilt, dass der Kettenbruch Cj = [q1,...,qj] die j-te Konvergente
+	* des ursprünglichen Kettenbruch ist. Cj kann durch den Bruch c[j]/d[j] dargestellt werden.
+	* Dabei besitzt der Zähler c[j] die Werte: 1, wenn j = 0, q1, falls j=  1 und qj *c[j-1] +c[j-2], 
+	* für alle j >= 2. Der Nenner d[j] besitzt hingegen die Werte: 0, wenn j = 0, 1, falls j = 1 und
+	* qj * d[j-1] + d[j-2] für alle j >= 2.
+	*
+	* @param a Integer Variable, die den Nenner des Bruchs enthält
+	* @param b Integer Variable, die den Zähler des Bruchs enthält
+	* @param c Vector, in dem die von der Methode berechneten c[j] für 0 <= j <= m gespeichert
+	* werden, welche jeweils den Zähler des j-ten Näherungsbruch repräsentieren.
+	* @param d Vector, in dem die von der Methode berecheten d[j] für 0 <= j <= m gespeichert 
+	* werden, welche jeweils den Nenner des j-ten Näherungsbruch repräsentieren.
+	*
+	* @return Die Länge des errechneten Vectors c (TODO!!!)
+	*/
 	unsigned int computeConvergents(const Integer& a, const Integer& b,
 			vector<Integer>& c, vector<Integer>& d);
 
 	/***
+	 * Die Methode euklid berechnet den endlichen Kettenbruch a/b mit Hilfe des 
+	 * euklidschen Algorithmus. Ein endlicher Kettenbruch ist ein Term, der
+	 * durch q1 + (1/(q2 + (1/(q3 + ... + (1(qm))))) dargestellt werden kann,
+	 * wobei q1 bis qm nicht-negative ganze Zahlen sind. Ein endlicher Kettenbruch
+	 * kann auch als [q1,...,qm] dargestellt werden. Für alle Brüche a/b, mit 
+	 * a,b ∈ natürliche Zahlen, mit b > 0, gilt, dass sie als endlicher Kettenbruch
+	 * [q1,...,qm] dargestellt werden können. Dieser Kettenbruch kann mit Hilfe des
+	 * Algorithmus von Euklid berechnet werden. Dabei repräsentiert jede errechnete
+	 * Gleichung den Term r{m-1} = q{m}*r{m} + r{m+1}. Die berechnung des endlichen
+	 * Kettenbruchs wird benötigt, um die Wiener-Attacke auf RSA durchzuführen.
 	 *
-	 *
-	 * @param a
-	 * @param b
-	 * @param q
-	 * @return
+	 * @param a Integer Variable, die den Zähler des Bruchs enthält
+	 * @param b Integer Variable (b > 0), die den Nenner des Bruchs enthält
+	 * @param q Vector in dem die Integer-Werte des Kettenbruchs [q1,...,qm] abgespeichert
+	 * werden
+	 * @return Berechneter gcd(a,b), weclhes das letzte Element des Kettenbruchs ist
 	 */
 	Integer euklid(const Integer& a, const Integer& b, vector<Integer>& q);
 
@@ -34,22 +62,23 @@ public:
 	 * Linearkombinationen von a und b ist. Mit dem EEA wird zusätzlich dieses
 	 * x und y berechnet und in (param) x und (param) y abgespeichert.
 	 *
-	 * @param a Ein ganze Zahl > 0 als Integer
-	 * @param b Ein ganze Zahl > 0 als Integer
+	 * @param a Eine ganze Zahl > 0 als Integer
+	 * @param b Eine ganze Zahl > 0 als Integer
 	 * @param d Diese Methode setzt d auf den größten gemeinsamen Teiler
 	 * von a und b.
 	 * @param x Diese Methode setzt x auf das x der oben erläuterten
 	 * Linearkombination von  {ax + by | x, y ∈ Z}.
 	 * @param y Diese Methode setzt y auf das y der oben erläuterten
 	 * Linearkombination von {ax + by | x, y ∈ Z}.
-	 * @return True, wenn d = 1, also wenn gcd(a,b)=1, sonst False.
+	 * @return True, wenn d = 1, also wenn gcd(a,b)=1 (und die beiden
+	 * Integer teilerfremd sind), sonst False.
 	 */
 	bool EEA(const Integer& a, const Integer& b, Integer& d,
 			Integer& x, Integer& y);
 
 	/**
 	 * modularExponentation implementiert die modulare Exponentation. Dabei
-	 * wird die Funktion a^b mod n berechnet und das Ergebnis wird über
+	 * wird die Funktion a^b mod n effizient berechnet und das Ergebnis wird über
 	 * den Rückgabewert als Integer zurückgelifert.
 	 *
 	 * @param a a für a^b mod n als Integer.
@@ -61,7 +90,9 @@ public:
 			const Integer& n);
 
 	/**
-	 * multInverse berechnet das multiplikative Inverse von a modulo n.
+	 * multInverse berechnet das multiplikative Inverse von a modulo n. Ein
+	 * a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und teilerfremd
+	 * zu einander sind.
 	 *
 	 * @param a Das a, für welches das multiplikative Inverse a mod n berechnet
 	 * wird. a ist ein Integer.
@@ -124,7 +155,7 @@ public:
 	bool millerRabinTest(Integer& n, unsigned int s);
 
 	/***
-	 * randomInteger liefert einen zufälligen zufälligen Integer
+	 * randomInteger liefert einen zufälligen Integer
 	 * im Bereich 0,1,...,n-1 zurück.
 	 *
 	 * @param n n gibt die Obergrenze des zu generierenden Integers an.
@@ -139,7 +170,7 @@ public:
 	 * und speichert diese Zahl im Parameter p ab. Die generierte Zahl hat ebenfalls eine
 	 * maximale Größe in Binardarstellung von bitlen Ziffern/Bits. Die generierte Zahl wird
 	 * mit einem Nicht Blockierenden Pseudozufallszahlengenerator generiert und mit
-	 * dem Rabin Miller Test auf nicht Prim überprüft.
+	 * dem Rabin Miller Test überprüft, ob es sich dabei um eine Primzahl handelt.
 	 *
 	 * @param p In p wird die generierte Zahl als Integer abgespeichert.
 	 * @param bitlen bitlen gibt die Größe der zu erzeugenden Zahl in Bits an.
@@ -158,8 +189,8 @@ public:
 	 * - p ist eine Rabin-Primzahl, ð, es gilt p ≡ 3 (mod 4).
 	 * und speichert diese in p ab.
 	 *
-	 * @param p In p wird die generierte Rabin Primzahl abgespeichert.
-	 * @param bitlen bitlen gibt die maximale Größte der zu erzeugenden Primzahl
+	 * @param p In Variable p wird die generierte Rabin-Primzahl abgespeichert.
+	 * @param bitlen bitlen gibt die maximale Größe der zu erzeugenden Primzahl
 	 * in Bits an.
 	 * @param s s ist das s in 2^-s, welches die Fehlerwahrscheinlichkeit
 	 * angibt, dass der zurückgeliferte Wert in p keine Primzahl ist.
@@ -170,7 +201,10 @@ public:
 
 	/**
 	 * modPrimeSqrt berechnet die zwei Quadratwurzeln von y mod p, falls p
-	 * kongruent zu 3 (mod 4) ist.
+	 * kongruent zu 3 (mod 4) ist. Denn ist p eine Primzahl mit dieser
+	 * Eigenschaft, dann ist y ein quadratischer Rest modulo p und die
+	 * Gleichung y^2 = a (mod p) besitzt 2 Lösungen. Diese können durch
+	 * (+-)a^((p-1)/4) mod p berechnet werden.
 	 *
 	 * @param y Das y bei y mod p, für welches die Quadratwurzeln berechnet
 	 * werden. y ist ein Integer.
@@ -206,11 +240,11 @@ public:
 	/***
 	 * generateRSAParams generiert Werte für einen RSA-Schlüssel. Speziell
 	 * besteht der RSA Schlüssel K aus n, p, q, e, d. n ist das Produkt
-	 * aus p * q und kann somit ebenfalls aus den Werten p und q berechnet
+	 * aus den Primzahlen p * q und kann somit ebenfalls aus den Werten p und q berechnet
 	 * werden. n und e bilden den öffentlichen Schlüssel, p, q und d den
 	 * privaten Teil des Schlüssels. Es wird ebenfalls sichergestellt, dass
 	 * p != q, da sonst n einfach durch die Wurzel faktorisierbar ist.
-	 * Für die Sicherheit von N darf N nicht einfach faktorisierbar sein.
+	 * Für die Sicherheit von n darf n nicht einfach faktorisierbar sein.
 	 *
 	 * @param p p ist eine bitlen-Bit Zufallszahl, die mit einer
 	 * Wahrscheinlichkeit von 1-2^-s eine Primzahl ist.
