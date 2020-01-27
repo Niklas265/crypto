@@ -8,7 +8,9 @@ using namespace std;
 using namespace CryptoPP;
 
 /**
- * TODO
+ * Die Klasse PublicKeyAlgorithmBox stellt diverse zahlentheoretische Algorithmen bereit.
+ * Die Methoden dieser Klasse werden von anderen Klassen des Praktikum-Public-Key als
+ * Hilfsfunktionen verwendet.
  */
 class PublicKeyAlgorithmBox {
 public:
