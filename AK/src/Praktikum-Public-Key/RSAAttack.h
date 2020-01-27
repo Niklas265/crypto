@@ -61,7 +61,7 @@ public:
 	* Ganze Zahl 2. Ist n anhand vom errechneten ϕ(n) aus Bedingung 1 faktorisierbar. Dazu wird die
 	* Methode factorizeN() eingesetzt. Treffen beide Bedingungen zu, dann konnten die beiden Primzahlen
 	* p und q errechnet werden. Dieses Vorgehen führt zur faktorisierung von n, da aus den 
-	* Schlussfolgerungen des zahlentheoretischen Satzes ϕ(n) anahnd der Konvergenten des Kettenbruchs 
+	* Schlussfolgerungen des zahlentheoretischen Satzes ϕ(n) anhand der Konvergenten des Kettenbruchs 
 	* von e/n berechnet werden kann. Schlagen die beiden Bedingungen für alle Näherungsbrüche fehl, dann war
 	* der Angriff nicht erfolgreich und n konnte nicht faktorisiert werden.
 	*
@@ -92,13 +92,13 @@ public:
 	* Klartext um ein Bit nach links geshiftet. Für dieses neue y wird dann erneut die Half-Funktion 
 	* aufgerufen. Dieses Verfahren wird für die gesamte Bitlänge von n wiederholt und die Bits abgespeichert.
 	* Durch diese errechneten Bits, kann der Klartext x dann über eine Binäre Suche systematisch errechnet werden.
-	* Da die Funktion half(y) in der Praxis nicht exisitiert, wurde in dieser Implementierung ein Orakel der
+	* Da die Funktion half(y) in der Praxis nicht existiert, wurde in dieser Implementierung ein Orakel der
 	* Klasse RSAOracle eingesetzt, welches den zur Entschlüsselung benötigten Parameter d besitzt und damit
 	* half(y) berechnen kann, da es dazu in der Lage ist y zu entschlüsseln. Die Laufzeit der Half-Attack
 	* beträgt O(l³ + l*t(l)), wobei t(l) für die Laufzeit von half(y) für Zahlen mit l-Bit steht.
 	*
 	* @param n Die Integer-Variable n entspricht dem Parameter n des öffentlichen Teils des RSA-Schlüssels
-	* @param e Die Integer-Variable n entspricht dem Parameter e des öffentlichen Teils des RSA-Schlüssels
+	* @param e Die Integer-Variable e entspricht dem Parameter e des öffentlichen Teils des RSA-Schlüssels
 	* @param rsa_oracle Zeiger auf ein Objekt der Klasse RSAOracle, dass half(y) berechnen kann
 	*
 	* @return Die Methode gibt den Klartext x zurück, sodass y = x^e (mod n). Die Vorraussetzung hierfür ist
