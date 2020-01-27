@@ -50,7 +50,7 @@ public:
 	 * @param b Integer Variable (b > 0), die den Nenner des Bruchs enthält
 	 * @param q Vector in dem die Integer-Werte des Kettenbruchs [q1,...,qm] abgespeichert
 	 * werden
-	 * @return Berechneter gcd(a,b), weclhes das letzte Element des Kettenbruchs ist
+	 * @return Berechneter gcd(a,b), welches das letzte Element des Kettenbruchs ist
 	 */
 	Integer euklid(const Integer& a, const Integer& b, vector<Integer>& q);
 
@@ -91,7 +91,7 @@ public:
 
 	/**
 	 * multInverse berechnet das multiplikative Inverse von a modulo n. Ein
-	 * a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und teilerfremd
+	 * a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und n teilerfremd
 	 * zu einander sind.
 	 *
 	 * @param a Das a, für welches das multiplikative Inverse a mod n berechnet
@@ -170,7 +170,8 @@ public:
 	 * und speichert diese Zahl im Parameter p ab. Die generierte Zahl hat ebenfalls eine
 	 * maximale Größe in Binardarstellung von bitlen Ziffern/Bits. Die generierte Zahl wird
 	 * mit einem Nicht Blockierenden Pseudozufallszahlengenerator generiert und mit
-	 * dem Rabin Miller Test überprüft, ob es sich dabei um eine Primzahl handelt.
+	 * dem Rabin Miller Test überprüft, ob es sich dabei mit Wahrscheinlichkeit 1-2^-s um 
+	 * eine Primzahl handelt.
 	 *
 	 * @param p In p wird die generierte Zahl als Integer abgespeichert.
 	 * @param bitlen bitlen gibt die Größe der zu erzeugenden Zahl in Bits an.
