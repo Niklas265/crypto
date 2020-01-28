@@ -13,7 +13,8 @@ using namespace CryptoPP;
  * Die Klasse RSADecryptor bietet Methoden an, um einen mit RSA verschlüsselten
  * Geheimtext zu entschlüsseln. Der Geheimtext muss mit dem Öffentlichen
  * Schlüssel n und e verschlüsselt worden sein, wobei gelten muss, dass
- * n = p * q und dass e * d ≡ 1 (mod ϕ(n)). Die Sicherheit von RSA
+ * n = p * q und dass e * d ≡ 1 (mod ϕ(n)), d also das multiplikative Inverse 
+ * von e (mod ϕ(n)). Die Sicherheit von RSA
  * beruht auf dem Faktorisierungsproblem und dem Invertieren der modularen
  * Potenzfunktion. Für keines der beiden Probleme ist ein Polynomialzeit
  * Algorithmus bekannt. Könnten diese Probleme in effizienter Laufzeit gelöst
@@ -28,18 +29,18 @@ class RSADecryptor {
 private:
     /**
      * p ist ein Teil des privaten Schlüssels. p muss eine Primzahl sein,
-     * das wird von dieser Klasse allerdings nicht überprüft. Es muss p != q
-     * gelten. Das wird allerdings ebenfalls nicht überprüft.
+     * dies wird von dieser Klasse allerdings nicht überprüft. Es muss p != q
+     * gelten, das wird allerdings ebenfalls nicht überprüft.
      */
 	Integer p;
     /**
      * q ist ein Teil des privaten Schlüssels. q muss eine Primzahl sein,
-     * das wird von dieser Klasse allerdings nicht überprüft. Es muss
-     * p != q gelten. Das wird allerdings ebenfalls nicht überprüft.
+     * dies wird von dieser Klasse allerdings nicht überprüft. Es muss
+     * p != q gelten, das wird allerdings ebenfalls nicht überprüft.
      */
 	Integer q;
     /**
-     * d ist ein Teil des privaten Schlüssels. d muss das mulitplikative Inverse
+     * d ist ein Teil des privaten Schlüssels. d muss das multiplikative Inverse
      * von e mod ϕ(n) sein. Das wird von dieser Klasse allerdings nicht
      * überprüft. e ist Teil des Öffentlichen Schlüssels.
      */
@@ -59,7 +60,7 @@ public:
      * Klassenvariablen p, q und d zugewiesen. Das n wird ebenfalls durch
      * p * q berechnet. n ist ein Teil des öffentlichen Schlüsseln, und
      * gibt mit Z_n den Klartext- und Geheimtextraum an. Die Parameter
-     * werden nicht auf Korrektheit hin überprüft. Also wird nicht überprüft
+     * werden nicht auf Korrektheit hin überprüft, also wird nicht überprüft
      * ob p und tatsächlich mit einer ausreichenden Wahrscheinlichkeit
      * Primzahlen sind und ebenfalls nicht, ob p == q ist.
      *
@@ -77,44 +78,44 @@ public:
 	 * dem Privaten Teil d. Bei dieser Implementation der Entschlüsselung
 	 * wird die zu entschlüsselnde Zahl y mit y^d mod n entschlüsselt.
 	 * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
-	 * gespeichert wird. Die Zahl y muss < n sein, weil sonst y nicht Teil
+	 * gespeichert wird. Die Zahl y muss < n sein, weil y sonst nicht Teil
 	 * des Geheimtextraums ist.
 	 * @param y Die zu entschlüsselnde Zahl als Integer.
 	 * @param x Wenn entschlüsselt werden kann, dann wird das entschlüsselte
 	 * y in x als Integer gespeichert.
-	 * @return True, wenn entschlüsselt werden konnte, false wenn nicht.
+	 * @return True, wenn entschlüsselt werden konnte, also y < n gilt, False wenn nicht.
 	 */
 	bool compute(const Integer& y, Integer& x) const;
 
     /***
      * compute entschlüsselt den Integer y mit dem Öffentlichen Teil n und
-     * dem Privaten Teil d. Bei dieser Implementation der Entschlüsselung
+     * dem Privaten Teil d. Bei der Implementierung der Entschlüsselung in dieser Methode
      * wird die zu entschlüsselnde Zahl y mit dem Chinesischen Restsatz
      * entschlüsselt. Das ist möglich, weil die Faktoren p und q für n zum
-     * einen bekannt sind, und zum anderen weil gcd(p,q) = 1 ist, was eine
-     * Vorbedingung für den CRT ist.
+     * einen bekannt sind, und zum anderen weil gcd(p,q) = 1 ist, was die
+     * Vorbedingung für den Einsatz des CRT ist.
      * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
-     * gespeichert wird. Die Zahl y muss < n sein, weil sonst y nicht Teil
-     * des Geheimtextraums ist.
+     * gespeichert wird. Die Zahl y muss < n sein, weil sonst y nicht innerhalb
+     * des Geheimtextraums liegt.
      * @param y Die zu entschlüsselnde Zahl als Integer.
      * @param x Wenn entschlüsselt werden kann, dann wird das entschlüsselte
      * y in x als Integer gespeichert.
-     * @return True, wenn entschlüsselt werden konnte, false wenn nicht.
+     * @return True, wenn entschlüsselt werden konnte, also y < n gilt, False wenn nicht.
      */
 	bool crt(const Integer& y, Integer& x) const;
 
     /***
      * compute entschlüsselt den Integer y mit dem Öffentlichen Teil n und
-     * dem Privaten Teil d. Bei dieser Implementation der Entschlüsselung
+     * dem Privaten Teil d. Bei der Implementierung der Entschlüsselung in dieser Methode
      * wird die zu entschlüsselnde Zahl y mit Garners Verfahren
-     * entschlüsselt.
+     * entschlüsselt, welches effiziente Entschlüsselung des Geheimtexts erlaubt.
      * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
      * gespeichert wird. Die Zahl y muss < n sein, weil sonst y nicht Teil
      * des Geheimtextraums ist.
      * @param y Die zu entschlüsselnde Zahl als Integer.
      * @param x Wenn entschlüsselt werden kann, dann wird das entschlüsselte
      * y in x als Integer gespeichert.
-     * @return True, wenn entschlüsselt werden konnte, false wenn nicht.
+     * @return True, wenn entschlüsselt werden konnte, also y < n gilt, False wenn nicht.
      */
 	bool garner(const Integer& y, Integer& x) const;
 };
