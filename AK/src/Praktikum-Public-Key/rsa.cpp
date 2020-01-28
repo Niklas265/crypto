@@ -142,6 +142,7 @@ void factorizingAttack() {
                          Integer("127869459623070904102412837477002840200"),
                          p, q);
     // Es wird erwartet, dass n erfolgreich faktorisiert werden konnte.
+    cout << "Faktoren von n: " << p << " " << q << endl;
     assert(p * q == Integer("127869459623070904125109742803085324131"));
 }
 
@@ -151,11 +152,23 @@ void euklidExercise() {
 	 * Aufgabe 19.
 	 *********************************************************************/
     PublicKeyAlgorithmBox pb;
+    // Berechnet die Werte q1 bis qm des Kettenbruchs 39/112 und speichert diese im
+    // Vektor q ab
     vector<Integer> q;
     Integer d = pb.euklid(39, 112, q);
+    // eukild() liefert gcd(39,112) zurück, es wird erwartet dass dieser 1 ist,
+    // also 39 und 112 teilerfremd sind.
+    cout << "gcd(39, 112) = " << d << endl;
     assert(d == 1);
     vector<Integer> expectedResult = {Integer("0"), Integer("2"), Integer("1"),
                                    Integer("6"), Integer("1"), Integer("4")};
+    // Überprüfen, ob die Werte q1 bis qm in q mit den erwarteten Werten
+    // übereinstimmen.
+    cout << "q1 bis qm des Kettenbruchs 39/112: " << endl;
+    for (auto i : q) {
+        cout << i << ' ';
+    }
+    cout << endl;
     assert(q == expectedResult);
 }
 
@@ -166,10 +179,23 @@ void convergentsExercise() {
 	 *********************************************************************/
 
     PublicKeyAlgorithmBox pb;
+    // Berechnung der Konvergenten des Kettenbruchs von 39/112 und abspeichern der Zähler in
+    // Vector c und der Nenner in Vector d
     vector<Integer> c, d;
     pb.computeConvergents(Integer(39), Integer(112), c, d);
     vector<Integer> expectedC = {1, 0, 1, 1, 7, 8, 39};
     vector<Integer> expectedD = {0, 1, 2, 3, 20, 23, 112};
+    // Überprüfen, ob die Zähler und Nenner mit den erwarteten Werten übereinstimmen
+    cout << "Zähler der Konvergenten des Kettenbruchs 39/112: " << endl;
+    for (auto i : c) {
+        cout << i << ' ';
+    }
+    cout << endl;
+    cout << "Nenner der Konvergenten des Kettenbruchs 39/112: " << endl;
+    for (auto i : d) {
+        cout << i << ' ';
+    }
+    cout << endl;
     assert(c == expectedC);
     assert(d == expectedD);
 }
@@ -179,13 +205,23 @@ void wienerAttack() {
 	/*********************************************************************
 	 * Aufgabe 21.
 	 *********************************************************************/
-
+    // Beispiel der Wiener Attacke auf RSA
 	RSAAttack rsaAttack;
 	Integer p, q;
-	rsaAttack.wienerAttack(Integer("224497286580947090363360894377508023561"),
-	                       Integer("163745652718951887142293581189022709093"),
+	// Die wienerAttack kann, wenn die Parameter von RSA ungünstig gewählt
+	// sind, mit dem Öffentlichen Schlüssel den privaten Schlüssel p und q
+	// berechnen. An wienerAttack wird das n des öffentlichen Schlüssels
+	// im ersten Argument und das e des öffentlichen Schlüssels im zweiten
+	// Argument übergeben. Bei Erfolg liefert wienerAttack True zurück
+	// und speichert die Faktoren von n im dritten und vierten Parameter
+	// ab.
+	Integer n = Integer("224497286580947090363360894377508023561");
+	rsaAttack.wienerAttack(n, Integer("163745652718951887142293581189022709093"),
 	                       p, q);
-	assert(p * q == Integer("224497286580947090363360894377508023561"));
+	// Es wird erwartet, dass die wienerAttack erfolgreich war und die Faktoren
+	// von n korrekt von wienerAttack gesetzt wurden.
+	cout << "Wiener Attack: Faktoren von n: " << p << ' ' << q << endl;
+	assert(p * q == n);
 }
 
 // #oracleExercise()
@@ -199,10 +235,34 @@ void oracleExercise() {
 	Integer d = Integer("946975621");
 
 	RSAOracle rsaOracle(p, q, d);
-	assert(rsaOracle.half(Integer("116415012259126332853105614449093205668")));
-    assert(!rsaOracle.half(Integer("74304303162215663057995326922844871006")));
-    assert(!rsaOracle.half(Integer("102949691974634609941445904667722882083")));
-    assert(rsaOracle.half(Integer("42549620926959222864355800078420537413")));
+	// Die Methode half() liefert den Wert des höchstwertigen Bits des
+    // entschlüsselten Geheimtext in y zurück. y wird an half als Integer übergeben.
+    // Dabei hat der entschlüsselte Geheimtext die
+    // gleiche Bitlänge wie n, wird also wenn nötig mit Nullen links aufgefüllt/gepadded.
+    // Da keine solche Funktion existiert, welche diese
+    // Funktionalität in effizienter Zeit mit dem öffentlichen Schlüssel berechnet, muss dem Orakel
+    // Wissen über den privaten Teil des RSA-Schlüssels übergegeben werden, um den Geheimtext
+    // entschlüsseln zu können und auf diese Weise das höchstwertigste Bit zu bestimmen.
+    bool result = rsaOracle.half(Integer("116415012259126332853105614449093205668"));
+    cout << "Half Funktion auf 116415012259126332853105614449093205668 liefert " << result << endl;
+    // Es wird erwartet, dass das höchstwertigste Bit von
+    // 116415012259126332853105614449093205668 entschlüsselt 1 ist.
+	assert(result);
+	result = rsaOracle.half(Integer("74304303162215663057995326922844871006"));
+	cout << "Half Funktion auf 74304303162215663057995326922844871006 liefert " << result << endl;
+    // Es wird erwartet, dass das höchstwertigste Bit von
+    // 74304303162215663057995326922844871006 entschlüsselt 0 ist.
+    assert(!result);
+    result = rsaOracle.half(Integer("102949691974634609941445904667722882083"));
+    cout << "Half Funktion auf 102949691974634609941445904667722882083 liefert " << result << endl;
+    // Es wird erwartet, dass das höchstwertigste Bit von
+    // 102949691974634609941445904667722882083 entschlüsselt 0 ist.
+    assert(!result);
+    result = rsaOracle.half(Integer("42549620926959222864355800078420537413"));
+    cout << "Half Funktion auf 42549620926959222864355800078420537413 liefert " << result << endl;
+    // Es wird erwartet, dass das höchstwertigste Bit von
+    // 42549620926959222864355800078420537413 entschlüsselt 1 ist.
+    assert(result);
 }
 
 // #halfAttack()
@@ -210,22 +270,40 @@ void halfAttack() {
 	/*********************************************************************
 	 * Aufgabe 23.
 	 *********************************************************************/
-
+    // Beispiel Angriff auf RSA mit half Attack, bei der ein verschlüsselter
+    // Geheimtext entschlüsselt wird
 	Integer p = Integer("12889769717276679053");
 	Integer q = Integer("17322528238664264177");
 	Integer e = Integer("55051594731967684255289987977028610689");
     Integer d = Integer("149154082258429024247010774747829057473");
     Integer x = Integer("167092961114842952923160287194683529938");
 
+    //Die Klasse RSAAttack implementiert die halfAttack Funktion, welche
+    // diesen Angriff implementiert
 	RSAAttack rsaAttack;
+	// halfAttack benötigt die in RSAOracle implementierte Methode half(), welche
+	// den Wert des höchstwertigen Bits des entschlüsselten Geheimtext in y zurückliefert.
 	RSAOracle rsaOracle(p, q, d);
+	// halfAttack erhält das öffentliche n des RSA Schlüsels, also p*q, im ersten
+	// Argument.
+	// Das e des öffentlichen Schlüssels wird im zweiten Parameter übergeben
+	// Das dritte Argument enhält den zu entschlüsselnden Geheimtext und
+	// das vierte Argument eine Referenz auf eine RSAOracle Klasse.
+	// halfAttack liefert den entschlüsselten Geheimtext zurück.
 	Integer result = rsaAttack.halfAttack(p * q, e, x, rsaOracle);
 
+	// Abschließend wird überprüft, ob der laut halfAttack entschlüsselte
+	// Geheimtext tatsächlich der Klartext ist. Dafür wird
+	// RSADecryptor mit dem privaten Schlüssel initialisiert und
+	// das mit halfAttack entschlüsselte x wird ebenfalls mit
+	// RSADecryptor entschlüsselt.
 	RSADecryptor rsaDecryptor(p, q, d);
 	Integer y;
 	rsaDecryptor.compute(x, y);
-    assert(y == result);
     cout << "Decrypted Message: " << result << endl;
+    // Wenn halfAttack erfolgreich war, dann sind beide entschlüsselten
+    // Zahlen gleich.
+    assert(y == result);
 }
 
 // #main()

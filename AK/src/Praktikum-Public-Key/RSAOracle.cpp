@@ -25,7 +25,7 @@ bool RSAOracle::half(const Integer& y) const {
     //Methode half(), die für einen Geheimtext das höchstwertigste Bit des
     //zugehörigen Klartexts zurücklieferts
 
-    //Erzeugen eines Objekts der Klasee PublicKeyAlgorithmBox, in dem die
+    //Erzeugen eines Objekts der Klasse PublicKeyAlgorithmBox, in dem die
     //anschließende Modulare Exponentation zum entschlüsseln des Geheimtexts
     //implementiert ist
     PublicKeyAlgorithmBox pb;

@@ -31,7 +31,7 @@ public:
 	* @param d Vector, in dem die von der Methode berecheten d[j] für 0 <= j <= m gespeichert 
 	* werden, welche jeweils den Nenner des j-ten Näherungsbruch repräsentieren.
 	*
-	* @return Die Länge des errechneten Vectors c (TODO!!!)
+	* @return Die Länge des errechneten Vectors c
 	*/
 	unsigned int computeConvergents(const Integer& a, const Integer& b,
 			vector<Integer>& c, vector<Integer>& d);
@@ -197,7 +197,8 @@ public:
 	 * in Bits an.
 	 * @param s s ist das s in 2^-s, welches die Fehlerwahrscheinlichkeit
 	 * angibt, dass der zurückgeliferte Wert in p keine Primzahl ist.
-	 * @return Es wird immer 0 zurückgelifert.
+	 * @return Die Anzahl der Versuche, bis eine Rabin Primzahl gewürfelt
+	 * worden ist.
 	 */
 	unsigned int randomRabinPrime(Integer &p, unsigned int bitlen,
 			unsigned int s);

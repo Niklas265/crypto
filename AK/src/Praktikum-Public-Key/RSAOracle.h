@@ -36,8 +36,10 @@ public:
 
 	/***
 	* Die Methode half() wird zur Durchführung einer Half-Attack auf RSA verwendet. Diese Methode
-	* bekommt einen Geheimtext übergeben und liefert den Wert des höchstwertigen Bits des zu dem
-	* Geheimtext gehörenden Klartexts zurück. Da keine solche Funktion existiert, welche diese
+	* bekommt einen Geheimtext übergeben und liefert den Wert des höchstwertigen Bits des
+	* entschlüsselten Geheimtext in y zurück. Dabei hat der entschlüsselte Geheimtext die
+	* gleiche Bitlänge wie n, wird also wenn nötig mit Nullen links aufgefüllt/gepadded.
+	* Da keine solche Funktion existiert, welche diese
 	* Funktionalität in effizienter Zeit mit dem öffentlichen Schlüssel berechnet, besitzt das Orakel
 	* in dieser Implementierung Wissen über den privaten Teil des RSA-Schlüssels, um den Geheimtext
 	* entschlüsseln zu können und auf diese Weise das höchstwertigste Bit zu bestimmen.
@@ -48,10 +50,7 @@ public:
 	* @return True, falls das höchstwertigste Bit des zugehörigen Klartexts 1 ist, ansonsten False.
 	*/
 	bool half(const Integer& y) const;
-	
-	/***
-	* TODO
-	*/
+
 	bool parity(const Integer& y) const;
 
 };

@@ -238,6 +238,9 @@ unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
     // erzeugen von Zufallszahlen verwendet.
     NonblockingRng nonblockingRng;
 
+    // versuche gibt die Anzahl der bisher gewürfelten Zufallszahlen an.
+    unsigned int versuche = 0;
+
     // In jedem Schleifendurchlauf wird eine Zufallszahl mit maximaler Bitlänge
     // bitlen erzeugt. Wenn gilt, dass p % 4 != 3 und
     // laut dem Rabin Miller Test mit einer Wahrscheinlichkeit von 1-2^-s
@@ -246,9 +249,12 @@ unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
     // Schleifendurchlauf ausgeführt, die Schleife wird also nicht verlassen.
     do {
         p.Randomize(nonblockingRng, bitlen);
+        versuche++;
     } while (p % 4 != 3 || !millerRabinTest(p, s));
 
-    return 0;
+    // Die Anzahl der Würfelversuche, bis ein Versuch eine Rabin Primzahl war,
+    // wird zurückgegeben.
+    return versuche;
 } // randomRabinPrime()
 
 // #modPrimeSqrt()
