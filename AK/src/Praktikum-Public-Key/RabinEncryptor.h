@@ -11,13 +11,16 @@ using namespace CryptoPP;
 
 /***
  * RabinEncryptor stellt Methoden bereit, um eine Zahl in einem Integer
- * mit dem Rabin Kryptosystem zu verschlüsseln. Es gibt zusätzlich die
+ * mit dem Rabin Kryptosystem zu verschlüsseln. Das Rabin-Kryptosystem wurde im Jahre
+ * 1979 von Michael O. Rabin entwicket. In dieser Implementierung gibt es zusätzlich die
  * Möglichkeit, einen zu verschlüsselnden Klartext zu markieren.
  * Markiert bedeutet, dass das padding an das Ende der zu verschlüsselnden
  * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt.
  * Der Grund dafür ist, dass es bei der Entschlüsselung einer verschlüsselten
  * Zahl 4 verschiedene Möglichkeiten gibt und nur eine davon ist der
- * ursprüngliche Klartext. Da das padding beiden Parteien bekannt ist, erhält
+ * ursprüngliche Klartext. Es gibt genau 4 mögliche Klartexte, da gilt, dass wenn n
+ * das Produkt zweier Rabin-Primzahlen ist, für Gleichung x² ≡ a (mod n) genau
+ * 4 Lösungen existieren. Da bei Markierung das padding beiden Parteien bekannt ist, erhält
  * die entschlüsselnde Partei durch das Padding einen Hinweis darauf,
  * welches der 4 entschlüsselten Möglichkeiten der originale Klartext sein
  * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
@@ -30,7 +33,8 @@ private:
     /**
      * n soll das Produkt zweier Rabin Primzahlen sein.
      * Dies wird jedoch nicht überprüft.
-     * n ist ein Teil des öffentlichen Schlüssels.
+     * n ist ein Teil des öffentlichen Schlüssels und repräsentiert den Modul der Ver- und
+     * Entschlüsselungsfunktion.
      * n wird sowohl bei der Ver- als auch bei der
      * Entschlüsselung verwendet und gibt die Größe des Klartextraums und
      * Geheimtextraums an, der Z_n ist.
@@ -72,26 +76,29 @@ public:
 	virtual ~RabinEncryptor();
 
 	/***
-	 * compute verschlüsselt die Zahl in x mit dem Rabin Kryptosystem und
+	 * compute verschlüsselt die Zahl im Parameter x mit dem Rabin Kryptosystem und
 	 * speichert die verschlüsselte Zahl ohne padding/Markierung in y ab.
+	 * Bei der Verschlüsselung mit dem Rabin-Kryptosystem wird der Geheimtext
+	 * y druch y = x² (mod n) berechnet.
 	 *
 	 * @param x Zu verschlüsselnde Zahl als Integer. x muss kleiner als n sein.
 	 * @param y In y wird die verschlüsselte Zahl als Integer geschrieben.
 	 * @return True, wenn erfolgreich verschlüsselt wurde, also wenn x ein passender Klartext ist, 
-	 * false wenn nicht.
+	 * False wenn nicht.
 	 */
 	bool compute(const Integer& x, Integer& y);
 
     /***
-     * compute2 verschlüsselt die Zahl in x mit dem Rabin Kryptosystem und
+     * compute2 verschlüsselt die Zahl in x mit dem Rabin-Kryptosystem und
      * speichert die verschlüsselte Zahl mit padding/Markierung in y ab.
      * Markiert bedeutet, dass das padding an das Ende der zu verschlüsselnden
-     * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt.
+     * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt. Die 
+     * Verschlüsselung findet durch y = (x||padding)² (mod n) statt.
      *
 	 * @param x Zu verschlüsselnde Zahl als Integer. x muss kleiner als n sein.
 	 * @param y In y wird die zu verschlüsselnde Zahl mit padding/Markierung als
      * Integer geschrieben.
-	 * @return True, wenn erfolgreich verschlüsselt wurde, false wenn nicht.
+	 * @return True, wenn erfolgreich verschlüsselt wurde, also x < n gilt, False wenn nicht.
      */
 	bool compute2(const Integer&x, Integer& y);
 };
