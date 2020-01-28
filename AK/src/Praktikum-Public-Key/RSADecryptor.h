@@ -84,42 +84,70 @@ public:
 	 * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
 	 * gespeichert wird. Die Zahl y muss < n sein, weil y sonst nicht Teil
 	 * des Geheimtextraums ist.
-	 * @param y Die zu entschlüsselnde Zahl als Integer.
+	 * Sei x der originale Klartext. Wenn x mit x^e mod n = y verschlüsselt
+     * wurde, dann kann der daraus resultierende Ciphertext y mit
+     * y^d mod n entschlüsselt werden. Der Grund dafür ist, dass laut
+     * Vorgabe e * d ≡ 1 (mod ϕ(n)) gelten muss. y = (x^e)^d = x^(e*d)
+     * Mit dem Satz von Fermat kann
+     * gezeigt werden, dass x^(e*d) ≡ x (mod p) und x^(e*d) ≡ x (mod q)
+     * für alle x ∈ Z_n ist. Somit ist der entschlüsselte Text der gleiche wie
+     * der originale Klartext x.
+     * Da n = p*q kann mit dem Chinesischen Restsatz gezeigt werden, dass
+     * x^(e*d) ≡ x (mod n). Der Chinesischen Restsatz kann verwendet werden,
+     * weil gcd(p,q) = 1 ist.
+	 * @param y Die zu entschlüsselnde Zahl als Integer. y muss ein Element
+	 * des Geheimtextraums sein.
 	 * @param x Wenn entschlüsselt werden kann, dann wird das entschlüsselte
-	 * y in x als Integer gespeichert.
-	 * @return True, wenn entschlüsselt werden konnte, also y < n gilt, False wenn nicht.
+	 * y in x als Integer gespeichert. x wird ein Element des Klartextraums
+	 * sein.
+	 * @return True, wenn entschlüsselt werden konnte, also y < n gilt,
+	 * False wenn nicht.
 	 */
 	bool compute(const Integer& y, Integer& x) const;
 
     /***
      * compute entschlüsselt den Integer y mit dem Öffentlichen Teil n und
-     * dem Privaten Teil d. Bei der Implementierung der Entschlüsselung in dieser Methode
-     * wird die zu entschlüsselnde Zahl y mit dem Chinesischen Restsatz
-     * entschlüsselt. Das ist möglich, weil die Faktoren p und q für n zum
+     * dem Privaten Teil d. Bei der Implementierung der Entschlüsselung in
+     * dieser Methode wird die zu entschlüsselnde Zahl y mit dem Chinesischen Restsatz
+     * entschlüsselt.
+     * Alternativ zu x ≡ y^d % n
+     * kann mit:
+     * x ≡ y^d % p
+     * x ≡ y^d % q
+     * und dem Chinesischen Restsatz entschlüsselt weden, weil gcd(p,q) = 1 ist.
+     * Das ist möglich, weil die Faktoren p und q für n zum
      * einen bekannt sind, und zum anderen weil gcd(p,q) = 1 ist, was die
      * Vorbedingung für den Einsatz des CRT ist.
+     * Die Anwendung des CRT wird im .cpp Teil dieser Methode erläutert.
      * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
      * gespeichert wird. Die Zahl y muss < n sein, weil sonst y nicht innerhalb
      * des Geheimtextraums liegt.
-     * @param y Die zu entschlüsselnde Zahl als Integer.
+     * @param y Die zu entschlüsselnde Zahl als Integer. y muss ein Element des
+     * Geheimtextraums sein.
      * @param x Wenn entschlüsselt werden kann, dann wird das entschlüsselte
-     * y in x als Integer gespeichert.
-     * @return True, wenn entschlüsselt werden konnte, also y < n gilt, False wenn nicht.
+     * y in x als Integer gespeichert. x wird ein Element des Klartextraums
+	 * sein.
+     * @return True, wenn entschlüsselt werden konnte, also y < n gilt,
+     * False wenn nicht.
      */
 	bool crt(const Integer& y, Integer& x) const;
 
     /***
      * compute entschlüsselt den Integer y mit dem Öffentlichen Teil n und
-     * dem Privaten Teil d. Bei der Implementierung der Entschlüsselung in dieser Methode
-     * wird die zu entschlüsselnde Zahl y mit Garners Verfahren
-     * entschlüsselt, welches effiziente Entschlüsselung des Geheimtexts erlaubt.
+     * dem Privaten Teil d. Bei der Implementierung der Entschlüsselung in dieser
+     * Methode wird die zu entschlüsselnde Zahl y mit Garners Verfahren
+     * entschlüsselt, welches eine effiziente Entschlüsselung des Geheimtexts
+     * erlaubt.
      * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
      * gespeichert wird. Die Zahl y muss < n sein, weil sonst y nicht Teil
      * des Geheimtextraums ist.
-     * @param y Die zu entschlüsselnde Zahl als Integer.
+     * @param y Die zu entschlüsselnde Zahl als Integer. y muss ein Element
+     * des Geheimtextraums sein.
      * @param x Wenn entschlüsselt werden kann, dann wird das entschlüsselte
-     * y in x als Integer gespeichert.
-     * @return True, wenn entschlüsselt werden konnte, also y < n gilt, False wenn nicht.
+     * y in x als Integer gespeichert. x wird ein Element des Klartextraums
+     * sein.
+     * @return True, wenn entschlüsselt werden konnte, also y < n gilt,
+     * False wenn nicht.
      */
 	bool garner(const Integer& y, Integer& x) const;
 };

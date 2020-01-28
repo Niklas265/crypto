@@ -58,7 +58,7 @@ bool RabinEncryptor::compute2(const Integer& x, Integer& y) {
     // Ist die zu verschlüsselnde Zahl x mit padding größer als n, dann wird x
     // nicht verschlüsselt, weil x||padding nicht Teil des Klartextraums ist.
     // In einem solchen Fall würde das Entschlüsseln den Wert x (mod n) und
-    // und nicht x zurückliefern.
+    // und nicht x (ohne mod n) zurückliefern.
     if (x * offset + padding >= n) return false;
     // Zur Verschlüsselung wird enc((n,p,q),x) = x² mod n wird mit a_exp_b_mod_c
     // berechnet.

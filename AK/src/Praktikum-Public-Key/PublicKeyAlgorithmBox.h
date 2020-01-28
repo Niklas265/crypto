@@ -95,6 +95,14 @@ public:
 	 * multInverse berechnet das multiplikative Inverse von a modulo n. Ein
 	 * a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und n teilerfremd
 	 * zu einander sind.
+	 * a ist invertierbar modulo n, falls gcd(a,n) = 1. gcd(a,n) kann auch mit
+     * dem Erweiterten Algorithmus von Euklid berechnet werden.
+     * Wegen ZTK Satz 3.4 gibt es x,y ∈ Z, so dass gcd(a, n) = 1 = ax + ny.
+     * Somit gilt 1 ist kongruent zu ax+ny (mod n). Wegen mod n kürzt sich das
+     * ny raus und ist somit das gleiche wie 1 ist kongruent zu ax (mod n).
+     * Dadurch ist x das multiplikative Inverse von a mod n und dieses x kann
+     * ebenfalls durch den EEA berechnet werden.
+     * Es werden keine negativen Inversen zurückgegeben.
 	 *
 	 * @param a Das a, für welches das multiplikative Inverse a mod n berechnet
 	 * wird. a ist ein Integer.

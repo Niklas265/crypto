@@ -11,7 +11,7 @@ using namespace std;
 using namespace CryptoPP;
 
 /**
- * Diese Klasse implementiert das RSA-Orakel, dass für die Half-Attack benötigt wird.
+ * Diese Klasse implementiert das RSA-Orakel, welches für die Half-Attack benötigt wird.
  * Das Orakel besitzt kenntnis über den geheimen RSA-Schlüssel und ist so in der Lage,
  * Aussagen über das höchstwertigste Bit eines Klartexts mit dem dazugehörigen
  * Geheimtexts zu treffen.

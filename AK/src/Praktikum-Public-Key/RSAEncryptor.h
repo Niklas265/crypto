@@ -40,6 +40,9 @@ private:
 	/**
 	 * Der öffentliche Teil e des Schlüsseln, mit dem ein zu verschlüsselnder
 	 * Text verschlüsselt wird. e wird im Konstruktor dieser Klasse gesetzt.
+	 * e muss das multiplikative Inverse
+     * von d mod ϕ(n) sein. Das wird von dieser Klasse allerdings nicht
+     * überprüft.
 	 */
 	Integer e;
 
@@ -65,14 +68,16 @@ public:
 
 	/***
 	 * compute verschlüsselt die Zahl x mit dem RSA Kryptosystem und dem
-	 * öffentlichen Schlüssel n und e. Speziell wird x^e mod n berechnet.
+	 * öffentlichen Schlüssel n und e. Dabei wird x^e mod n berechnet.
 	 * Das Ergebnis ist das verschlüsselte x, welches im Parameter y
 	 * gespeichert wird. Die Zahl x muss < n sein, weil sonst x nicht Teil
 	 * des Klartextraums ist.
-	 * @param x Die zu verschlüsselnde Zahl als Integer.
+	 * @param x Die zu verschlüsselnde Zahl als Integer. x muss ein Element
+	 * des Klartextraums Z_n sein.
 	 * @param y In y wird bei Erfolg die verschlüsselte Zahl x als Integer
-	 * gespeichert.
-	 * @return True, wenn x verschlüsselt worden ist und somit x < n gilt, false wenn nicht.
+	 * gespeichert. y wird ein Element des Geheimtextraums.
+	 * @return True, wenn x verschlüsselt worden ist und somit x < n gilt,
+	 * false wenn nicht.
 	 */
 	bool compute(const Integer& x, Integer& y) const;
 };

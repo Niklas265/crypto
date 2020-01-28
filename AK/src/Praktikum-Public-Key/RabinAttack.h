@@ -11,6 +11,8 @@
 using namespace CryptoPP;
 
 /***
+ * Das Rabin-System ist anfällig gegen eine Attacke mit frei wählbarem
+ * Geheimtext.
  * Die Klasse RabinAttack bietet eine Methode an, mit der das Rabin
  * Kryptosystem gebrochen werden kann, unter der Voraussetzung, dass ein
  * frei zu wählender Geheimtext mit dem zu brechenden Kryptosystem bzw. deren
@@ -41,6 +43,14 @@ public:
      * zweiten Parameter, geschrieben und die Anzahl der Versuche, die
      * benötigt wurden, um n zu Faktorisieren, wird als int zurückgegeben.
      * Wenn n nicht faktorisiert worden ist, dann wird -1 zurückgegeben.
+     * Der Angriff wird detailliert im .cpp Code erläutert.
+     * In dieser Implementierung wird davon ausgegangen, dass nur einer der
+     * 4 möglichen Klartexte des frei wählbarem Geheimtext bekannt sind. Wären
+     * alternativ alle 4 möglichen Klartexte bekannt, dann würde der Angriff
+     * direkt zum Erfolg führen. Der Angriff kann verhindert werden, indem man
+     * den Klartext mit einer eindeutigen, wiedererkennbaren Markierung
+     * versieht, weil dann nicht nur der Klartext x, sondern x||padding
+     * verschlüsselt wird.
      *
 	 * @param n Das zu faktorisierende n als Integer.
 	 * @param f In f wird bei erfolgreicher Faktorisierung von n ein Faktor

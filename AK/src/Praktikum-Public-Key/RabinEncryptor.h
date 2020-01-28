@@ -23,28 +23,33 @@ using namespace CryptoPP;
  * 4 Lösungen existieren. Da bei Markierung das padding beiden Parteien bekannt ist, erhält
  * die entschlüsselnde Partei durch das Padding einen Hinweis darauf,
  * welches der 4 entschlüsselten Möglichkeiten der originale Klartext sein
- * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
- * Geheimtext abgewehrt werden.
+ * könnte.
+ * Das Rabin Kryptosystem ist anfällig gegen eine Chosen-Ciphertext-Attacke.
+ * Durch das Padding kann ebenfalls ein Angriff dieser Art allerdings abgewehrt
+ * werden.
  * Es ist möglich, dass mehr als einer der 4 entschlüsselten Möglichkeiten
  * mit dem Padding endet. Die Wahrscheinlichkeit dafür sinkt bei größerem
- * Padding. Sollte dieser Fall trotzdem eintreten, dann wird dieser
- * Abgefangen und compute2 liefert False zurück, was auf einen Fehler hinweist.
+ * Padding.
+ * Das Rabin Kryptosystem ist ein Public Key Kryptosystem, dessen Sicherheit
+ * vom Faktorisierungsproblem abhängt.
  * Beim Faktorisierungsproblem ist eine zusammengesetzte Zahl n gegeben.
  * Gesucht ist ein Faktor f von n, d.h eine Zahl f mit den Eigenschaften:
  * 1 < f < n und f | n.
- * Das Rabin Kryptosystem ist ein Public Key Kryptosystem, dessen Sicherheit
- * vom Faktorisierungsproblem abhängt.
+ * Das Rabin Kryptosystem ist beweisbar sicher. Es hat eine geringe
+ * Bedeutung für die Praxis, da zum Beispiel ein erhöhter Aufwand bei der
+ * Entschlüsselung aufgrund der nicht injektiven Verschlüsselungsfunktion
+ * entsteht.
  */
 class RabinEncryptor {
 private:
     /**
      * n soll das Produkt zweier Rabin Primzahlen sein.
      * Dies wird jedoch nicht überprüft.
-     * n ist ein Teil des öffentlichen Schlüssels und repräsentiert den Modul der Ver- und
-     * Entschlüsselungsfunktion.
+     * n ist ein Teil des öffentlichen Schlüssels und repräsentiert den Modul
+     * der Ver- und Entschlüsselungsfunktion.
      * n wird sowohl bei der Ver- als auch bei der
-     * Entschlüsselung verwendet und gibt die Größe des Klartextraums und
-     * Geheimtextraums an, der Z_n ist.
+     * Entschlüsselung verwendet und gibt den Klartextraum und Geheimtextraum
+     * an, der Z_n ist.
      */
 	Integer n;
 	/**
@@ -65,6 +70,8 @@ private:
      * Zum Beispiel, wenn padding = 987 ist, dann ist offset = 1000.
      * Ein zu verschlüsselnder Geheimtext a = 123 kann dann mit
      * a * offset + padding = 123987 markiert werden.
+     * Wenn das Padding zum markieren von Klartexten verwendet werden soll,
+     * dann muss das Padding beim Ver- und Entschlüsseln bekannt sein.
      */
 	Integer padding;
 
@@ -73,7 +80,8 @@ public:
      * Konstruktor der RabinEncryptor Klasse, welcher die Klassenvariablen
      * n, offset, und padding setzt.
      *
-     * @param n n soll das Produkt zweier Rabin Primzahlen als Crypto++ Integer sein.
+     * @param n n soll das Produkt zweier Rabin Primzahlen als Crypto++ Integer
+     * sein. n wird Teil des öffentlichen Schlüssels.
      * @param padding Ist der Wert, mit dem der zu verschlüsselnde Text markiert
      * wird, wenn mit der compute2 Methode verschlüsselt wird. Markiert
      * bedeutet, dass das padding an das Ende des zu verschlüsselten Texts
@@ -83,13 +91,17 @@ public:
 	virtual ~RabinEncryptor();
 
 	/***
-	 * compute verschlüsselt die Zahl im Parameter x mit dem Rabin Kryptosystem und
-	 * speichert die verschlüsselte Zahl ohne padding/Markierung in y ab.
+	 * compute verschlüsselt die Zahl im Parameter x mit dem Rabin Kryptosystem
+	 * und speichert die verschlüsselte Zahl ohne padding/Markierung in y ab.
 	 * Bei der Verschlüsselung mit dem Rabin-Kryptosystem wird der Geheimtext
-	 * y druch y = x² (mod n) berechnet.
+	 * y durch y = x² (mod n) berechnet. x muss ein Element des Klartextraums
+	 * sein. Der Klartextraum ist Z_n. Das heißt, dass x < n sein muss. y wird
+	 * ein Element aus dem Geheimtextraum Z_n.
 	 *
 	 * @param x Zu verschlüsselnde Zahl als Integer. x muss kleiner als n sein.
-	 * @param y In y wird die verschlüsselte Zahl als Integer geschrieben.
+	 * x ist ein Element des Klartextraums Z_n.
+	 * @param y In y wird die verschlüsselte Zahl als Integer geschrieben. y ist
+	 * ein Element des Geheimtextraums Z_n und ein Quadratischer Rest modulo n.
 	 * @return True, wenn erfolgreich verschlüsselt wurde, also wenn x ein passender Klartext ist, 
 	 * False wenn nicht.
 	 */
@@ -101,11 +113,29 @@ public:
      * Markiert bedeutet, dass das padding an das Ende der zu verschlüsselnden
      * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt. Die 
      * Verschlüsselung findet durch y = (x||padding)² (mod n) statt.
+     * Der Grund dafür ist, dass es bei der Entschlüsselung einer verschlüsselten
+     * Zahl 4 verschiedene Möglichkeiten gibt und nur eine davon ist der
+     * ursprüngliche Klartext. Es gibt genau 4 mögliche Klartexte, da gilt, dass wenn n
+     * das Produkt zweier Rabin-Primzahlen ist, für Gleichung x² ≡ a (mod n) genau
+     * 4 Lösungen existieren. Da bei Markierung das padding beiden Parteien bekannt ist, erhält
+     * die entschlüsselnde Partei durch das Padding einen Hinweis darauf,
+     * welches der 4 entschlüsselten Möglichkeiten der originale Klartext sein
+     * könnte.
+     * Es ist möglich, dass mehr als einer der 4 entschlüsselten Möglichkeiten
+     * mit dem Padding endet. Die Wahrscheinlichkeit dafür sinkt bei größerem
+     * Padding.
+     * Die aus x||padding resultierende Zahl muss ein Element des Klartextraums
+     * sein. Das bedeutet, dass es nicht mehr wie bei compute ausreicht, dass
+     * nur x ein Element aus Z_n ist.
      *
 	 * @param x Zu verschlüsselnde Zahl als Integer. x muss kleiner als n sein.
+     * Die aus x||padding resultierende Zahl muss ein Element Z_n, also des
+     * Klartextraums sein.
 	 * @param y In y wird die zu verschlüsselnde Zahl mit padding/Markierung als
-     * Integer geschrieben.
-	 * @return True, wenn erfolgreich verschlüsselt wurde, also x < n gilt, False wenn nicht.
+     * Integer geschrieben. y ist Teil des Geheimtextraums Z_n und ein
+     * Quadratischer Rest modulo n.
+	 * @return True, wenn erfolgreich verschlüsselt wurde, also x||padding < n
+     * gilt, False wenn nicht.
      */
 	bool compute2(const Integer&x, Integer& y);
 };

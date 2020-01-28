@@ -16,17 +16,33 @@ using namespace std;
  * mit dem Rabin Kryptosystem zu entschlüsseln. Es gibt zusätzlich die
  * Möglichkeit, über einen mit dem padding endenden verschlüsselten Klartext
  * aus den 4 möglichen, aus der Entschlüsselung resultierenden, Klartexten
- * zu bestimmen.
+ * zu bestimmen. Wurde am Ende des Klartexts ein Padding hinzugefügt, dann
+ * wird das in dieser Dokumentation als markieren des Klartextes bezeichnet.
  * Markiert bedeutet, dass das padding an das Ende der zu verschlüsselnden
  * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt.
  * Der Grund dafür ist, dass es bei der Entschlüsselung einer verschlüsselten
- * Zahl 4 verschiedene Möglichkeiten gibt und nur eine davon der
- * ursprüngliche Klartext ist. Da das padding beiden Parteien bekannt ist, erhält
- * die entschlüsselnde Partei durch das Padding einen Hinweis darauf,
- * welches der 4 entschlüsselten Möglichkeiten der originale Klartext sein
- * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
- * Geheimtext abgewehrt werden.
- * Das Rabin Kryptosystem ist ein Public Key Kryptosystem.
+ * Zahl 4 verschiedene Möglichkeiten gibt und nur eine davon ist der
+ * ursprüngliche Klartext. Es gibt genau 4 mögliche Klartexte, da gilt, dass
+ * wenn n das Produkt zweier Rabin-Primzahlen ist, für Gleichung x² ≡ a (mod n)
+ * genau 4 Lösungen existieren. Da bei Markierung das padding beiden Parteien
+ * bekannt ist, erhält die entschlüsselnde Partei durch das Padding einen
+ * Hinweis darauf, welches der 4 entschlüsselten Möglichkeiten der originale
+ * Klartext sein könnte.
+ * Das Rabin Kryptosystem ist anfällig gegen eine Chosen-Ciphertext-Attacke.
+ * Durch das Padding kann ebenfalls ein Angriff dieser Art allerdings abgewehrt
+ * werden.
+ * Es ist möglich, dass mehr als einer der 4 entschlüsselten Möglichkeiten
+ * mit dem Padding endet. Die Wahrscheinlichkeit dafür sinkt bei größerem
+ * Padding.
+ * Das Rabin Kryptosystem ist ein Public Key Kryptosystem, dessen Sicherheit
+ * vom Faktorisierungsproblem abhängt.
+ * Beim Faktorisierungsproblem ist eine zusammengesetzte Zahl n gegeben.
+ * Gesucht ist ein Faktor f von n, d.h eine Zahl f mit den Eigenschaften:
+ * 1 < f < n und f | n.
+ * Das Rabin Kryptosystem ist beweisbar sicher. Es hat eine geringe
+ * Bedeutung für die Praxis, da zum Beispiel ein erhöhter Aufwand bei der
+ * Entschlüsselung aufgrund der nicht injektiven Verschlüsselungsfunktion
+ * entsteht.
  */
 class RabinDecryptor {
 private:
@@ -68,6 +84,8 @@ private:
      * Das kann ein Hinweis darauf sein, dass der Klartext markiert worden ist.
      * Es kann aber auch sein, dass einer der möglichen Klartexte nur zufällig
      * mit dem padding endet.
+     * Wenn das Padding zum markieren von Klartexten verwendet werden soll,
+     * dann muss das Padding beim Ver- und Entschlüsseln bekannt sein.
      */
 	Integer offset;
 
@@ -76,8 +94,10 @@ public:
      * Konstruktor der RabinDecryptor Klasse, welcher die Klassenvariablen
      * p, q, offset, und padding setzt.
      *
-     * @param p p soll eine Rabin Primzahl (p ≡ 3 (mod 4)) und verschieden zu q sein.
-     * @param q q soll eine Rabin Primzahl (q ≡ 3 (mod 4)) und verschieden zu p sein.
+     * @param p p soll eine Rabin Primzahl (p ≡ 3 (mod 4)) und verschieden zu q
+     * sein. p wird Teil des privaten Schlüssels.
+     * @param q q soll eine Rabin Primzahl (q ≡ 3 (mod 4)) und verschieden zu p
+     * sein. q wird Teil des privaten Schlüssels.
      * @param padding Ist ein Wert, mit dem ein zu verschlüsselnder Text markiert
      * wurde. Markiert bedeutet, dass das padding an das Ende des zu
      * verschlüsselten Texts angehangen worden ist.
@@ -100,36 +120,72 @@ public:
 	 * folgendermaßen statt: Zuerst werden die Lösungen der Gleichungen a² ≡ y (mod p)
 	 * und b² ≡ y (mod q) berechnet. Anschließend werden mit Hilfe des Chinesischen Restsatzes
 	 * die vier möglichen Lösungen der Gleichung v² ≡ y (mod p*q) berechnet. Der Chinesische
-	 * Restsatz kann angewandt werden, da gcd(p,q) = 1.
+	 * Restsatz kann angewandt werden, da gcd(p,q) = 1. Das funktioniert, weil
+	 * y aus x² mod n entstanden ist und somit ist y ein quadratischer Rest
+	 * modulo n.
 	 * @param y y ist der zu entschlüsselnde Geheimtext bzw. die zu
-	 * entschlüsselnde Zahl als Integer.
+	 * entschlüsselnde Zahl als Integer. y muss ein Element des Geheimtextraums
+	 * sein.
 	 * @param xv xv ist ein Vektor von Integern, in welchen bei erfolgreicher
-	 * Entschlüsselung die 4 möglichen Klartexte abgespeichert werden.
+	 * Entschlüsselung die 4 möglichen Klartexte abgespeichert werden. Jeder
+	 * dieser Integer ist ein Element des Klartextraums.
 	 * @return True, wenn das Entschlüsseln erfolgreich war, false wenn nicht.
 	 */
 	bool compute(const Integer& y, vector<Integer>& xv);
     /***
-     * compute Entschlüsselt den Geheimtext y und speichert eines der 4
-     * möglichen Klartexte im Integer x ab. Es wird nicht nach einem padding in
+     * compute Entschlüsselt den Geheimtext y. Zu beachten gilt es, dass 4
+	 * mögliche Klartexte resultieren werden und diese Methode nicht
+	 * bestimmt, welches der 4 möglichen Klartexte der tatsächliche Klartext
+	 * ist. Stattdessen wird einer dieser 4 möglichen Klartexte zurückgegeben.
+     * Zur Entschlüsselung muss die Wurzel von y modulo n berechnet werden.
+	 * Diese Berechnung ist durchführbar, wenn die beiden Rabin-Primzahlen p und q
+	 * des privaten Schlüssels bekannt sind. Grundlage der Entschlüsselung ist der
+	 * Satz, dass die beiden Lösungen der Gleichung x² ≡ a (mod p), wenn p eine
+	 * eine Rabin-Primzahl ist, durch die Formel: x1/2 = (+/-) a^((p-1)/4) mod p
+	 * berechnet werden kann. Die Entschlüsselung des Rabin-Kryptosystems findet dann
+	 * folgendermaßen statt: Zuerst werden die Lösungen der Gleichungen a² ≡ y (mod p)
+	 * und b² ≡ y (mod q) berechnet. Anschließend werden mit Hilfe des Chinesischen Restsatzes
+	 * die vier möglichen Lösungen der Gleichung v² ≡ y (mod p*q) berechnet. Der Chinesische
+	 * Restsatz kann angewandt werden, da gcd(p,q) = 1. Das funktioniert, weil
+	 * y aus x² mod n entstanden ist und somit ist y ein quadratischer Rest
+	 * modulo n.
+     * Es wird nicht nach einem padding in
      * den möglichen Klartexten hin überprüft.
      * @param y y ist der zu entschlüsselnde Geheimtext bzw. die zu
-     * entschlüsselnde Zahl als Integer.
+     * entschlüsselnde Zahl als Integer. y muss ein Element des Geheimtextraums
+	 * sein.
      * @param x x ist ein Integern, in welchem bei erfolgreicher
-     * entschlüsselung eines der 4 möglichen Klartexte abgespeichert wird.
+     * entschlüsselung eines der 4 möglichen Klartexte abgespeichert wird. x
+     * ist ein Element des Klartextraums.
      * @return True, wenn das entschlüsseln erfolgreich war, false wenn nicht.
      */
 	bool compute(const Integer& y, Integer& x);
 
     /***
-     * compute2 Entschlüsselt den Geheimtext y, wodurch 4 mögliche Klartexte
-     * entstehen. Zusätzlich zu compute überprüft compute2, ob einer dieser
+     * compute2 Entschlüsselt den Geheimtext y. Zu beachten gilt es, dass 4
+	 * mögliche Klartexte aus der Entschlüsselung resultieren.
+     * Zur Entschlüsselung muss die Wurzel von y modulo n berechnet werden.
+	 * Diese Berechnung ist durchführbar, wenn die beiden Rabin-Primzahlen p und q
+	 * des privaten Schlüssels bekannt sind. Grundlage der Entschlüsselung ist der
+	 * Satz, dass die beiden Lösungen der Gleichung x² ≡ a (mod p), wenn p eine
+	 * eine Rabin-Primzahl ist, durch die Formel: x1/2 = (+/-) a^((p-1)/4) mod p
+	 * berechnet werden kann. Die Entschlüsselung des Rabin-Kryptosystems findet dann
+	 * folgendermaßen statt: Zuerst werden die Lösungen der Gleichungen a² ≡ y (mod p)
+	 * und b² ≡ y (mod q) berechnet. Anschließend werden mit Hilfe des Chinesischen Restsatzes
+	 * die vier möglichen Lösungen der Gleichung v² ≡ y (mod p*q) berechnet. Der Chinesische
+	 * Restsatz kann angewandt werden, da gcd(p,q) = 1. Das funktioniert, weil
+	 * y aus x² mod n entstanden ist und somit ist y ein quadratischer Rest
+	 * modulo n.
+     * Zusätzlich zu compute überprüft compute2, ob einer dieser
      * 4 Klartexte in Dezimaldarstellung mit dem padding endet. Das padding
      * wird als Markierung gesehen, welches den Klartext markiert. compute2
      * speichert bei Erfolg den Klartext ohne padding im Integer x.
      * @param y y ist der zu entschlüsselnde Geheimtext bzw. die zu
-     * entschlüsselnde Zahl als Integer.
+     * entschlüsselnde Zahl als Integer. y muss ein Element des Klartextraums
+     * sein.
      * @param x x ist ein Integer, in welchem bei Erfolg der entschlüsselte
-     * Klartext ohne padding gespeichert wird.
+     * Klartext ohne padding gespeichert wird. x wird ein Element des
+     * Klartextraums sein.
      * @return True, wenn das Entschlüsseln erfolgreich war, false wenn nicht.
      */
 	bool compute2(const Integer& y, Integer& x);

@@ -434,11 +434,16 @@ void PublicKeyAlgorithmBox::generateRSAParams(Integer& p, Integer& q,
         randomPrime(q, bitlen, s);
     } while(p == q);
     Integer n = p * q;
-    // phiN gibt die Anzahl der Zahlen an, die Teilerfremd zu n sind.
+    // phiN ist ϕ(n) und gibt die Anzahl der Zahlen an, die Teilerfremd zu n sind.
     Integer phiN = (p-1) * (q-1);
+    // Es werden solange Zufallszahlen für e ∈ {1,2,..., ϕ(n)-1} gezogen, bis
+    // ein e gefunden wurde, welches die teilerfremd zu ϕ(n) ist.
     do {
         e = randomInteger(phiN-2) + 1;
     } while (Integer::Gcd(e, phiN) != 1);
+    // d wird auf das multiplikative Inverse von e gesetzt. Dafür wird in
+    // der Methode multInverse() der Erweiterte Algorithmus von Euklid
+    // verwendet.
     multInverse(e, phiN, d);
 }
 

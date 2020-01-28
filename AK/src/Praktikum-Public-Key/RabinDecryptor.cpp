@@ -42,12 +42,11 @@ RabinDecryptor::RabinDecryptor(const Integer& p, const Integer& q,
 // #compute()
 bool RabinDecryptor::compute(const Integer& y, vector<Integer>& xv) {
 
-    // Damit die compute Methode für y gepaddete und nicht gepaddete Zahlen
-    // funktiert, muss bei nachfolgendem Check davon ausgegangen werden, dass
-    // die Zahl gepadded ist. Es wird überprüft, ob ein gepaddeter Geheimtext
-    // Teil des Geheimtextraums ist.
+    // Es wird überprüft, ob y ein Element des Geheimtextraums Z_n ist.
+    // Ist das nicht der Fall, dann kann y nicht entschlüsselt werden und es
+    // wird false zurückgegeben.
     Integer n = p * q;
-    if (y / offset >= n) return false;
+    if (y >= n) return false;
 
     // Gesucht ist die Wurzel von y mod n.
     // Wenn können die Wurzeln sowohl von p als auch für q berechnet werden,
