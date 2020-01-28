@@ -102,7 +102,7 @@ bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
     return false;
 } // multInverse()
 
-// #witness()   // TODO: copy pasted from Praktikum-Primzahlen
+// #witness() 
 bool PublicKeyAlgorithmBox::witness(const Integer& a, const Integer& n) {
     //Implementierung des Witness-Algorithmus, der True zurückliefert, wenn n keine Primzahl ist
 
@@ -346,7 +346,7 @@ unsigned int PublicKeyAlgorithmBox::computeConvergents(const Integer& a,
         d.push_back(q[i-1] * d[i-1] + d[i-2]);
     }
 
-    return 1;
+    return c.size();
 }
 
 // #sqrt()
