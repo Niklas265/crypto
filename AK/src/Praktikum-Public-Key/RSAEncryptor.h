@@ -26,7 +26,10 @@ using namespace CryptoPP;
  * Zusätzlich hängt die Sicherheit von der Qualität der Schlüssel und der
  * geheimhaltung des privaten Schlüssels ab. Mit dem aktuellen Stand der
  * Technik werden mindestens 2048 Bit pro p und q vorgeschlagen.
- * RSA ist ein Public Key Kryptosystem.
+ * RSA ist ein Public Key Kryptosystem. Da die zur Verschlüsselung benötigten
+ * Parameter öffentlich sind, kann jeder eine verschlüsselte Nachricht
+ * versenden. Bei hinreichend langer Schlüssellänge und guter Wahl der
+ * Parameter gilt RSA als sicheres Kryptosystem.
  */
 class RSAEncryptor {
 private:
