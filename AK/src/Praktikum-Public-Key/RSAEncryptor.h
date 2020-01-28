@@ -18,6 +18,11 @@ using namespace CryptoPP;
  * Potenzfunktion. Für keines der beiden Probleme ist ein Polynomialzeit
  * Algorithmus bekannt. Könnten diese Probleme in effizienter Laufzeit gelöst
  * werden, dann ist RSA nicht mehr sicher.
+ * Beim Faktorisierungsproblem ist eine zusammengesetzte Zahl n gegeben.
+ * Gesucht ist ein Faktor f von n, d.h eine Zahl f mit den Eigenschaften:
+ * 1 < f < n und f | n.
+ * Die modulare Potenzfunktion ist eine Einwegfunktion und ist deshalb
+ * schwierig zu invertieren.
  * Zusätzlich hängt die Sicherheit von der Qualität der Schlüssel und der
  * geheimhaltung des privaten Schlüssels ab. Mit dem aktuellen Stand der
  * Technik werden mindestens 2048 Bit pro p und q vorgeschlagen.

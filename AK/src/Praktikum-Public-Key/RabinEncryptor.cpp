@@ -17,10 +17,19 @@ RabinEncryptor::RabinEncryptor(const Integer& n, const Integer& padding) {
     // Zum Beispiel, wenn padding = 987 ist, dann ist offset = 1000.
     // Ein zu verschlüsselnder Geheimtext a = 123 kann dann mit
     // a * offset + padding = 123987 markiert werden.
+    // padding = 0 ist ein Spezialfall, in dem der offset <= padding
+    // Algorithmus nicht funktioniert. Er wird deshalb separat
+    // behandelt, wobei das offset auf 10 gesetzt und zurückgegeben wird.
+    // offset ist 10, weil für das Padding mit der Ziffer 0 eine Ziffer
+    // für das Abspeichern des Paddings benötigt wird.
+    if (padding == 0) {
+        offset = 10;
+        return;
+    }
     offset = 1;
     // In jedem Schleifendurchlauf wird offset sozusagen in Dezimaldarstellung
     // um 1 nach links verschoben. Wenn offset > padding ist, dann ist das
-    // offset ausreichend groß, um das padding im der Anzahl der Ziffern von
+    // offset ausreichend groß, um das padding in der Anzahl der Ziffern von
     // offset in Dezimaldarstellung zu speichern.
     while (offset <= padding) {
         offset *= 10;

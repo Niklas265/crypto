@@ -8,10 +8,32 @@
 
 RabinDecryptor::RabinDecryptor(const Integer& p, const Integer& q,
 		const Integer& padding) {
+    // Initialisieren der Klassenattribute mit den Übergabeparametern n und
+    // padding.
     this->p = p;
     this->q = q;
     this->padding = padding;
+    // offset stellt die Zahl dar, mit der ein zu verschlüsselnder Text/Zahl
+    // multipliziert werden muss, damit das padding auf dieses Produkt addiert
+    // werden kann und in Dezimaldarstellung die letzten x Ziffern belegt,
+    // wobei x die Anzahl der Ziffern des paddings in Dezimaldarstellung ist.
+    // Zum Beispiel, wenn padding = 987 ist, dann ist offset = 1000.
+    // Ein zu verschlüsselnder Geheimtext a = 123 kann dann mit
+    // a * offset + padding = 123987 markiert werden.
+    // padding = 0 ist ein Spezialfall, in dem der offset <= padding
+    // Algorithmus nicht funktioniert. Er wird deshalb separat
+    // behandelt, wobei das offset auf 10 gesetzt und zurückgegeben wird.
+    // offset ist 10, weil für das Padding mit der Ziffer 0 eine Ziffer
+    // für das Abspeichern des Paddings benötigt wird.
+    if (padding == 0) {
+        offset = 10;
+        return;
+    }
     offset = 1;
+    // In jedem Schleifendurchlauf wird offset sozusagen in Dezimaldarstellung
+    // um 1 nach links verschoben. Wenn offset > padding ist, dann ist das
+    // offset ausreichend groß, um das padding in der Anzahl der Ziffern von
+    // offset in Dezimaldarstellung zu speichern.
     while (offset <= padding) {
         offset *= 10;
     }
@@ -27,10 +49,7 @@ bool RabinDecryptor::compute(const Integer& y, vector<Integer>& xv) {
     Integer n = p * q;
     if (y / offset >= n) return false;
 
-    // Gesucht ist die Wurzel von y mod n. TODO:~Diese kann nicht effizient berechnet
-    // werden, da n das Produkt von zwei Primzahlen ist. ODER: vielleicht
-    // gibt es auch unendliche viele wenn man das p und q nicht berücksichtigt
-    // TODO: karg dazu fragen
+    // Gesucht ist die Wurzel von y mod n.
     // Wenn können die Wurzeln sowohl von p als auch für q berechnet werden,
     // weil diese laut Vorgabe Rabin Primzahlen sind.
     vector<Integer> bp, bq;

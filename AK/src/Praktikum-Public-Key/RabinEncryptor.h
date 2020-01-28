@@ -22,6 +22,13 @@ using namespace CryptoPP;
  * welches der 4 entschlüsselten Möglichkeiten der originale Klartext sein
  * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
  * Geheimtext abgewehrt werden.
+ * Es ist möglich, dass mehr als einer der 4 entschlüsselten Möglichkeiten
+ * mit dem Padding endet. Die Wahrscheinlichkeit dafür sinkt bei größerem
+ * Padding. Sollte dieser Fall trotzdem eintreten, dann wird dieser
+ * Abgefangen und compute2 liefert False zurück, was auf einen Fehler hinweist.
+ * Beim Faktorisierungsproblem ist eine zusammengesetzte Zahl n gegeben.
+ * Gesucht ist ein Faktor f von n, d.h eine Zahl f mit den Eigenschaften:
+ * 1 < f < n und f | n.
  * Das Rabin Kryptosystem ist ein Public Key Kryptosystem, dessen Sicherheit
  * vom Faktorisierungsproblem abhängt.
  */
