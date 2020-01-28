@@ -284,34 +284,64 @@ bool PublicKeyAlgorithmBox::modPrimeSqrt(const Integer& y, const Integer& p,
 
 Integer PublicKeyAlgorithmBox::euklid(const Integer& a, const Integer& b,
 		vector<Integer>& q) {
-
+    //Berechnet die Werte q1 bis qm des Kettenbruchs a/b und speichert diese im
+    //Vektor q ab
+    //Erzeuge einen Integer-Vector r und füge an den ersten beiden Positionen a 
+    //und b ab. Setze anschließend den int m auf 1, mit welchem der Index des 
+    //Vektors bestimmt wird
     vector<Integer> r = {a, b};
     int m = 1;
 
+    //Führe die nachfolgende Schleife durch, solange das Element an Position m nicht
+    //den Wert 0 besitzt
     while (r[m] != 0) {
+	//Füge an das Ende des Vektors q das abgerundete Ergebnis der Division von
+	// r[m-1] durch r[m] an. Dies ist das Element q[m] des Kettenbruchs
         q.push_back(r[m-1] / r[m]);
+	//Füge an das Ende des Vektors r den Wert r[m-1]-q[m]*r[m] an. Dies entspricht
+	//gcd(r[m-1],r[m])
         r.push_back(r[m-1] - q[m-1]*r[m]);
+	//Inkrementiere m um 1, um im nächsten Schleifendurchlauf auf den nächsten Index
+	//zuzugreifen
         m += 1;
     }
+    //Dekrementiere m um 1, damit über m das letzte Element in Vektor r adressiert werden kann
     m -= 1;
 
+    //gib das Element des Vektors r zurück, dass sich an Index m befindet, also das letzte Element
+    //des Vektors ist. Dies entspricht gcd(a,b)
     return r[m];
 }
 
 unsigned int PublicKeyAlgorithmBox::computeConvergents(const Integer& a,
 		const Integer& b, vector<Integer>& c, vector<Integer>& d) {
-
+    //Berechnung der Konvergenten des Kettenbruchs von a/b und abspeichern der Zähler in
+    //Vector c und der Nenner in Vector d
+	
+    //Erzeugen des Vektors q, ind welchem [q1,..,qm] des Kettenbruchs von a/b gespeichert werden
     vector<Integer> q;
+    //Aufruf der Methode euklid, in der q1 bis qm des Kettenbruchs von a/b berechnet werden und diese
+    //im Vektor q abgespeichert werden
     euklid(a, b, q);
 
+    //Zuerst werden die Werte des Vektors c berechnet, der jeweils die Zähler der Näherungsbrüche enthält.
+    //An erster Stelle befindet sich eine 1
     c.push_back(Integer(1));
+    //An zweiter Stelle befindet sich der Wert q1, der sich im Vektor q an der Stelle 0 befindet
     c.push_back(q[0]);
+    //Für alle weiteren Zähler kann der Wert durch q[i]*c[i-1]+q[i-2] berechnet werden. Für die Berechnung 
+    //von q[i] muss i um 1 verringert werden, da die Zählweise innerhalb des Vektors mit 0 anstatt 1 beginnt
     for (int i = 2; i <= q.size(); i++) {
         c.push_back(q[i-1] * c[i-1] + c[i-2]);
     }
 
+    //Anschließend werden die Werte des Vektors d berechnet, der jeweils die Nenner der Näherungsbrüche enthält
+    //Der erste Wert wird auf 0 gesetzt
     d.push_back(Integer("0"));
+    //Der zweite Wert wird auf 1 gesetzt
     d.push_back(Integer(1));
+    //Alle anderen Werte werden durch q[i]*d[i-1]*d[i-2] berechnet. Für diese Implementierung muss für den Index
+    //in Vektor q das i um 1 verringert werden, da die zählweise des Vektors bei 0 anstatt 1 beginnt
     for (int i = 2; i <= q.size(); i++) {
         d.push_back(q[i-1] * d[i-1] + d[i-2]);
     }
