@@ -31,7 +31,7 @@ bool RSAOracle::half(const Integer& y) const {
     PublicKeyAlgorithmBox pb;
 
     //Entschlüsseln des übergebenen Geheimtexts y und abspeichern in der 
-    //Variable x. Dazu wird die in der Klasse PublicKeyAlgorithmBox implementiert
+    //Variable x. Dazu wird die in der Klasse PublicKeyAlgorithmBox implementierte
     //Methode zur Modularen Exponentation eingesetzt und y^d (mod n) berechnet,
     //was der Entschlüsselung im RSA-Kryptosystem entspricht
     Integer x = pb.modularExponentation(y, d, n);
