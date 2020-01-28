@@ -12,7 +12,7 @@ using namespace CryptoPP;
 /**
  * RSAEncryptor bietet die Funktion, eine Zahl mit dem RSA Kryptosystem
  * zu verschlüsseln. Bei der Verschlüsselung wird n, ein Teil des öffentlichen
- * Schlüssels und e, ebenfalls ein Teil des öffentlichen Schlüssels verwendet.
+ * Schlüssels und e, ebenfalls ein Teil des öffentlichen Schlüssels, verwendet.
  * Die Sicherheit von RSA
  * beruht auf dem Faktorisierungsproblem und dem Invertieren der modularen
  * Potenzfunktion. Für keines der beiden Probleme ist ein Polynomialzeit
@@ -45,12 +45,14 @@ public:
      * Klassenvariablen n und e zugewiesen.
      * @param n Der bei der Ver- und Entschlüsselung verwendete Modul n,
      * welcher das Produkt von zwei Primzahlen p und q ist, wobei p != q. Das
-     * allerdings kann nicht und wird nicht überprüft. n ist ein Integer und
+     * wird allerdings im Konstruktor nicht überprüft. n ist ein Integer und
      * Teil des öffentlichen Schlüssels.
      * @param e Der bei der Verschlüsselung verwendete Exponent e als Integer.
      * e ist ebenfalls Teil des öffentlichen Schlüssels. Weiter sollte gelten,
-     * dass e * d ≡ 1 (mod ϕ(n)), wobei d ein Teil des privaten Schlüssels ist
-     * und in der Klasse RSADecryptor gesetzt wird und somit zum entschlüsseln
+     * dass gcd(e,ϕ(n)) = 1, e und ϕ(n) also teilerfremd sind, sodass ein multiplikatives
+     * Inverses d mod(ϕ(n)) für e existiert, sodass e * d ≡ 1 (mod ϕ(n)), wobei d 
+     * ein Teil des privaten Schlüssels ist
+     * und in der Klasse RSADecryptor gesetzt wird und somit zum Entschlüsseln
      * verwendet wird.
      */
 	RSAEncryptor(const Integer& n, const Integer& e);
@@ -65,7 +67,7 @@ public:
 	 * @param x Die zu verschlüsselnde Zahl als Integer.
 	 * @param y In y wird bei Erfolg die verschlüsselte Zahl x als Integer
 	 * gespeichert.
-	 * @return True, wenn x verschlüsselt worden ist, false wenn nicht.
+	 * @return True, wenn x verschlüsselt worden ist und somit x < n gilt, false wenn nicht.
 	 */
 	bool compute(const Integer& x, Integer& y) const;
 };
