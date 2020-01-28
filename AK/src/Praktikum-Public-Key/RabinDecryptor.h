@@ -91,7 +91,16 @@ public:
 	 * möglichen Klartexte überprüft. Zu beachten gilt es, dass 4
 	 * mögliche Klartexte zurückgeliefert werden und diese Methode nicht
 	 * bestimmt, welches der 4 möglichen Klartexte der tatsächliche Klartext
-	 * ist.
+	 * ist. Zur Entschlüsselung muss die Wurzel von y modulo n berechnet werden.
+	 * Diese Berechnung ist durchführbar, wenn die beiden Rabin-Primzahlen p und q
+	 * des privaten Schlüssels bekannt sind. Grundlage der Entschlüsselung ist der 
+	 * Satz, dass die beiden Lösungen der Gleichung x² ≡ a (mod p), wenn p eine 
+	 * eine Rabin-Primzahl ist, durch die Formel: x1/2 = (+/-) a^((p-1)/4) mod p
+	 * berechnet werden kann. Die Entschlüsselung des Rabin-Kryptosystems findet dann
+	 * folgendermaßen statt: Zuerst werden die Lösungen der Gleichungen a² ≡ y (mod p)
+	 * und b² ≡ y (mod q) berechnet. Anschließend werden mit Hilfe des Chinesischen Restsatzes
+	 * die vier möglichen Lösungen der Gleichung v² ≡ y (mod p*q) berechnet. Der Chinesische
+	 * Restsatz kann angewandt werden, da gcd(p,q) = 1.
 	 * @param y y ist der zu entschlüsselnde Geheimtext bzw. die zu
 	 * entschlüsselnde Zahl als Integer.
 	 * @param xv xv ist ein Vektor von Integern, in welchen bei erfolgreicher
