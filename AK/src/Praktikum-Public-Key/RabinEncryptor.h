@@ -12,17 +12,18 @@ using namespace CryptoPP;
 /***
  * RabinEncryptor stellt Methoden bereit, um eine Zahl in einem Integer
  * mit dem Rabin Kryptosystem zu verschlüsseln. Es gibt zusätzlich die
- * Möglichkeit, einen verschlüsselnden zu markieren.
+ * Möglichkeit, einen zu verschlüsselnden Klartext zu markieren.
  * Markiert bedeutet, dass das padding an das Ende der zu verschlüsselnden
  * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt.
  * Der Grund dafür ist, dass es bei der Entschlüsselung einer verschlüsselten
  * Zahl 4 verschiedene Möglichkeiten gibt und nur eine davon ist der
  * ursprüngliche Klartext. Da das padding beiden Parteien bekannt ist, erhält
- * die zu entschlüsselnde Partei durch das Padding einen Hinweis darauf,
- * welches der 4 entschlüsselten Möglichkeiten er originale Klartext sein
+ * die entschlüsselnde Partei durch das Padding einen Hinweis darauf,
+ * welches der 4 entschlüsselten Möglichkeiten der originale Klartext sein
  * könnte. Durch das Padding kann ebenfalls ein Angriff mit frei wählbarem
  * Geheimtext abgewehrt werden.
- * Das Rabin Kryptosystem ist ein Public Key Kryptosystem.
+ * Das Rabin Kryptosystem ist ein Public Key Kryptosystem, dessen Sicherheit
+ * vom Faktorisierungsproblem abhängt.
  */
 class RabinEncryptor {
 private:
@@ -58,10 +59,10 @@ private:
 
 public:
     /***
-     * Konstruktor der RabinEncryptor Klasse, welcher die Klassenvariblen
+     * Konstruktor der RabinEncryptor Klasse, welcher die Klassenvariablen
      * n, offset, und padding setzt.
      *
-     * @param n n soll das Produkt zweier Rabin Primzahlen als Integer sein.
+     * @param n n soll das Produkt zweier Rabin Primzahlen als Crypto++ Integer sein.
      * @param padding Ist der Wert, mit dem der zu verschlüsselnde Text markiert
      * wird, wenn mit der compute2 Methode verschlüsselt wird. Markiert
      * bedeutet, dass das padding an das Ende des zu verschlüsselten Texts
@@ -76,7 +77,8 @@ public:
 	 *
 	 * @param x Zu verschlüsselnde Zahl als Integer. x muss kleiner als n sein.
 	 * @param y In y wird die verschlüsselte Zahl als Integer geschrieben.
-	 * @return True, wenn erfolgreich verschlüsselt wurde, false wenn nicht.
+	 * @return True, wenn erfolgreich verschlüsselt wurde, also wenn x ein passender Klartext ist, 
+	 * false wenn nicht.
 	 */
 	bool compute(const Integer& x, Integer& y);
 
