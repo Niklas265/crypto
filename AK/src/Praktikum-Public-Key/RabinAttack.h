@@ -29,12 +29,12 @@ public:
      * dann kann man das Rabin Kryptosystem brechen und verschlüsselte
      * Nachrichten brechen/entschlüsseln, weil p und q die privaten Schlüssel
      * sind. Pro Versuch ist die Erfolgswahrscheinlichkeit bei 50%. Durch
-     * wiederhole Versuche wird die Erfolgswahrscheinlichkeit erhöht. Mit
+     * wiederholte Versuche wird die Erfolgswahrscheinlichkeit erhöht. Mit
      * max_tries kann die Anzahl der Versuche bestimmt werden. Die
      * Erfolgswahrscheinlichkeit aller Versuche zusammen ist dann
      * 1-2^-max_tries. Das Vorgehen des Versuchs wird im Source Code erläutert.
      * Die Attacke darf einen frei wählbaren Geheimtext mit dem zu brechenden
-     * RabinDecryptor entschlüsseln. Der zu brechende RabinEncryptor wird
+     * RabinDecryptor entschlüsseln. Der zu brechende RabinDecryptor wird
      * im 4. Parameter übergeben. Im ersten Parameter wird das n, der
      * öffentliche Teil des Schlüssels des RabinEncryptors des 4. Parameters
      * spezifiziert. Bei Erfolg wird ein Faktor von n in das f, also den
