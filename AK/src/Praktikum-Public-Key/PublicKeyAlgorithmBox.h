@@ -31,7 +31,7 @@ public:
 	* @param d Vector, in dem die von der Methode berecheten d[j] für 0 <= j <= m gespeichert 
 	* werden, welche jeweils den Nenner des j-ten Näherungsbruch repräsentieren.
 	*
-	* @return Die Länge des errechneten Vectors c (TODO!!!)
+	* @return Die Länge des errechneten Vectors c
 	*/
 	unsigned int computeConvergents(const Integer& a, const Integer& b,
 			vector<Integer>& c, vector<Integer>& d);
