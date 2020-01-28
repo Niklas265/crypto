@@ -116,7 +116,7 @@ bool PublicKeyAlgorithmBox::witness(const Integer& a, const Integer& n) {
 
     //Für jedes Bit in der Binärdarstellung von n-1
     for(int i = 0; i < nMinus1.BitCount(); i++) {
-        //wenn das Bit an der i-ten Position 1 ist, dann Berechne u = (n-1)/ 2^i
+        //wenn das Bit an der i-ten Position 1 ist, dann berechne u = (n-1)/ 2^i
         if(nMinus1.GetBit(i)) {
             powerof2 = Integer::Power2(i);
             r = i;
@@ -164,16 +164,13 @@ Integer PublicKeyAlgorithmBox::randomInteger(const Integer& n) {
     return ret;
 }
 
-// #millerRabinTest()   // TODO: copy pasted too
+// #millerRabinTest()
 bool PublicKeyAlgorithmBox::millerRabinTest(Integer& n, unsigned int s) {
     //Impementiert den Miller-Rabin Primzahltest, der feststellen kann, ob es sich bei n um eine Primzahl oder eine
     //Zusammengesetze Zahl handelt
 
-    //Sicherstellen, dass der Qualitätsparameter s größer gleich 0 ist
-    assert(s >= 0);
-
     //Wenn die Zahl gerade ist (also n % 2 = 0), dann gib False zurück. Die Zahl 2 ist die einzige gerade Primzahl.
-    // Auf 2 wird deshalt speziell tetestet.
+    // Auf 2 wird deshalb speziell getestet.
     if (n == 2) return true;
     if((n % 2) == 0) {
         return false;
