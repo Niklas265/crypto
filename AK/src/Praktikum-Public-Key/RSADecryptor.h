@@ -13,8 +13,8 @@ using namespace CryptoPP;
  * Die Klasse RSADecryptor bietet Methoden an, um einen mit RSA verschlüsselten
  * Geheimtext zu entschlüsseln. Der Geheimtext muss mit dem Öffentlichen
  * Schlüssel n und e verschlüsselt worden sein, wobei gelten muss, dass
- * n = p * q und dass e * d ≡ 1 (mod ϕ(n)), d also das multiplikative Inverse 
- * von e (mod ϕ(n)). Die Sicherheit von RSA
+ * n = p * q und das e * d ≡ 1 (mod ϕ(n)), d also das multiplikative Inverse 
+ * von e (mod ϕ(n)) ist. Die Sicherheit von RSA
  * beruht auf dem Faktorisierungsproblem und dem Invertieren der modularen
  * Potenzfunktion. Für keines der beiden Probleme ist ein Polynomialzeit
  * Algorithmus bekannt. Könnten diese Probleme in effizienter Laufzeit gelöst
@@ -25,7 +25,7 @@ using namespace CryptoPP;
  * Die modulare Potenzfunktion ist eine Einwegfunktion und ist deshalb
  * schwierig zu invertieren.
  * Zusätzlich hängt die Sicherheit von der Qualität der Schlüssel und der
- * geheimhaltung des privaten Schlüssels ab. Mit dem aktuellen Stand der
+ * Geheimhaltung des privaten Schlüssels ab. Mit dem aktuellen Stand der
  * Technik werden mindestens 2048 Bit pro p und q vorgeschlagen.
  * RSA ist ein Public Key Kryptosystem. Da die zur Verschlüsselung benötigten
  * Parameter öffentlich sind, kann jeder eine verschlüsselte Nachricht
@@ -65,7 +65,7 @@ public:
      * Konstruktor der RSAEncryptor Klasse, welche den privaten Teil
      * des Schlüssels, p, q und d setzt. Die Übergabeargumente werden den
      * Klassenvariablen p, q und d zugewiesen. Das n wird ebenfalls durch
-     * p * q berechnet. n ist ein Teil des öffentlichen Schlüsseln, und
+     * p * q berechnet. n ist ein Teil des öffentlichen Schlüssels, und
      * gibt mit Z_n den Klartext- und Geheimtextraum an. Die Parameter
      * werden nicht auf Korrektheit hin überprüft, also wird nicht überprüft
      * ob p und tatsächlich mit einer ausreichenden Wahrscheinlichkeit
