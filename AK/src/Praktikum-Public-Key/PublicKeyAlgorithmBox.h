@@ -81,7 +81,7 @@ public:
 	/**
 	 * modularExponentation implementiert die modulare Exponentation. Dabei
 	 * wird die Funktion a^b mod n effizient berechnet und das Ergebnis wird über
-	 * den Rückgabewert als Integer zurückgelifert.
+	 * den Rückgabewert als Integer zurückgeliefert.
 	 *
 	 * @param a a für a^b mod n als Integer.
 	 * @param b b für a^b mod n als Integer.
@@ -95,13 +95,13 @@ public:
 	 * multInverse berechnet das multiplikative Inverse von a modulo n. Ein
 	 * a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und n teilerfremd
 	 * zu einander sind.
-	 * a ist invertierbar modulo n, falls gcd(a,n) = 1. gcd(a,n) kann auch mit
+	 *  gcd(a,n) kann auch mit
      * dem Erweiterten Algorithmus von Euklid berechnet werden.
      * Wegen ZTK Satz 3.4 gibt es x,y ∈ Z, so dass gcd(a, n) = 1 = ax + ny.
      * Somit gilt 1 ist kongruent zu ax+ny (mod n). Wegen mod n kürzt sich das
      * ny raus und ist somit das gleiche wie 1 ist kongruent zu ax (mod n).
      * Dadurch ist x das multiplikative Inverse von a mod n und dieses x kann
-     * ebenfalls durch den EEA berechnet werden.
+     * ebenfalls durch den Erweiterten Euklidschen Algorithmus berechnet werden.
      * Es werden keine negativen Inversen zurückgegeben.
 	 *
 	 * @param a Das a, für welches das multiplikative Inverse a mod n berechnet
@@ -198,7 +198,7 @@ public:
 	 * Zufallsprimzahl mit folgenden Eigenschaften:
 	 * - Die Binärdarstellung von p hat höchstens bitlen Bits.
 	 * - p ist eine Rabin-Primzahl, ð, es gilt p ≡ 3 (mod 4).
-	 * und speichert diese in p ab.
+	 * Die Methode speichert die erzeugte Rabin-Primzahl in p ab.
 	 *
 	 * @param p In Variable p wird die generierte Rabin-Primzahl abgespeichert.
 	 * @param bitlen bitlen gibt die maximale Größe der zu erzeugenden Primzahl
@@ -215,7 +215,7 @@ public:
 	 * modPrimeSqrt berechnet die zwei Quadratwurzeln von y mod p, falls p
 	 * kongruent zu 3 (mod 4) ist. Denn ist p eine Primzahl mit dieser
 	 * Eigenschaft, dann ist y ein quadratischer Rest modulo p und die
-	 * Gleichung y^2 = a (mod p) besitzt 2 Lösungen. Diese können durch
+	 * Gleichung y² = a (mod p) besitzt 2 Lösungen. Diese können durch
 	 * (+-)a^((p-1)/4) mod p berechnet werden.
 	 *
 	 * @param y Das y bei y mod p, für welches die Quadratwurzeln berechnet
