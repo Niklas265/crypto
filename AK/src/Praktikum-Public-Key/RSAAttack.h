@@ -11,7 +11,15 @@
 using namespace CryptoPP;
 
 /**
- * TODO
+ * Die Klasse RSAAttack stellt mehrere Methoden zur Verfügung, in denen Angriffe
+ * auf das RSA-Kryptosystem implementiert sind. Bei diesen Angriffen handelt es
+ * sich um factorize n, einem Angriff der n anhand des bekannten ϕ(n) faktorisiert,
+ * die Wiener Attacke, die ebenfalls n faktorisieren kann, wenn die Parameter des
+ * öffentlichen Schlüssels ungünstig gewählt sind, sowie die nur theorethisch 
+ * durchführbare Half-Attack, über die der zum Geheimtext zugehörige Klartext
+ * berechnet werden könnte, falls eine Funktion existieren würde, die für einen
+ * Geheimtext das höchstwertigste Bit seiner Binärdarstellung in Zn berechnen
+ * kann.
  */
 class RSAAttack {
 public:
