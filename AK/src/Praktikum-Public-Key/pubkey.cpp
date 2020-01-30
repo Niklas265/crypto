@@ -35,7 +35,9 @@ void eeaExercise() {
     // Berechnet das d, x und y für verschiedene a und b mit dem Erweiterten
     // Algorithmus von Euklid. a wird an EEA als erstes Argument übergeben
     // und b an EEA als zweites Argument. d, x und y werden nach jeder der drei
-    // Beispiele über stdout ausgegeben.
+    // Beispiele über stdout ausgegeben. d ist der größte Gemeinsame Teiler
+    // von a und b. Das x und y ist für die Linearkombination
+    // {ax + by | x, y ∈ Z}, wobei a*x + b*y = gcd(a,b).
     pb.EEA(Integer(2987), Integer(1279865), d, x, y);
     cout << "d: " << d << " x: " << x << " y: " << y << endl;
     pb.EEA(Integer(78845945), Integer(2503417846), d, x, y);

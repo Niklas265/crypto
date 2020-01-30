@@ -63,6 +63,8 @@ public:
 	 * kleinste positive Element der Menge {ax + by | x, y ∈ Z} aller
 	 * Linearkombinationen von a und b ist. Mit dem EEA wird zusätzlich dieses
 	 * x und y berechnet und in (param) x und (param) y abgespeichert.
+	 * Die Methode liefert True zurück, wenn a und b teilerfremd sind, also
+	 * wenn gcd(a, b) gleich 1 ist.
 	 *
 	 * @param a Eine ganze Zahl > 0 als Integer
 	 * @param b Eine ganze Zahl > 0 als Integer
@@ -92,8 +94,11 @@ public:
 			const Integer& n);
 
 	/**
-	 * multInverse berechnet das multiplikative Inverse von a modulo n. Ein
-	 * a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und n teilerfremd
+	 * multInverse berechnet das multiplikative Inverse von a modulo n,
+	 * vorausgesetzt ein solches existiert. Die Methode lifert True
+	 * zurück, wenn ein solches multiplikatives Inverses existiert und
+	 * False wenn nicht.
+	 * Ein a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und n teilerfremd
 	 * zu einander sind.
 	 *  gcd(a,n) kann auch mit
      * dem Erweiterten Algorithmus von Euklid berechnet werden.
