@@ -45,7 +45,9 @@ public:
 	 * a,b ∈ natürliche Zahlen, mit b > 0, gilt, dass sie als endlicher Kettenbruch
 	 * [q1,...,qm] dargestellt werden können. Dieser Kettenbruch kann mit Hilfe des
 	 * Algorithmus von Euklid berechnet werden. Dabei repräsentiert jede errechnete
-	 * Gleichung den Term r{m-1} = q{m}*r{m} + r{m+1}. Die berechnung des endlichen
+	 * Gleichung den Term r{m-1} = q{m}*r{m} + r{m+1}. In dieser Implementierung starten
+	 * die Indexe der Zahlen eines Kettenbruchs mit 0, da diese innerhalb eines Vectors
+	 * gespeichert werden. Die Berechnung des endlichen
 	 * Kettenbruchs wird benötigt, um die Wiener-Attacke auf RSA durchzuführen.
 	 *
 	 * @param a Integer Variable, die den Zähler des Bruchs enthält
