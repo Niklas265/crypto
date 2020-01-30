@@ -45,7 +45,9 @@ public:
 	 * a,b ∈ natürliche Zahlen, mit b > 0, gilt, dass sie als endlicher Kettenbruch
 	 * [q1,...,qm] dargestellt werden können. Dieser Kettenbruch kann mit Hilfe des
 	 * Algorithmus von Euklid berechnet werden. Dabei repräsentiert jede errechnete
-	 * Gleichung den Term r{m-1} = q{m}*r{m} + r{m+1}. Die berechnung des endlichen
+	 * Gleichung den Term r{m-1} = q{m}*r{m} + r{m+1}. In dieser Implementierung starten
+	 * die Indexe der Zahlen eines Kettenbruchs mit 0, da diese innerhalb eines Vectors
+	 * gespeichert werden. Die Berechnung des endlichen
 	 * Kettenbruchs wird benötigt, um die Wiener-Attacke auf RSA durchzuführen.
 	 *
 	 * @param a Integer Variable, die den Zähler des Bruchs enthält
@@ -81,7 +83,7 @@ public:
 			Integer& x, Integer& y);
 
 	/**
-	 * modularExponentation implementiert die modulare Exponentation. Dabei
+	 * modularExponentation implementiert den Algorithmus zur modularen Exponentation. Dabei
 	 * wird die Funktion a^b mod n effizient berechnet und das Ergebnis wird über
 	 * den Rückgabewert als Integer zurückgeliefert.
 	 *
@@ -95,7 +97,9 @@ public:
 
 	/**
 	 * multInverse berechnet das multiplikative Inverse von a modulo n,
-	 * vorausgesetzt ein solches existiert. Die Methode lifert True
+	 * vorausgesetzt ein solches existiert. Für ein multiplikatives Inverses a_inv 
+	 * von a gilt, dass a * a_inv ≡ 1 (mod n), da 1 dem neutralen Element der 
+	 * Multiplikation (mod n) entspricht. Die Methode liefert True
 	 * zurück, wenn ein solches multiplikatives Inverses existiert und
 	 * False wenn nicht.
 	 * Ein a ist invertierbar modulo n, wenn gcd(a,n) = 1, also a und n teilerfremd
@@ -209,7 +213,7 @@ public:
 	 * @param bitlen bitlen gibt die maximale Größe der zu erzeugenden Primzahl
 	 * in Bits an.
 	 * @param s s ist das s in 2^-s, welches die Fehlerwahrscheinlichkeit
-	 * angibt, dass der zurückgeliferte Wert in p keine Primzahl ist.
+	 * angibt, dass der zurückgelieferte Wert in p keine Primzahl ist.
 	 * @return Die Anzahl der Versuche, bis eine Rabin Primzahl gewürfelt
 	 * worden ist.
 	 */
@@ -221,7 +225,8 @@ public:
 	 * kongruent zu 3 (mod 4) ist. Denn ist p eine Primzahl mit dieser
 	 * Eigenschaft, dann ist y ein quadratischer Rest modulo p und die
 	 * Gleichung y² = a (mod p) besitzt 2 Lösungen. Diese können durch
-	 * (+-)a^((p-1)/4) mod p berechnet werden.
+	 * (+-)a^((p-1)/4) mod p berechnet werden. Das berechnete Ergebnis wird im
+	 * im Vektor v gespeichert.
 	 *
 	 * @param y Das y bei y mod p, für welches die Quadratwurzeln berechnet
 	 * werden. y ist ein Integer.
@@ -231,9 +236,10 @@ public:
 	 * p eine Primzahl sein.
 	 * @param v v ist ein Vector aus Integern, in welchem die zwei
 	 * Quadratwurzeln von y mod p gespeichert werden, falls p
-	 * kongruent zu 3 (mod 4) ist.
+	 * kongruent zu 3 (mod 4) ist, da dann genau zwei Quadratwurzeln für y
+	 * existieren.
 	 *
-	 * @return True, falls die Quadratwurzeln berechnet wurden, sonst False.
+	 * @return True, falls die Quadratwurzeln berechnet wurden, ansonsten False.
 	 * Die Quadratwurzeln können von dieser Funktion berechnet werden, falls
 	 * p kongruent zu 3 (mod 4) ist.
 	 */

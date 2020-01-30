@@ -62,13 +62,14 @@ private:
 
 public:
     /***
-     * Konstruktor der RSAEncryptor Klasse, welche den privaten Teil
+     * Konstruktor der RSADecryptor Klasse, welche den privaten Teil
      * des Schlüssels, p, q und d setzt. Die Übergabeargumente werden den
-     * Klassenvariablen p, q und d zugewiesen. Das n wird ebenfalls durch
-     * p * q berechnet. n ist ein Teil des öffentlichen Schlüssels, und
-     * gibt mit Z_n den Klartext- und Geheimtextraum an. Die Parameter
-     * werden nicht auf Korrektheit hin überprüft, also wird nicht überprüft
-     * ob p und tatsächlich mit einer ausreichenden Wahrscheinlichkeit
+     * Klassenvariablen p, q und d zugewiesen. Das n wird ebenfalls gemäß 
+     * der RSA-Spezifikation durch
+     * p * q berechnet. n ist ein Teil des öffentlichen Schlüssels und
+     * gibt mit Z_n den Klartext- und Geheimtextraum vor. Die Parameter
+     * werden nicht auf Korrektheit hin überprüft, also wird nicht überprüft,
+     * ob p und q tatsächlich mit einer ausreichenden Wahrscheinlichkeit
      * Primzahlen sind und ebenfalls nicht, ob p == q ist.
      *
      * @param p p ist ein Teil des privaten Schlüssels. p muss eine Primzahl
@@ -81,7 +82,7 @@ public:
 	virtual ~RSADecryptor();
 
 	/***
-	 * compute entschlüsselt den Integer y mit dem Öffentlichen Teil n und
+	 * compute entschlüsselt den Integer y mit dem n des öffentlichen Schlüssels und
 	 * dem Privaten Teil d. Bei dieser Implementation der Entschlüsselung
 	 * wird die zu entschlüsselnde Zahl y mit y^d mod n entschlüsselt.
 	 * Das Ergebnis ist das entschlüsselte y, welches im Parameter x
