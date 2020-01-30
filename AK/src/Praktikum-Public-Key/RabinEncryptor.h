@@ -43,7 +43,7 @@ using namespace CryptoPP;
 class RabinEncryptor {
 private:
     /**
-     * n soll das Produkt zweier Rabin Primzahlen sein.
+     * Der Integer n soll das Produkt zweier Rabin-Primzahlen sein.
      * Dies wird jedoch nicht überprüft.
      * n ist ein Teil des öffentlichen Schlüssels und repräsentiert den Modul
      * der Ver- und Entschlüsselungsfunktion.
@@ -81,7 +81,7 @@ public:
      * n, offset, und padding setzt.
      *
      * @param n n soll das Produkt zweier Rabin Primzahlen als Crypto++ Integer
-     * sein. n wird Teil des öffentlichen Schlüssels.
+     * sein. n ist Teil des öffentlichen Schlüssels und repräsentiert den Modul.
      * @param padding Ist der Wert, mit dem der zu verschlüsselnde Text markiert
      * wird, wenn mit der compute2 Methode verschlüsselt wird. Markiert
      * bedeutet, dass das padding an das Ende des zu verschlüsselten Texts
@@ -95,7 +95,7 @@ public:
 	 * und speichert die verschlüsselte Zahl ohne padding/Markierung in y ab.
 	 * Bei der Verschlüsselung mit dem Rabin-Kryptosystem wird der Geheimtext
 	 * y durch y = x² (mod n) berechnet. x muss ein Element des Klartextraums
-	 * sein. Der Klartextraum ist Z_n. Das heißt, dass x < n sein muss. y wird
+	 * sein. Der Klartextraum ist Z_n, das heißt, dass 0 <= x < n sein muss. y wird
 	 * ein Element aus dem Geheimtextraum Z_n.
 	 *
 	 * @param x Zu verschlüsselnde Zahl als Integer. x muss kleiner als n sein.
@@ -113,7 +113,8 @@ public:
      * Markiert bedeutet, dass das padding an das Ende der zu verschlüsselnden
      * Zahl angehangen wird und dann erst wird "x||padding" verschlüsselt. Die 
      * Verschlüsselung findet durch y = (x||padding)² (mod n) statt.
-     * Der Grund dafür ist, dass es bei der Entschlüsselung einer verschlüsselten
+     * Der Grund dafür ist, dass die Verschlüsselungsfunktion des Rabin-Kryptosystems
+     * nicht injektiv ist und es so bei der Entschlüsselung einer verschlüsselten
      * Zahl 4 verschiedene Möglichkeiten gibt und nur eine davon ist der
      * ursprüngliche Klartext. Es gibt genau 4 mögliche Klartexte, da gilt, dass wenn n
      * das Produkt zweier Rabin-Primzahlen ist, für Gleichung x² ≡ a (mod n) genau
