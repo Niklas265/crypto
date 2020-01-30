@@ -26,5 +26,7 @@ bool RSAEncryptor::compute(const Integer& x, Integer& y) const {
     // gespeichert.
     y = pb.modularExponentation(x, e, n);
 
+    // x ist ein Element des Klartextraums und konnte verschlüsselt werden.
+    // Darum wird True zurückgegeben.
     return true;
 }

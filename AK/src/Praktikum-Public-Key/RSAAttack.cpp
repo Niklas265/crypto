@@ -36,12 +36,15 @@ bool RSAAttack::factorizeN(const Integer& n, const Integer& phi_n, Integer& p,
     // Überprüfen, ob die Faktorisierung Erfolgreich war.
     // Das ist zum Beispiel nicht der Fall, falls das ϕ(n) falsch ist.
     if (pTemp * qTemp == n) {
+        // pTemp und qTemp sind die Faktoren von n
         // Bei Erfolg werden die beiden Faktoren von n in p und q gespeichert.
         p = pTemp;
         q = qTemp;
         return true;
     }
 
+    // n konnte nicht faktorisiert werden. Das wird durch das zurückgeben
+    // von False signalisiert.
     return false;
 }
 

@@ -22,7 +22,7 @@ int RabinAttack::factorize(const Integer& n, Integer& f, int max_tries,
     // wählbarem Geheimtext.
 
     // Nach max_tries Versuchen wird die Attacke abgebrochen.
-    // In jedem Schleifendurchlauf wird einmal Versucht einen Faktor von n zu
+    // In jedem Schleifendurchlauf wird einmal versucht einen Faktor von n zu
     // berechnen.
     for (int i = 1; i <= max_tries; i++) {
         PublicKeyAlgorithmBox pb;
@@ -30,7 +30,9 @@ int RabinAttack::factorize(const Integer& n, Integer& f, int max_tries,
         Integer r = pb.randomInteger(n-2) + 1;
         Integer y = pb.modularExponentation(r, 2, n);
         Integer x;
-        // y wird entschlüsselt und in x gespeichert.
+        // y wird entschlüsselt und in x gespeichert. Der Zugriff auf
+        // die Entschlüsselungsfunktion wird über die Instanz rabin_dec
+        // der Klasse RabinDecryptor ermöglicht.
         // Bei der Entschlüsselung wird x auf eines der 4 Möglichkeiten für
         // √y mod n gesetzt.
         rabin_dec.compute(y, x);

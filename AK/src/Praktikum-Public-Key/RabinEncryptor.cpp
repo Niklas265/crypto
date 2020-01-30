@@ -7,7 +7,8 @@
 
 RabinEncryptor::RabinEncryptor(const Integer& n, const Integer& padding) {
     // Initialisieren der Klassenattribute mit den Übergabeparametern n und
-    // padding.
+    // padding. n soll das Produkt zweier Primzahlen sein. Das wird allerdings
+    // nicht überprüft.
     this->n = n;
     this->padding = padding;
     // offset stellt die Zahl dar, mit der ein zu verschlüsselnder Text/Zahl
@@ -46,10 +47,12 @@ bool RabinEncryptor::compute(const Integer& x, Integer& y) {
     // In einem solchen Fall würde das Entschlüsseln den Wert x (mod n) und
     // und nicht x zurückliefern.
     if (x >= n) return false;
-    // Zur Verschlüsselung wird enc((n,p,q),x) = x² mod n wird mit a_exp_b_mod_c
-    // berechnet.
+    // Zur Verschlüsselung wird enc((n,p,q),x) = x² mod n berechnet, wobei
+    // a_exp_b_mod_c, also die modulare Exponentation a^b mod n, verwendet wird.
+    // Dabei ist a = x, b = 2 und n = n.
     // Bei compute wird der Verschlüsselte Text nicht mit dem padding markiert.
     y = a_exp_b_mod_c(x, 2, n);
+    // x konnte verschlüsselt werden. Darum wird True zurückgegeben.
     return true;
 }
 
@@ -60,13 +63,15 @@ bool RabinEncryptor::compute2(const Integer& x, Integer& y) {
     // In einem solchen Fall würde das Entschlüsseln den Wert x (mod n) und
     // und nicht x (ohne mod n) zurückliefern.
     if (x * offset + padding >= n) return false;
-    // Zur Verschlüsselung wird enc((n,p,q),x) = x² mod n wird mit a_exp_b_mod_c
-    // berechnet.
+    // Zur Verschlüsselung wird enc((n,p,q),x) = x² mod n berechnet, wobei
+    // a_exp_b_mod_c, also die modulare Exponentation a^b mod n, verwendet wird.
+    // Dabei ist a = x, b = 2 und n = n.
     // Bei compute2 wird der Verschlüsselte Text mit dem padding markiert.
     // Dafür wird das padding am Ende von x (in Dezimaldarstellung) angehangen.
     // Das padding ist dem Entschlüssler bekannt und dadurch hat dieser einen
-    // Hinweis darauf, welches der 4 Möglichkeiten der Tatsächliche Klartext
+    // Hinweis darauf, welches der 4 Möglichkeiten der tatsächliche Klartext
     // ist.
     y = a_exp_b_mod_c(x * offset + padding, 2, n);
+    // x konnte verschlüsselt werden. Darum wird True zurückgegeben.
     return true;
 }

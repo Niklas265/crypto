@@ -42,6 +42,8 @@ bool PublicKeyAlgorithmBox::EEA(const Integer& a, const Integer& b,
 Integer PublicKeyAlgorithmBox::modularExponentation(const Integer& a,
 		const Integer& b, const Integer& n) {
 
+    // d enthält während der Berechnung die Zwischenergebnisse und
+    // nach Berechnung das Ergebnis von a^b mod n.
     Integer d = 1;
 
     // Bei der Berechnung der modularen Exponentation wird die Binärdarstellung
@@ -74,8 +76,8 @@ Integer PublicKeyAlgorithmBox::modularExponentation(const Integer& a,
 bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
 		Integer& a_inv) {
 
+    // Parameter für den erweiterten Algorithmus von Euklid.
     Integer d, x, y;
-
     // a ist invertierbar modulo n, falls gcd(a,n) = 1. gcd(a,n) kann auch mit
     // dem Erweiterten Algorithmus von Euklid berechnet werden.
     // Wegen ZTK Satz 3.4 gibt es x,y ∈ Z, so dass gcd(a, n) = 1 = ax + ny.
@@ -88,7 +90,8 @@ bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
     // Bei EEA wird gcd(a,n) in d gespeichert.
     if (d == 1) {
         // Laut Aufgabenstellung sollen keine negativen inversen zurückgegeben
-        // werden. Da -1 (mod n) = n-1 (mod n), kann ein berechnetes negatives
+        // werden. Da -1 (mod n) = n-1 (mod n); -2 (mod n) = n-2 (mod n) ...
+        // kann ein berechnetes negatives
         // Inverses zu einer positiven Inversen umgewandelt werden.
         if (x < 0) x += n;
         // Das multiplikative Inverse von a wird über a_inv zurückgegeben.
@@ -97,7 +100,7 @@ bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
         // Inverses existiert.
         return true;
     }
-    // gcd(a,n) != 1, das heißt, dass es kein inverses Element gibt.
+    // gcd(a,n) != 1, das heißt, dass kein inverses Element für a existiert.
     // Dadurch wird false zurückgegeben.
     return false;
 } // multInverse()
@@ -105,9 +108,6 @@ bool PublicKeyAlgorithmBox::multInverse(const Integer& a, const Integer& n,
 // #witness() 
 bool PublicKeyAlgorithmBox::witness(const Integer& a, const Integer& n) {
     //Implementierung des Witness-Algorithmus, der True zurückliefert, wenn n keine Primzahl ist
-
-    //sicherstellen, dass n ungerade Zahl ist
-    assert((n%2)==1);
 
     //Berechne u und r so dass n-1 = u * 2^r
     Integer nMinus1 = n-1;
@@ -241,11 +241,13 @@ unsigned int PublicKeyAlgorithmBox::randomRabinPrime(Integer &p,
     // In jedem Schleifendurchlauf wird eine Zufallszahl mit maximaler Bitlänge
     // bitlen erzeugt. Wenn gilt, dass p % 4 != 3 und
     // laut dem Rabin Miller Test mit einer Wahrscheinlichkeit von 1-2^-s
-    // p eine Primzahl ist, dann wird die Schleife und die Funktion verlassen.
+    // p eine Primzahl ist, dann ist p mit Wahrscheinlichkeit von 1-2^-s
+    // eine Rabin Primzahl. Dadurch wird die Schleife und die Funktion verlassen.
     // Ist eine der beiden Bedingungen nicht erfüllt, dann wird der nächste
     // Schleifendurchlauf ausgeführt, die Schleife wird also nicht verlassen.
     do {
         p.Randomize(nonblockingRng, bitlen);
+        // In jedem Schleifendurchlauf wird eine Zufallszahl erzeugt
         versuche++;
     } while (p % 4 != 3 || !millerRabinTest(p, s));
 
@@ -267,17 +269,18 @@ bool PublicKeyAlgorithmBox::modPrimeSqrt(const Integer& y, const Integer& p,
     // p kongruent zu 3 modulo 4 ist, dann sind x1,2 = +/- a^((p+1)/4) die
     // beiden Lösungen für die Gleichung x² ist kongruent zu a (mod p). Dabei
     // ist a ein quadratischer Rest modulo p und in unserem Fall ist a der
-    // Übergabeparameter y und x bzw die 2 x's sind die zu suchenden
+    // Übergabeparameter y und x bzw. die 2 x's in x1,2 sind die zu suchenden
     // Quadratwurzeln.
     // p kongruent zu 3 modulo 4 ist durch obige p % 4 == 3 abfrage gegeben.
     // x1,2 = +/- a^((p+1)/4)
+    // Brechnet wird x = x1 und da -x = x2 wird sowohl x1 als auch x2 berechnet.
     Integer x = modularExponentation(y, (p+1)/4, p);
     v.clear();
     // Der plus Fall
     v.push_back(x);
     // Der minus Fall. Es gilt -x (mod p) = -x + p (mod p)
     // Durch die Testwerte aus der Aufgabenstellung wurde angenommen, dass hier
-    // die zwei kleinsten POSITIVE Quadratwurzeln zurückgegeben werden soll.
+    // die zwei kleinsten positiven Quadratwurzeln zurückgegeben werden sollen.
     v.push_back(-x + p);
 
     // Die Quadratwurzeln konnten berechnet werden. Dadurch wird True
@@ -349,6 +352,7 @@ unsigned int PublicKeyAlgorithmBox::computeConvergents(const Integer& a,
         d.push_back(q[i-1] * d[i-1] + d[i-2]);
     }
 
+    // Die Anzahl der Elemente im Vektor c wird zurückgegeben.
     return c.size();
 }
 
@@ -370,6 +374,14 @@ bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
     Integer min = 0;
     Integer max = x / 2;
 
+    // Spezialfall bei gesuchter Wurzel von 0.
+    if (x == 0) {
+        // Wurzel von 0 ist 0. Über s wird diese zurückgegeben.
+        s = 0;
+        // Wurzel gefunden, wodurch True zurückgegeben wird.
+        return true;
+    }
+
     while (min < max) {
         // In jedem Schleifendurchlauf wird die Mitte von min und max bestimmt.
         // Der Suchraum wird dadurch in der Mitte halbiert.
@@ -380,6 +392,8 @@ bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
             // und wenn sie es ist, dann wird s auf mid gesetzt und true
             // zurückgegeben.
             s = mid;
+            // 0 ist die gesuchte Quadratwurzel von a und es wird deshalb
+            // true zurückgegeben.
             return true;
         }
         // Spezieller Fall wenn der Suchraum nur noch 2 Elemente groß ist.
@@ -389,6 +403,8 @@ bool PublicKeyAlgorithmBox::sqrt(const Integer& x, Integer& s) const {
             // abgerundet wird. Da max auf mid - 1 gesetzt wird, wurde max² == x
             // bisher noch nicht getestet.
             if (max * max == x) {
+                // Wenn max² gleich x ist, dann ist max die gesucht Quadratwurzel
+                // von x.
                 s = max;
                 return true;
             }

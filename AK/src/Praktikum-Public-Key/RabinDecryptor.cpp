@@ -107,6 +107,7 @@ bool RabinDecryptor::compute(const Integer& y, vector<Integer>& xv) {
     xv.push_back((bp[1] * q * mp + bq[0] * p * mq) % n);
     xv.push_back((bp[1] * q * mp + bq[1] * p * mq) % n);
 
+    // y konnte entschlüsselt werden. Darum wird True zurückgegeben.
     return true;
 }
 
@@ -117,6 +118,7 @@ bool RabinDecryptor::compute(const Integer& y, Integer& x) {
         // Wenn erfolgreich, dann wird das erste der 4 Ergebnisse in x
         // gespeichert und True zurückgegeben.
         x = xv[0];
+        // y konnte entschlüsselt werden. Darum wird True zurückgegeben.
         return true;
     }
     // Wenn √y (mod n) nicht berechnet werden konnte, dann wird False

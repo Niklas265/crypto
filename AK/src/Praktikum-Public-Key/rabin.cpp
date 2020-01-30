@@ -21,7 +21,7 @@ void rabinParameters() {
 	PublicKeyAlgorithmBox pb;
 	Integer p, q;
 	// unter Verwendung der Methode randomRabinPrime() werden zwei geeignete
-	// 256-Bit Primzahlen p und q als Parameter für das Rabin-Kryptosystem
+	// 256-Bit Rabin Primzahlen p und q als Parameter für das Rabin-Kryptosystem
 	//  generiert. Für das Rabin-Kryptosystem muss jede der beiden Primzahlen
 	// eine Rabin-Primzahl, ð, sein, bei der gilt, dass x ≡ 3 (mod 4), wobei x
 	// p bzw. q ist.
@@ -39,8 +39,8 @@ void sqrtModPrimeExercise() {
 
 	PublicKeyAlgorithmBox pb;
 	vector<Integer> v;
-	// Berechnet die zwei Quadratwurzeln von 400040001 % 884249923643 und
-	// speichert diese im vector v ab.
+	// Berechnet die zwei Quadratwurzeln von 400040001 mod 884249923643 und
+	// speichert diese als Integer im vector v ab.
 	pb.modPrimeSqrt(Integer("400040001"), Integer("884249923643"), v);
 	cout << "Quadratwurzeln von 400040001 mod 884249923643" << v[0] << ' '
 	     << v[1] << endl;
@@ -148,7 +148,7 @@ void rabinAttack() {
         assert(f == p || f == q);
     } else {
         // Nach 5 Versuchen wurde kein Faktor von n gefunden.
-        cout << "Didnt find f after " << tries << " tries." << endl;
+        cout << "Did not find f after 5 tries." << endl;
     }
 }
 

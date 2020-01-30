@@ -40,6 +40,8 @@ bool RSADecryptor::compute(const Integer& y, Integer& x) const {
     // weil gcd(p,q) = 1 ist.
     x = pb.modularExponentation(y, d, n);
 
+    // y ist ein Element des Geheimtextraums und konnte deshalb
+    // entschlüsselt werden. Darum wird True zurückgegeben.
     return true;
 }
 
@@ -80,6 +82,8 @@ bool RSADecryptor::crt(const Integer& y, Integer& x) const {
     // Die Werte in die Formel einsetzten und x kann berechnet werden.
     x = (b1 * q * mq + b2 * p * mp) % n;
 
+    // y ist ein Element des Geheimtextraums und konnte deshalb
+    // entschlüsselt werden. Darum wird True zurückgegeben.
     return true;
 }
 
@@ -104,5 +108,7 @@ bool RSADecryptor::garner(const Integer& y, Integer& x) const {
     // Ansonsten werden die Werte in Garner's Formel eingesetzt.
     x = (((a - b) * (qInv % p)) % p) * q + b;
 
+    // y ist ein Element des Geheimtextraums und konnte deshalb
+    // entschlüsselt werden. Darum wird True zurückgegeben.
     return true;
 }

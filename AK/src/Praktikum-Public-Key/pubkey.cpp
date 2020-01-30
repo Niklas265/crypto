@@ -53,13 +53,14 @@ void invExercise() {
 
     PublicKeyAlgorithmBox pb;
     Integer a_inv;
-    // Berechnet das berechnet das multiplikative Inverse
+    // multInverse berechnet das multiplikative Inverse
     // von 10353 modulo 820343. Falls ein solches existiert, dann wird es in
-    // a_inv gespeichert.
-    pb.multInverse(Integer(10353), Integer(820343), a_inv);
+    // a_inv gespeichert. multInverse liefert auch True zurück, falls ein
+    // solches inverses Element existert und False wenn nicht.
+    assert(pb.multInverse(Integer(10353), Integer(820343), a_inv));
     cout << "multiplikatives Inverses von 10353 modulo 820343: " << a_inv << endl;
     // Es wird erwartet, dass ein solches multiplikative Inverse existiert und
-    // das dieses 21711 ist.
+    // dass dieses 21711 ist.
     assert(a_inv == Integer(21711));
     // Es wird erwartet, dass kein multiplikatives Inverses von
     // 10353 modulo 820344 existiert. In diesem Fall liefert multInverse()
@@ -67,7 +68,7 @@ void invExercise() {
     assert(!pb.multInverse(Integer(10353), Integer(820344), a_inv));
     // Berechnet das multiplikatives Inverses von 562312 modulo 57913313.
     // Es wird erwartet, dass dieses 53494466 ist.
-    pb.multInverse(Integer(562312), Integer(57913313), a_inv);
+    assert(pb.multInverse(Integer(562312), Integer(57913313), a_inv));
     cout << "multiplikatives Inverses von 562312 modulo 57913313: " << a_inv << endl;
     assert(a_inv == Integer(53494466));
 }
@@ -105,7 +106,7 @@ void randExercise() {
     // dafür einen 'entropy pool'. Wird ein neuer Seed gebraucht, dann kann
     // dieser aus dem pool entnommen werden. Das Betriebssystem fügt dem
     // pool Seeds aus verschiedenen scheinbar zufälligen Quellen wie zum
-    // Beispiel die Verzögerung zwischen dem Drücken von Tasten. Dieser Pool
+    // Beispiel die Verzögerung zwischen dem Drücken von Tasten hinzu. Dieser Pool
     // kann auch leer werden. Wenn dieser Pool leer ist, dann blockt ein
     // BlockingRng wie dev/random, also wartet bis er ein Bit zurückgibt,
     // hält praktisch die Ausführung an, bis zusätzliche Werte dem pool
@@ -125,10 +126,16 @@ void randExercise() {
     // Randomize wird eine Referenz auf eine Klasse vom Typ
     // RandomNumberGenerator übergeben. BlockingRng und NonblockingRng
     // erben von RandomNumberGenerator und sind somit für Randomize geeignet.
+    // Über das zweite Argument wird die maximale Bitgröße der zu
+    // erzeugenden Zufallszahl bestimmt. Hier wird also eine 128 Bit
+    // Zufallszahl gewürfelt, welche in a gespeichert wird.
     a.Randomize(blockingRng, 128);
     cout << "Erzeuge 128 Bit Zufallszahl: " << a << endl;
 
     NonblockingRng nonblockingRng;
+    // Erzeugen einer 1025 Bit Zufallszahl mit einem nicht
+    // blockierenden Pseudozufallszahlengenerator. Die Zufallszahl
+    // wird in a abgespeichert.
     a.Randomize(nonblockingRng, 1024);
     cout << "Erzeuge 1024 Bit Zufallszahl: " << a << endl;
 }
@@ -141,7 +148,7 @@ void millerRabinExercise() {
 	PublicKeyAlgorithmBox pb;
 	Integer a = Integer("279226292160650115722581212551219487007");
 	// Mit dem Miller Rabin Test wird überprüft, ob a mit
-	// Fehlerwahrscheinlichkeit s eine Primzahl ist.
+	// Fehlerwahrscheinlichkeit 2^-s eine Primzahl ist.
 	// Die zu testende Zahl a wird als erstes Argument an millerRabinTest()
 	// übergeben.
 	// Als Fehlerwahrscheinlichkeit wird 2^−100 über s, dem zweiten Argument,
@@ -150,18 +157,22 @@ void millerRabinExercise() {
 	// angenommen wird, dass es sich bei a um eine Primzahl handelt.
 	bool ergebnis = pb.millerRabinTest(a, 100);
 	cout << "279226292160650115722581212551219487007 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+	// Es wird erwartet, dass a eine Primzahl ist.
 	assert(pb.millerRabinTest(a, 100));
 	Integer b = Integer("247278711133334795867191516244139839983");
     ergebnis = pb.millerRabinTest(b, 100);
     cout << "247278711133334795867191516244139839983 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+    // Es wird erwartet, dass a keine Primzahl ist.
     assert(!ergebnis);
     Integer c = Integer("192172622525902080249109244057747132167");
     ergebnis = pb.millerRabinTest(c, 100);
     cout << "192172622525902080249109244057747132167 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+    // Es wird erwartet, dass a keine Primzahl ist.
     assert(!ergebnis);
     Integer d = Integer("177387942943728133030691912202779547031");
     ergebnis = pb.millerRabinTest(d, 100);
     cout << "177387942943728133030691912202779547031 ist laut Rabin Miller Test " << (ergebnis ? "Prim" : "nicht Prim") << endl;
+    // Es wird erwartet, dass a eine Primzahl ist.
     assert(ergebnis);
 }
 

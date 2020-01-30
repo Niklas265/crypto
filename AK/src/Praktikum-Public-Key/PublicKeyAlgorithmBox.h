@@ -202,7 +202,7 @@ public:
 	 * randomRabinPrime generiert mit Fehlerwahrscheinlichkeit 2^-s eine
 	 * Zufallsprimzahl mit folgenden Eigenschaften:
 	 * - Die Binärdarstellung von p hat höchstens bitlen Bits.
-	 * - p ist eine Rabin-Primzahl, ð, es gilt p ≡ 3 (mod 4).
+	 * - p ist eine Rabin-Primzahl, ð, für die gilt p ≡ 3 (mod 4).
 	 * Die Methode speichert die erzeugte Rabin-Primzahl in p ab.
 	 *
 	 * @param p In Variable p wird die generierte Rabin-Primzahl abgespeichert.

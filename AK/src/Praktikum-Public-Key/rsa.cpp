@@ -90,10 +90,12 @@ void rsaDemo() {
     rsaDecryptor.compute(outy, outx);
     cout << "RSA Entschlüsselung: " << outy << " --compute--> " << outx << endl;
     assert(outx == x);
+    // Alternative Entschlüsselung mit dem Chinesischen Restsatz.
     rsaDecryptor.crt(outy, outcrt);
     cout << "RSA Entschlüsselung: " << outy << " --CRT--> " << outcrt << endl;
     assert(outcrt == x);
     rsaDecryptor.garner(outy, outgarner);
+    // Alternative Entschlüsselung mit Garners Verfahren.
     cout << "RSA Entschlüsselung: " << outy << " --Garner--> " << outgarner << endl;
     assert(outgarner == x);
 }
@@ -162,13 +164,13 @@ void euklidExercise() {
     assert(d == 1);
     vector<Integer> expectedResult = {Integer("0"), Integer("2"), Integer("1"),
                                    Integer("6"), Integer("1"), Integer("4")};
-    // Überprüfen, ob die Werte q1 bis qm in q mit den erwarteten Werten
-    // übereinstimmen.
     cout << "q1 bis qm des Kettenbruchs 39/112: " << endl;
     for (auto i : q) {
         cout << i << ' ';
     }
     cout << endl;
+    // Überprüfen, ob die Werte q1 bis qm in q mit den erwarteten Werten
+    // übereinstimmen.
     assert(q == expectedResult);
 }
 
