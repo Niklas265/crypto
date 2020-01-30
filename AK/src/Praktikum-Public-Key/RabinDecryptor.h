@@ -95,9 +95,11 @@ public:
      * p, q, offset, und padding setzt.
      *
      * @param p p soll eine Rabin Primzahl (p ≡ 3 (mod 4)) und verschieden zu q
-     * sein. p wird Teil des privaten Schlüssels.
+     * sein. p wird Teil des privaten Schlüssels. Der Konstruktor überprüft jedoch
+     * nicht, ob es sich bei p tatsächlich um eine Rabin-Primzahl handelt.
      * @param q q soll eine Rabin Primzahl (q ≡ 3 (mod 4)) und verschieden zu p
-     * sein. q wird Teil des privaten Schlüssels.
+     * sein. q wird Teil des privaten Schlüssels. Es muss jedoch vom aufrufenden
+     * Programm sichergestellt werden, dass es sich um eine Rabin-Primzahl handelt.
      * @param padding Ist ein Wert, mit dem ein zu verschlüsselnder Text markiert
      * wurde. Markiert bedeutet, dass das padding an das Ende des zu
      * verschlüsselten Texts angehangen worden ist.
