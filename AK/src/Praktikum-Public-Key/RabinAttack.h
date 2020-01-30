@@ -29,8 +29,8 @@ public:
      * und nur durch Kenntniss von n ein p oder q bestimmt werden kann. Mit
      * anderen Worten, dass n faktorisierbar ist. Kann man n faktorisieren,
      * dann kann man das Rabin Kryptosystem brechen und verschlüsselte
-     * Nachrichten brechen/entschlüsseln, weil p und q die privaten Schlüssel
-     * sind. Pro Versuch ist die Erfolgswahrscheinlichkeit bei 50%. Durch
+     * Nachrichten brechen/entschlüsseln, weil p und q Teil des privaten Schlüssels
+     * sind. Pro Versuch liegt die Erfolgswahrscheinlichkeit bei 50%. Durch
      * wiederholte Versuche wird die Erfolgswahrscheinlichkeit erhöht. Mit
      * max_tries kann die Anzahl der Versuche bestimmt werden. Die
      * Erfolgswahrscheinlichkeit aller Versuche zusammen ist dann
